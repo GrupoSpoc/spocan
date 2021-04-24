@@ -2,5 +2,6 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/nunito_extralight</item>
+        <item>@font/nunito_light</item>
     </array>
 </resources>

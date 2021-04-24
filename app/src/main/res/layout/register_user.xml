@@ -1,6 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="207dp"
+        android:layout_height="73dp"
+        android:layout_marginBottom="26dp"
+        android:fontFamily="@font/nunito_light"
+        android:text="@string/registerUser"
+        android:textSize="45dp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="0dp"
+        android:layout_height="653dp"
+        android:background="@drawable/diseno_fondo_gris"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/nunito_light"
+            android:text="@string/radioOptionsDescription"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.356"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="268dp"
+            android:layout_height="63dp"
+            android:drawableLeft="@drawable/add_user_icon"
+            android:ems="10"
+            android:fontFamily="@font/nunito_light"
+            android:inputType="textPersonName"
+            android:text="@string/nicknamePlaceholder"
+            app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.616" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="230dp"
+            android:layout_height="77dp"
+            android:background="@drawable/diseno_botones_verdes"
+            android:fontFamily="@font/nunito_light"
+            android:text="@string/registerButton"
+            app:backgroundTint="@color/green_buttons"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
+            app:layout_constraintVertical_bias="0.288" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="150dp"
+                android:layout_height="63dp"
+                android:fontFamily="@font/nunito_light"
+                android:text="@string/radioOption1" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="150dp"
+                android:layout_height="62dp"
+                android:fontFamily="@font/nunito_light"
+                android:text="@string/radioOption2" />
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
