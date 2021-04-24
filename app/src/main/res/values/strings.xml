@@ -1,3 +1,10 @@
 <resources>
+    ##Strings usados para la vista de publicar iniciativa
     <string name="app_name">spocan</string>
+    <string name="SubirIniciativaTitle">Subir Iniciativa</string>
+    <string name="AddPhotoBtn">Agregar foto</string>
+    <string name="AddDescriptionBtn">Agregar una descripción</string>
+    <string name="PublishInitiativeBtn">Publicar</string>
+    <string name="CancelInitiativeBtn">Cancelar</string>
+
 </resources>
