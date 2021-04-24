@@ -1,3 +1,18 @@
 <resources>
+    ##Strings usados para la vista de publicar iniciativa
     <string name="app_name">spocan</string>
+    <string name="SubirIniciativaTitle">Subir Iniciativa</string>
+    <string name="AddPhotoBtn">Agregar foto</string>
+    <string name="AddDescriptionBtn">Agregar una descripción</string>
+    <string name="PublishInitiativeBtn">Publicar</string>
+    <string name="CancelInitiativeBtn">Cancelar</string>
+
+    ##Strings usados para la vista de registrarse
+    <string name="registerUser">Registrate</string>
+    <string name="nicknamePlaceholder"> Ingresa tu usuario</string>
+    <string name="radioOption1">Individuo</string>
+    <string name="radioOption2">Organización</string>
+    <string name="registerButton">Registrate</string>
+    <string name="radioOptionsDescription">Sos:</string>
+
 </resources>
