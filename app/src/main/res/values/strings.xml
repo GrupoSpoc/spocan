@@ -15,4 +15,8 @@
     <string name="registerButton">Registrate</string>
     <string name="radioOptionsDescription">Sos:</string>
 
+    ##Strings usados para el splash screen
+    <string name="appTitle">CollaborAR App</string>
+    <string name="legalInformation">S.P.O.C Dev 2021 ®</string>
+
 </resources>
