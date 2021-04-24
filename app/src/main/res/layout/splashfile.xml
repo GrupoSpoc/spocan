@@ -18,19 +18,19 @@
         app:layout_constraintVertical_bias="0.386">
 
         <ImageView
-            android:id="@+id/logo_id"
+            android:id="@+id/logo_splash_screen"
             android:layout_width="289dp"
             android:layout_height="272dp"
             android:layout_centerInParent="true"
             android:src="@drawable/ciudadesdelfuturologo"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintBottom_toTopOf="@+id/app_title_splash"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.551" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/text_spoc_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="28dp"
@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/app_title_splash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
