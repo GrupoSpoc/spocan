@@ -2,6 +2,7 @@ package com.neiapp.spocan.Models;
 
 import com.google.gson.Gson;
 
+
 public class Initiative {
 
     private String id;
@@ -52,16 +53,13 @@ public class Initiative {
         return isFromCurrentUser;
     }
 
-     public String toJson(Initiative initiativeToTransform){
+     public String toJson(){
      Gson gson = new Gson();
-     String jsonResult = gson.toJson(initiativeToTransform);
-
-        return jsonResult;
+         return  gson.toJson(this);
      }
      public  static Initiative convertJson (String jsonToTransform){
        Gson gson = new Gson();
-       Initiative initiativeResulting =  (Initiative) gson.fromJson(jsonToTransform, Initiative.class);
-        return initiativeResulting;
+         return  gson.fromJson(jsonToTransform, Initiative.class);
      }
 
-     }
+}
