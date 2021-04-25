@@ -65,6 +65,10 @@ public class Initiative {
         return isFromCurrentUser;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setImage(Bitmap bitmap) {
         this.imageBase64 = Base64Converter.bitmapToBase64(bitmap);
     }
@@ -82,4 +86,6 @@ public class Initiative {
         Gson gson = new Gson();
         return  gson.fromJson(jsonToTransform, Initiative.class);
     }
+
+
 }

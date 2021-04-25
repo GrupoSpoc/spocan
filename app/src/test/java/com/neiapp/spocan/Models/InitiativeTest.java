@@ -1,9 +1,7 @@
  package com.neiapp.spocan.Models;
 
  import android.graphics.Bitmap;
-
  import com.google.gson.JsonObject;
-
  import org.junit.Test;
  import org.junit.runner.RunWith;
  import org.robolectric.RobolectricTestRunner;
