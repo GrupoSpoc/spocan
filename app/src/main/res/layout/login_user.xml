@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="448dp"
+        android:layout_height="734dp"
+        android:background="@drawable/login_background_attempt"
+        app:layout_constraintBaseline_toBaselineOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-8dp">
+
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="139dp"
+            android:layout_marginBottom="79dp"
+            android:drawableLeft="@drawable/ic_baseline_lock_24"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="@+id/regular_login_btn"
+            app:layout_constraintTop_toTopOf="@+id/textView6"
+            tools:layout_editor_absoluteX="46dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_marginBottom="64dp"
+            android:drawableLeft="@drawable/add_user_icon"
+            android:ems="10"
+            android:hint="Usuario"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.192"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView6"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="324dp"
+            android:layout_height="53dp"
+            android:fontFamily="@font/nunito_extralight"
+            android:text="@string/loginTitle"
+            android:textSize="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.37"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.214" />
+
+        <Button
+            android:id="@+id/regular_login_btn"
+            android:layout_width="163dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="128dp"
+            android:layout_marginLeft="128dp"
+            android:layout_marginTop="356dp"
+            android:background="@drawable/diseno_botones_verdes"
+            android:fontFamily="@font/nunito_extralight"
+            android:text="@string/loginWithAppBtn"
+            android:textStyle="bold"
+            app:backgroundTint="@color/green_buttons"
+            app:iconTint="@color/green_buttons"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/google_login_btn"
+            android:layout_width="163dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="128dp"
+            android:layout_marginLeft="128dp"
+            android:layout_marginTop="424dp"
+            android:background="@drawable/diseno_botones_verdes"
+            android:fontFamily="@font/nunito_extralight"
+            android:text="@string/loginWithGoogleBtn"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/register_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_extralight"
+            android:text="@string/registerBottomButton"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/white"
+            app:iconTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.101"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.953"
+            app:rippleColor="@color/white" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="624dp"
+            android:fontFamily="@font/nunito_extralight"
+            android:text="@string/dontHaveAccount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="92dp"
+            android:layout_height="78dp"
+            android:cropToPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.443"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.06"
+            app:srcCompat="@drawable/ciudadesdelfuturologo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
