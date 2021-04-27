@@ -1,10 +1,12 @@
 package com.neiapp.spocan.Models;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.Gson;
+import com.neiapp.spocan.util.Base64Converter;
 
 
 public class Initiative {
-
     private String id;
     private String title;
     private String description;
@@ -29,6 +31,16 @@ public class Initiative {
         this.id = null;
         this.nickName = null;
     }
+
+    public Initiative(String title, String description, Bitmap bitmap, boolean isFromCurrentUser) {
+        this.title = title;
+        this.description = description;
+        setImage(bitmap);
+        this.isFromCurrentUser = isFromCurrentUser;
+        this.id = null;
+        this.nickName = null;
+    }
+
     public String getId() {
         return id;
     }
@@ -53,13 +65,21 @@ public class Initiative {
         return isFromCurrentUser;
     }
 
-     public String toJson(){
-     Gson gson = new Gson();
-         return  gson.toJson(this);
-     }
-     public  static Initiative convertJson (String jsonToTransform){
-       Gson gson = new Gson();
-         return  gson.fromJson(jsonToTransform, Initiative.class);
-     }
+    public void setImage(Bitmap bitmap) {
+        this.imageBase64 = Base64Converter.bitmapToBase64(bitmap);
+    }
 
+    public Bitmap getImage() {
+        return Base64Converter.base64ToBitmap(this.imageBase64);
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return  gson.toJson(this);
+    }
+
+    public  static Initiative convertJson (String jsonToTransform){
+        Gson gson = new Gson();
+        return  gson.fromJson(jsonToTransform, Initiative.class);
+    }
 }
