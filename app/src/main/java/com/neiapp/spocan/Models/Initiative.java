@@ -7,46 +7,38 @@ import com.neiapp.spocan.util.Base64Converter;
 
 
 public class Initiative {
-    private String id;
-    private String title;
+    private String _id;
     private String description;
-    private String imageBase64;
-    private String nickName;
+    private String image;
+    private String nickname;
     private boolean isFromCurrentUser;
 
-    public Initiative(String id, String title, String description, String imageBase64, String nickName, boolean isFromCurrentUser) {
-        this.id = id;
-        this.title = title;
+    public Initiative(String _id, String description, String image, String nickname, boolean isFromCurrentUser) {
+        this._id = _id;
         this.description = description;
-        this.imageBase64 = imageBase64;
-        this.nickName = nickName;
+        this.image = image;
+        this.nickname = nickname;
         this.isFromCurrentUser = isFromCurrentUser;
     }
 
-    public Initiative(String title, String description, String imageBase64, boolean isFromCurrentUser) {
-        this.title = title;
+    public Initiative(String description, String image, boolean isFromCurrentUser) {
         this.description = description;
-        this.imageBase64 = imageBase64;
+        this.image = image;
         this.isFromCurrentUser = isFromCurrentUser;
-        this.id = null;
-        this.nickName = null;
+        this._id = null;
+        this.nickname = null;
     }
 
-    public Initiative(String title, String description, Bitmap bitmap, boolean isFromCurrentUser) {
-        this.title = title;
+    public Initiative(String description, Bitmap bitmap, boolean isFromCurrentUser) {
         this.description = description;
         setImage(bitmap);
         this.isFromCurrentUser = isFromCurrentUser;
-        this.id = null;
-        this.nickName = null;
+        this._id = null;
+        this.nickname = null;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
+    public String get_id() {
+        return _id;
     }
 
     public String getDescription() {
@@ -54,11 +46,11 @@ public class Initiative {
     }
 
     public String getImageBase64() {
-        return imageBase64;
+        return image;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
     public boolean isFromCurrentUser() {
@@ -66,11 +58,11 @@ public class Initiative {
     }
 
     public void setImage(Bitmap bitmap) {
-        this.imageBase64 = Base64Converter.bitmapToBase64(bitmap);
+        this.image = Base64Converter.bitmapToBase64(bitmap);
     }
 
     public Bitmap getImage() {
-        return Base64Converter.base64ToBitmap(this.imageBase64);
+        return Base64Converter.base64ToBitmap(this.image);
     }
 
     public String toJson(){
