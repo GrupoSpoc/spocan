@@ -1,11 +1,12 @@
 package com.neiapp.spocan.backend;
 
 import com.neiapp.spocan.Models.Initiative;
+import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import java.util.ArrayList;
 
 public class MockedBackend implements Backend {
-    private static ArrayList<Initiative> initiative_store;
+    public static ArrayList<Initiative> initiative_store;
 
     protected MockedBackend(){
        initiative_store = new ArrayList<Initiative>();
@@ -17,9 +18,5 @@ public class MockedBackend implements Backend {
         initiative.setId(assignedId);
         initiative_store.add(initiative);
         callback.onSuccess();
-    }
-
-    public  ArrayList<Initiative> getAll() {
-        return initiative_store;
     }
 }
