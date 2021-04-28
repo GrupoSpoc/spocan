@@ -19,4 +19,11 @@
     <string name="appTitle">CollaborAR App</string>
     <string name="legalInformation">S.P.O.C Dev 2021 ®</string>
 
+    ##Strings usados para el log-in
+    <string name="loginTitle"> Ingresá a CollaborAr</string>
+    <string name="loginWithAppBtn">Login</string>
+    <string name="loginWithGoogleBtn">Login con Google</string>
+    <string name="registerBottomButton">Registrate</string>
+    <string name="dontHaveAccount">Todavia no tenés cuenta? </string>
+
 </resources>

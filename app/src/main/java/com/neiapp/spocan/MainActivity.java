@@ -11,22 +11,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button mGoToCreateInitiativeBtn;
-    FloatingActionButton fab;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_user);
 
-        mGoToCreateInitiativeBtn = findViewById(R.id.HomeButton);
-
-        mGoToCreateInitiativeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), InitiativeActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }
