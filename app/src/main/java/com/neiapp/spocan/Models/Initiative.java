@@ -3,10 +3,12 @@ package com.neiapp.spocan.Models;
 import android.graphics.Bitmap;
 
 import com.google.gson.Gson;
+import com.neiapp.spocan.backend.exception.JsonParseCustomException;
 import com.neiapp.spocan.util.Base64Converter;
 
 
 public class Initiative {
+    static final String MSG_ERR_PARSE_JSON = "Error al parsear el JSON";
     private String id;
     private String title;
     private String description;
@@ -78,8 +80,12 @@ public class Initiative {
         return  gson.toJson(this);
     }
 
-    public  static Initiative convertJson (String jsonToTransform){
-        Gson gson = new Gson();
-        return  gson.fromJson(jsonToTransform, Initiative.class);
+    public  static Initiative convertJson (String jsonToTransform) throws JsonParseCustomException {
+        try {
+            Gson gson = new Gson();
+            return gson.fromJson(jsonToTransform, Initiative.class);
+        }catch (Exception e){
+            throw new JsonParseCustomException(Initiative.class.getName(), MSG_ERR_PARSE_JSON);
+        }
     }
 }

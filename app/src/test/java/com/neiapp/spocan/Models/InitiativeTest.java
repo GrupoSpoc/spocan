@@ -1,9 +1,8 @@
  package com.neiapp.spocan.Models;
 
  import android.graphics.Bitmap;
-
  import com.google.gson.JsonObject;
-
+ import com.neiapp.spocan.backend.exception.JsonParseCustomException;
  import org.junit.Test;
  import org.junit.runner.RunWith;
  import org.robolectric.RobolectricTestRunner;
@@ -53,7 +52,7 @@ public class InitiativeTest {
     }
 
     @Test
-    public void testInitiativeTransformJSON()  {
+    public void testInitiativeTransformJSON() throws JsonParseCustomException {
 
         JsonObject jsonInitiative = new JsonObject();
 
@@ -75,7 +74,7 @@ public class InitiativeTest {
     }
 
     @Test
-    public void  toJsonAndThemFromJson(){
+    public void  toJsonAndThemFromJson() throws JsonParseCustomException {
         String  title = "title";
         String  description = "description";
         String  imageBase64 = "imageBase64";
