@@ -12,5 +12,6 @@ public interface Backend {
         } else return null; // todo devolver RestClientBackend
     }
     void createInitiative(Initiative initiative, CallbackVoid callback);
+    void getAll(CallbackCollection<Initiative> collection);
 }
 

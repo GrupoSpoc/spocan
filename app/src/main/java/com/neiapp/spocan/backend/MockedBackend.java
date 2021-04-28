@@ -3,6 +3,9 @@ package com.neiapp.spocan.backend;
 import com.neiapp.spocan.Models.Initiative;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class MockedBackend implements Backend {
@@ -16,5 +19,10 @@ public class MockedBackend implements Backend {
         initiative.setId(assignedId);
         initiative_store.add(initiative);
         callback.onSuccess();
+    }
+
+    @Override
+    public void getAll( CallbackCollection<Initiative> collection) {
+        collection.onSuccess(initiative_store);
     }
 }
