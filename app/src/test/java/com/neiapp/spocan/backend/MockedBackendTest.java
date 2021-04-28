@@ -1,14 +1,11 @@
 package com.neiapp.spocan.backend;
 
 import com.neiapp.spocan.Models.Initiative;
-import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import static org.junit.Assert.assertEquals;
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class MockedBackendTest {
@@ -16,7 +13,7 @@ public class MockedBackendTest {
     public void initiativeCreationTest (){
         MockedBackend fakeBackend = new MockedBackend();
         Initiative first ;
-        Initiative  initiative = new Initiative("title", "description","image", false);
+        Initiative  initiative = new Initiative("description","image", false);
         CallbackVoid callback = new CallbackVoid() {
             @Override
             public void onSuccess() {}

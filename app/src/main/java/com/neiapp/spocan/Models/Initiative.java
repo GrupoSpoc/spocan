@@ -46,7 +46,7 @@ public class Initiative {
         initDate();
     }
 
-    public String get_id() {
+    public String getId() {
         return _id;
     }
 
@@ -75,7 +75,7 @@ public class Initiative {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public void setImage(Bitmap bitmap) {

@@ -30,7 +30,7 @@ public class InitiativeTest {
         assertEquals(description, initiative.getDescription());
         assertEquals(imageBase64, initiative.getImageBase64());
         assertFalse(initiative.isFromCurrentUser());
-        assertNull(initiative.get_id());
+        assertNull(initiative.getId());
         assertNull(initiative.getNickname());
 
         // para asegurarme que la iniciativa se creó con el now, comparo los ms del now antes
@@ -54,7 +54,7 @@ public class InitiativeTest {
         assertEquals(description, initiative.getDescription());
         assertEquals(imageBase64, initiative.getImageBase64());
         assertTrue(initiative.isFromCurrentUser());
-        assertEquals(_id, initiative.get_id());
+        assertEquals(_id, initiative.getId());
         assertEquals(nickname, initiative.getNickname());
         assertEquals(date, initiative.getDateUTC());
     }
@@ -72,7 +72,7 @@ public class InitiativeTest {
         Initiative result = Initiative.convertJson(jsonInitiative.toString());
 
         assertEquals(result.getDescription(), jsonInitiative.get("description").getAsString());
-        assertEquals(result.get_id(), jsonInitiative.get("_id").getAsString());
+        assertEquals(result.getId(), jsonInitiative.get("_id").getAsString());
         assertEquals(result.getImageBase64(), jsonInitiative.get("image").getAsString());
         assertEquals(result.getNickname(), jsonInitiative.get("nickname").getAsString());
         assertFalse(result.isFromCurrentUser());
@@ -96,7 +96,7 @@ public class InitiativeTest {
         assertEquals(description, result.getDescription());
         assertEquals(imageBase64, result.getImageBase64());
         assertTrue(result.isFromCurrentUser());
-        assertEquals(_id, result.get_id());
+        assertEquals(_id, result.getId());
         assertEquals(nickname, result.getNickname());
         assertEquals(date, result.getDateUTC());
     }
@@ -113,7 +113,7 @@ public class InitiativeTest {
         assertNotNull(initiative.getImage());
         assertEquals(description, initiative.getDescription());
         assertTrue(initiative.isFromCurrentUser());
-        assertNull(initiative.get_id());
+        assertNull(initiative.getId());
         assertNull(initiative.getNickname());
     }
 
