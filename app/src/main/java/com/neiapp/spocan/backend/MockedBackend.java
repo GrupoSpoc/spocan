@@ -6,11 +6,9 @@ import com.neiapp.spocan.backend.callback.CallbackVoid;
 import java.util.ArrayList;
 
 public class MockedBackend implements Backend {
-    public static ArrayList<Initiative> initiative_store;
+    public static ArrayList<Initiative> initiative_store  = new ArrayList<>();
 
-    protected MockedBackend(){
-       initiative_store = new ArrayList<Initiative>();
-    }
+    protected MockedBackend() {}
 
     @Override
     public void createInitiative(Initiative initiative, CallbackVoid callback) {

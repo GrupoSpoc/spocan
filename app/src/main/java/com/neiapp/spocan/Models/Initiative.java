@@ -5,48 +5,57 @@ import android.graphics.Bitmap;
 import com.google.gson.Gson;
 import com.neiapp.spocan.util.Base64Converter;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 
 public class Initiative {
-    private String id;
-    private String title;
+    public static final long ZONE_BS_AS_HOURS = 3;
+    public static final ZoneId UTC = ZoneId.of("UTC");
+    private String _id;
     private String description;
-    private String imageBase64;
-    private String nickName;
+    private String image;
+    private String nickname;
+    private LocalDateTime date;
     private boolean isFromCurrentUser;
 
-    public Initiative(String id, String title, String description, String imageBase64, String nickName, boolean isFromCurrentUser) {
-        this.id = id;
-        this.title = title;
+    public Initiative(String _id, String description, String image, String nickname, String dateStrUTC, boolean isFromCurrentUser) {
+        this._id = _id;
         this.description = description;
-        this.imageBase64 = imageBase64;
-        this.nickName = nickName;
+        this.image = image;
+        this.nickname = nickname;
         this.isFromCurrentUser = isFromCurrentUser;
+        setDate(dateStrUTC);
     }
 
-    public Initiative(String title, String description, String imageBase64, boolean isFromCurrentUser) {
-        this.title = title;
+    public Initiative(String description, String image, boolean isFromCurrentUser) {
         this.description = description;
-        this.imageBase64 = imageBase64;
+        this.image = image;
         this.isFromCurrentUser = isFromCurrentUser;
-        this.id = null;
-        this.nickName = null;
+        this._id = null;
+        this.nickname = null;
+        initDate();
     }
 
-    public Initiative(String title, String description, Bitmap bitmap, boolean isFromCurrentUser) {
-        this.title = title;
+    public Initiative(String description, Bitmap bitmap, boolean isFromCurrentUser) {
         this.description = description;
         setImage(bitmap);
         this.isFromCurrentUser = isFromCurrentUser;
-        this.id = null;
-        this.nickName = null;
+        this._id = null;
+        this.nickname = null;
+        initDate();
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
-    public String getTitle() {
-        return title;
+    private void initDate() {
+        this.date = LocalDateTime.now(UTC);
+    }
+
+    public void setDate(String dateStrUTC) {
+        this.date = LocalDateTime.parse(dateStrUTC);
     }
 
     public String getDescription() {
@@ -54,11 +63,11 @@ public class Initiative {
     }
 
     public String getImageBase64() {
-        return imageBase64;
+        return image;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
     public boolean isFromCurrentUser() {
@@ -66,21 +75,30 @@ public class Initiative {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public void setImage(Bitmap bitmap) {
-        this.imageBase64 = Base64Converter.bitmapToBase64(bitmap);
+        this.image = Base64Converter.bitmapToBase64(bitmap);
     }
 
     public Bitmap getImage() {
-        return Base64Converter.base64ToBitmap(this.imageBase64);
+        return Base64Converter.base64ToBitmap(this.image);
+    }
+
+    public LocalDateTime getDateUTC() {
+        return date;
+    }
+
+    public LocalDateTime getDateLocal() {
+        return date.minusHours(ZONE_BS_AS_HOURS);
     }
 
     public String toJson(){
         Gson gson = new Gson();
         return  gson.toJson(this);
     }
+
 
     public  static Initiative convertJson (String jsonToTransform){
         Gson gson = new Gson();
