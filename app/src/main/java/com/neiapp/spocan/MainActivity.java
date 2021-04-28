@@ -31,6 +31,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private static final int RC_SIGN_IN = 1;
     private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
@@ -38,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Button mSignOutBtn;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_user);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 signOut();
             }
         });
+
     }
 
     private void signIn() {

@@ -12,15 +12,9 @@ import androidx.annotation.Nullable;
 public class LogInActivity extends Activity {
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_user);
-
-
-
-    }
-
 
 }
