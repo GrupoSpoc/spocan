@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.neiapp.spocan"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -48,6 +48,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
     // Import the Firebase BoM
@@ -56,4 +57,7 @@ dependencies {
     // Add the dependency for the Firebase SDK for Google Analytics
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics'
+
+    testCompile 'org.robolectric:robolectric:4.0.2'
+
 }
