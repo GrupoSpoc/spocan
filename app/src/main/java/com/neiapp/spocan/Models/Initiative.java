@@ -1,6 +1,9 @@
 package com.neiapp.spocan.Models;
 
 import android.graphics.Bitmap;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 import com.neiapp.spocan.util.Base64Converter;
@@ -9,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class Initiative {
     public static final long ZONE_BS_AS_HOURS = 3;
     public static final ZoneId UTC = ZoneId.of("UTC");
