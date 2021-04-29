@@ -49,13 +49,13 @@
 
         <EditText
             android:id="@+id/editTextTextPersonName2"
-            android:layout_width="268dp"
-            android:layout_height="63dp"
+            android:layout_width="278dp"
+            android:layout_height="69dp"
             android:drawableLeft="@drawable/add_user_icon"
             android:ems="10"
             android:fontFamily="@font/nunito_light"
+            android:hint="@string/nicknamePlaceholder"
             android:inputType="textPersonName"
-            android:text="@string/nicknamePlaceholder"
             app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
