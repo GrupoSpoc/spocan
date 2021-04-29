@@ -5,6 +5,8 @@ import com.neiapp.spocan.Models.Initiative;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 
+import java.util.ArrayList;
+
 public interface Backend {
     static Backend getInstance(String token) {
         if (Boolean.parseBoolean(BuildConfig.test)) {
