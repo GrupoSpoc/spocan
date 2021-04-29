@@ -25,4 +25,8 @@ public class MockedBackend implements Backend {
     public void getAll( CallbackCollection<Initiative> collection) {
         collection.onSuccess(initiative_store);
     }
+
+    public static void resetStorage(){
+        initiative_store.clear();
+    }
 }
