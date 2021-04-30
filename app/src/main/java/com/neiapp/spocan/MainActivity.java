@@ -27,10 +27,10 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private static final int RC_SIGN_IN = 1;
     private SignInButton signInButton;
@@ -45,12 +45,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_user);
 
-
         mAuth = FirebaseAuth.getInstance();
-
-        mSignOutBtn= findViewById(R.id.sign_out);
+        mSignOutBtn = findViewById(R.id.sign_out);
         signInButton = findViewById(R.id.sign_in_button);
-
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void signOut(){
+    private void signOut() {
         FirebaseAuth.getInstance().signOut();
         mGoogleSignInClient.signOut();
         mSignOutBtn.setVisibility(View.INVISIBLE);
@@ -89,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -97,27 +94,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
 
-        try{
+        try {
             GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
             Toast.makeText(MainActivity.this, "Logueado Exitosamente! ", Toast.LENGTH_SHORT).show();
-           firebaseAuthWithGoogle(acc.getIdToken());
-        }catch (ApiException ae){
+            firebaseAuthWithGoogle(acc.getIdToken());
+        } catch (ApiException ae) {
             Toast.makeText(MainActivity.this, "Hubo un error al loguearse ", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d(TAG, "Sign in with credential: Success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //Hacer algo con el usuario si hace falta
                             updateUI(user);
-                        }else{
+                        } else {
                             Log.w(TAG, "Fallo en el sign in", task.getException());
                             //Hacer algo para el usuario cuando falla si hace falta
                             updateUI(null);
@@ -129,22 +126,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser firebaseUser) {
         mSignOutBtn.setVisibility(View.VISIBLE);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-        if(account != null){
-            String personName = account.getDisplayName();
-            String personGivenName = account.getGivenName();
-            String personFamilyName = account.getFamilyName();
-            String personEmail = account.getEmail();
-            String personId = account.getId();
-            Uri personPhoto = account.getPhotoUrl();
-        }
+        firebaseUser.getIdToken(true).addOnCompleteListener(task ->{
+            GetTokenResult result = task.getResult();
+            String token = result.getToken();
+        });
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-       updateUI(currentUser);
+        if (currentUser != null) {
+            updateUI(currentUser);
+        }
     }
 
 }
