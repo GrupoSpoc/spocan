@@ -43,9 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
         setContentView(R.layout.login_user);
 
         mAuth = FirebaseAuth.getInstance();
@@ -132,6 +129,8 @@ public class LoginActivity extends AppCompatActivity {
         firebaseUser.getIdToken(true).addOnCompleteListener(task ->{
             GetTokenResult result = task.getResult();
             String token = result.getToken();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         });
     }
 

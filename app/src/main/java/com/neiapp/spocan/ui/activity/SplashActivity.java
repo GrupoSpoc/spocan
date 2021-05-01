@@ -23,20 +23,17 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.splashfile);
 
         handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final Intent intent;
+        handler.postDelayed(() -> {
+            final Intent intent;
 
-                if (Boolean.parseBoolean(BuildConfig.test)) {
-                    intent = new Intent(SplashActivity.this, MainActivity.class);
-                } else {
-                    intent = new Intent(SplashActivity.this, LoginActivity.class);
-                }
-
-                startActivity(intent);
-                finish();
+            if (Boolean.parseBoolean(BuildConfig.test)) {
+                intent = new Intent(SplashActivity.this, MainActivity.class);
+            } else {
+                intent = new Intent(SplashActivity.this, LoginActivity.class);
             }
+
+            startActivity(intent);
+            finish();
         }, 5000);
     }
 }
