@@ -1,4 +1,4 @@
-package com.neiapp.spocan;
+package com.neiapp.spocan.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import android.os.Handler;
+
+import com.neiapp.spocan.R;
 
 
 public class SplashActivity extends Activity {

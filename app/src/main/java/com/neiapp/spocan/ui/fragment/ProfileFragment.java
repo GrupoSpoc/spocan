@@ -1,4 +1,4 @@
-package com.neiapp.spocan;
+package com.neiapp.spocan.ui.fragment;
 
 import android.os.Bundle;
 
@@ -8,12 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Profile_Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Profile_Fragment extends Fragment {
+import com.neiapp.spocan.R;
+
+public class ProfileFragment extends Fragment {
 
 
 

@@ -1,4 +1,4 @@
-package com.neiapp.spocan;
+package com.neiapp.spocan.ui.fragment;
 
 import android.os.Bundle;
 
@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.neiapp.spocan.R;
 
-public class configuration_Fragment extends Fragment {
+
+public class ConfigurationFragment extends Fragment {
 
 
 

@@ -1,4 +1,4 @@
-package com.neiapp.spocan;
+package com.neiapp.spocan.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,10 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.neiapp.spocan.R;
+import com.neiapp.spocan.ui.activity.InitiativeActivity;
 
-public class Home_Fragment extends Fragment {
+public class HomeFragment extends Fragment {
 
     FloatingActionButton post;
     LinearLayout mparent;
