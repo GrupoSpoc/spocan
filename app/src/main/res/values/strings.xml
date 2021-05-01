@@ -14,6 +14,13 @@
     <string name="radioOption2">Organización</string>
     <string name="registerButton">Registrate</string>
     <string name="radioOptionsDescription">Sos:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    ##Strings para las vistas de pantallas
+    <string name="homeFragment">Home Fragment</string>
+    <string name="username">Nombre_usuario</string>
+    <string name="description">Descripcion de la publicacion</string>
 
     ##Strings usados para el splash screen
     <string name="appTitle">CollaborAR App</string>

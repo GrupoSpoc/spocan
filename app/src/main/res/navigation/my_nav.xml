@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/profile_Fragment">
+    <fragment
+        android:id="@+id/profile_Fragment"
+        android:name="com.neiapp.spocan.ui.fragment.ProfileFragment"
+        android:label="fragment_profile_"
+        tools:layout="@layout/fragment_profile_" />
+    <fragment
+        android:id="@+id/home_Fragment"
+        android:name="com.neiapp.spocan.ui.fragment.HomeFragment"
+        android:label="fragment_home_"
+        tools:layout="@layout/fragment_home_" />
+    <fragment
+        android:id="@+id/configuration_Fragment"
+        android:name="com.neiapp.spocan.ui.fragment.ConfigurationFragment"
+        android:label="fragment_configuration_"
+        tools:layout="@layout/fragment_configuration_" />
+</navigation>
