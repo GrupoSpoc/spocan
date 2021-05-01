@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import android.os.Handler;
 
+import com.neiapp.spocan.BuildConfig;
 import com.neiapp.spocan.R;
 
 
@@ -25,7 +26,14 @@ public class SplashActivity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                final Intent intent;
+
+                if (Boolean.parseBoolean(BuildConfig.test)) {
+                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                } else {
+                    intent = new Intent(SplashActivity.this, LoginActivity.class);
+                }
+
                 startActivity(intent);
                 finish();
             }
