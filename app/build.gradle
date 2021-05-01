@@ -31,9 +31,16 @@ android {
 }
 
 String isTest() {
+    final String test;
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("test");
+    File file = project.rootProject.file('localllll.properties');
+    if (file.isFile()) {
+        properties.load(file.newDataInputStream())
+        test = properties.getProperty("test");
+    } else {
+        test = false;
+    }
+    return test;
 }
 
 
