@@ -7,7 +7,6 @@ import android.os.Handler;
 
 import androidx.annotation.Nullable;
 
-import com.neiapp.spocan.BuildConfig;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 
