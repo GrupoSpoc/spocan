@@ -16,6 +16,12 @@ import java.util.List;
 
 public class RestClientBackend implements Backend {
     private static String jwt = "token";
+    private final RestPerformer performer;
+
+
+    public RestClientBackend() {
+        this.performer = new RestPerformer(jwt);
+    }
 
     public static void doAuthenticate(String firebaseToken, CallbackInstance<User> callback) {
         callback.onSuccess(null);
@@ -35,8 +41,7 @@ public class RestClientBackend implements Backend {
     // Ejemplo de GET
     @Override
     public void getObject(CallbackInstance<Object> callback) {
-        RestPerformer perfomer = new RestPerformer(jwt);
-        perfomer.get(Paths.BASE + Paths.OBJECT, new ServerEnsureResponseCallback() {
+        performer.get(Paths.BASE + Paths.OBJECT, new ServerEnsureResponseCallback() {
             @Override
             void doSuccess(@NotNull String serverResponse) {
                 callback.onSuccess(serverResponse);
@@ -52,9 +57,7 @@ public class RestClientBackend implements Backend {
     // ejemplo de POST
     @Override
     public void createObject(Object o, CallbackVoid callbackVoid) {
-        RestPerformer perfomer = new RestPerformer(jwt);
-
-        perfomer.post(Paths.BASE + Paths.OBJECT, o.toString(), new ServerCallback() {
+        performer.post(Paths.BASE + Paths.OBJECT, o.toString(), new ServerCallback() {
             @Override
             void success(@Nullable String serverResponse) {
                 callbackVoid.onSuccess();
@@ -71,7 +74,6 @@ public class RestClientBackend implements Backend {
 
     @Override
     public void ping() {
-        RestPerformer performer = new RestPerformer(jwt);
         performer.get(Paths.BASE + Paths.PING, new ServerCallback() {
             @Override
             void success(@Nullable String serverResponse) {
