@@ -21,15 +21,15 @@ public class RestPerformer {
 
     public void get(String url, Callback serverCallback) {
         Request request = buildGetRequest(url);
-        performCall(request, serverCallback);
+        perform(request, serverCallback);
     }
 
     public void post(String url, String payload, Callback serverCallback) {
         Request request = buildPostRequest(url, payload);
-        performCall(request, serverCallback);
+        perform(request, serverCallback);
     }
 
-    private void performCall(Request request, Callback serverCallback) {
+    private void perform(Request request, Callback serverCallback) {
         httpClient.newCall(request).enqueue(serverCallback);
     }
 
