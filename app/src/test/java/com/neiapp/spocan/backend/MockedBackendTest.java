@@ -1,7 +1,10 @@
 package com.neiapp.spocan.backend;
 
 import com.neiapp.spocan.Models.Initiative;
+import com.neiapp.spocan.Models.User;
+import com.neiapp.spocan.Models.UserType;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
+import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 
 import org.junit.After;
@@ -60,6 +63,13 @@ public class MockedBackendTest {
                 assertEquals(String.valueOf(originalSize + 2), collection.get(originalSize + 1).getId());
             }
         });
+    }
 
+    @Test
+    public void doAuthenticate() {
+        MockedBackend.doAuthenticate(user -> {
+            assertEquals("CurrentUser", user.getNickname());
+            assertEquals(UserType.PERSON, user.getType());
+        });
     }
 }
