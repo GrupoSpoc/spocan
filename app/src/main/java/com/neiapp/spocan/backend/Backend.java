@@ -6,10 +6,14 @@ import com.neiapp.spocan.Models.User;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
+import com.neiapp.spocan.backend.callback.rest.RestClientBackend;
 
 public interface Backend {
+    void ping();
     void createInitiative(Initiative initiative, CallbackVoid callback);
     void getAll(CallbackCollection<Initiative> collection);
+    void getObject(CallbackInstance<Object> callback);
+    void createObject(Object o, CallbackVoid callbackVoid);
 
     static Backend getInstance() {
         if (test()) {
