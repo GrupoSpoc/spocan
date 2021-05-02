@@ -10,12 +10,17 @@
     ##Strings usados para la vista de registrarse
     <string name="registerUser">Registrate</string>
     <string name="nicknamePlaceholder"> Ingresa tu usuario</string>
-    <string name="radioOption1">Individuo</string>
-    <string name="radioOption2">Organización</string>
+    <string name="dropDownOption1">Individuo</string>
+    <string name="dropDownOption2">Organización</string>
     <string name="registerButton">Registrate</string>
-    <string name="radioOptionsDescription">Sos:</string>
+    <string name="dropDownOptionsDescription">Sos:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="userTypes">
+        <item>Individuo</item>
+        <item>Organización</item>
+    </string-array>
 
     ##Strings para las vistas de pantallas
     <string name="homeFragment">Home Fragment</string>

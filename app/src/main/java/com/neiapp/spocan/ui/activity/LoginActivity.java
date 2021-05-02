@@ -124,16 +124,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void updateUI(FirebaseUser firebaseUser) {
-        mSignOutBtn.setVisibility(View.VISIBLE);
-        firebaseUser.getIdToken(true).addOnCompleteListener(task ->{
-            GetTokenResult result = task.getResult();
-            String token = result.getToken();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        });
-    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -141,6 +131,18 @@ public class LoginActivity extends AppCompatActivity {
         if (currentUser != null) {
             updateUI(currentUser);
         }
+    }
+
+    private void updateUI(FirebaseUser firebaseUser) {
+        mSignOutBtn.setVisibility(View.VISIBLE);
+        firebaseUser.getIdToken(true).addOnCompleteListener(task ->{
+            GetTokenResult result = task.getResult();
+            String token = result.getToken();
+
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
     }
 
 }
