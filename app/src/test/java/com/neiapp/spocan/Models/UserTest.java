@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
@@ -20,9 +18,9 @@ public class UserTest {
 
     public static final String NICKNAME = "nickname";
     public static final UserType TYPE = UserType.PERSON;
-    public static  int AMOUNT_INITIATIVES = 10;
-    public static  boolean IS_NOT_ADMIN = false;
-    public static  boolean IS_ADMIN = true;
+    public static final int AMOUNT_INITIATIVES = 10;
+    public static final boolean IS_NOT_ADMIN = false;
+    public static final boolean IS_ADMIN = true;
 
 
     @Test
@@ -32,7 +30,7 @@ public class UserTest {
         assertEquals(NICKNAME, user.getNickname());
         assertEquals(TYPE, user.getType());
         assertFalse(user.isAdmin());
-        assertEquals(0, user.getAmount_inititatives());
+        assertEquals(0, user.getAmountOfInititatives());
 
     }
     @Test
@@ -42,7 +40,7 @@ public class UserTest {
         assertEquals(NICKNAME, user.getNickname());
         assertEquals(TYPE, user.getType());
         assertFalse(IS_NOT_ADMIN);
-        assertEquals(0,user.getAmount_inititatives());
+        assertEquals(0,user.getAmountOfInititatives());
 
     }
     @Test
@@ -61,15 +59,15 @@ public class UserTest {
         JsonObject jsonUser = new JsonObject();
         jsonUser.addProperty("nickname", NICKNAME);
         jsonUser.addProperty("type", TYPE.getId());
-        jsonUser.addProperty("amount_initiatives",AMOUNT_INITIATIVES);
-        jsonUser.addProperty("isAdmin", IS_NOT_ADMIN);
+        jsonUser.addProperty("amountOfInitiatives",AMOUNT_INITIATIVES);
+        jsonUser.addProperty("admin", IS_NOT_ADMIN);
 
 
         User result = User.convertJson(jsonUser.toString());
 
         assertEquals(NICKNAME, result.getNickname());
         assertEquals(TYPE, result.getType());
-        assertEquals(AMOUNT_INITIATIVES,result.getAmount_inititatives());
+        assertEquals(AMOUNT_INITIATIVES,result.getAmountOfInititatives());
         assertFalse(result.isAdmin());
     }
 
@@ -83,7 +81,7 @@ public class UserTest {
         assertEquals(user.getNickname(), result.getNickname());
         assertEquals(user.getType(), result.getType());
         assertFalse(result.isAdmin());
-        assertEquals(user.getAmount_inititatives(),(int)result.getAmount_inititatives());
+        assertEquals(user.getAmountOfInititatives(),result.getAmountOfInititatives());
     }
 
     @Test
@@ -96,6 +94,6 @@ public class UserTest {
         assertEquals(user.getNickname(), result.getNickname());
         assertEquals(user.getType(), result.getType());
         assertTrue(result.isAdmin());
-        assertEquals(user.getAmount_inititatives(),(int)result.getAmount_inititatives());
+        assertEquals(user.getAmountOfInititatives(),result.getAmountOfInititatives());
     }
 }

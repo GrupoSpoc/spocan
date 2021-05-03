@@ -1,6 +1,5 @@
 package com.neiapp.spocan.Models;
 
-import com.google.android.gms.common.providers.PooledExecutorsProvider;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -9,31 +8,31 @@ import org.json.JSONObject;
 public class User {
     private String nickname;
     private UserType type;
-    private int amount_inititatives;
-    private boolean isAdmin;
+    private int amountOfInititatives;
+    private boolean admin;
 
     public User(String nickname, UserType type) {
         this.nickname = nickname;
         this.type = type;
-        this.amount_inititatives = 0;
-        this.isAdmin = false;
+        this.amountOfInititatives = 0;
+        this.admin = false;
 
     }
-    public User(String nickname, UserType type, int amountInitiative, boolean isAdmin){
+    public User(String nickname, UserType type, int amountInitiative, boolean admin){
         this.nickname = nickname;
         this.type = type;
-        this.isAdmin = isAdmin;
+        this.admin = admin;
         if (amountInitiative > 0){
-            this.amount_inititatives = amountInitiative;
+            this.amountOfInititatives = amountInitiative;
         }else{
-            this.amount_inititatives = 0;
+            this.amountOfInititatives = 0;
         }
     }
 
-    public boolean isAdmin() {return isAdmin;}
+    public boolean isAdmin() {return admin;}
 
-    public int getAmount_inititatives() {
-        return amount_inititatives;
+    public int getAmountOfInititatives() {
+        return amountOfInititatives;
     }
 
     public String getNickname() {
@@ -57,8 +56,8 @@ public class User {
 
         json.addProperty("nickname", this.nickname);
         json.addProperty("type", this.type.getId());
-        json.addProperty("amount_initiatives",this.amount_inititatives);
-        json.addProperty("isAdmin", this.isAdmin);
+        json.addProperty("amountOfInitiatives",this.amountOfInititatives);
+        json.addProperty("admin", this.admin);
 
         return json.toString();
     }
@@ -68,9 +67,9 @@ public class User {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
             final String nickname = jsonObject.getString("nickname");
             final int typeId = jsonObject.getInt("type");
-            final boolean isAdmin = jsonObject.getBoolean("isAdmin");
-            final int amountInitiatives = jsonObject.getInt("amount_initiatives");
-            return new User(nickname, UserType.fromIdOrElseThrow(typeId),amountInitiatives, isAdmin);
+            final boolean admin = jsonObject.getBoolean("admin");
+            final int amountOfInitiatives = jsonObject.getInt("amountOfInitiatives");
+            return new User(nickname, UserType.fromIdOrElseThrow(typeId),amountOfInitiatives, admin);
         } catch (JSONException e) {
             throw new RuntimeException(e);
 
