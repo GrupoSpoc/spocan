@@ -28,7 +28,7 @@
     <string name="description">Descripcion de la publicacion</string>
 
     ##Strings usados para el splash screen
-    <string name="appTitle">CollaborAR App</string>
+    <string name="appTitle">CollaborAR</string>
     <string name="legalInformation">S.P.O.C Dev 2021 ®</string>
 
     ##Strings usados para el log-in

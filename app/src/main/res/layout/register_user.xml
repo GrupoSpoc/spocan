@@ -1,51 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="207dp"
-        android:layout_height="73dp"
-        android:layout_marginBottom="26dp"
-        android:fontFamily="@font/nunito_light"
-        android:text="@string/registerUser"
-        android:textSize="45dp"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout2"
-        android:layout_width="413dp"
-        android:layout_height="657dp"
-        android:layout_marginBottom="4dp"
+        android:layout_width="425dp"
+        android:layout_height="448dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/diseno_fondo_gris"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.483">
 
 
         <EditText
             android:id="@+id/userTextBox"
             android:layout_width="310dp"
             android:layout_height="68dp"
-            android:layout_marginTop="168dp"
+            android:layout_marginTop="56dp"
             android:drawableLeft="@drawable/add_user_icon"
             android:ems="10"
             android:fontFamily="@font/nunito_light"
             android:hint="@string/nicknamePlaceholder"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,21 +43,22 @@
             app:backgroundTint="@color/green_buttons"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.525"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userTypeSpinner"
-            app:layout_constraintVertical_bias="0.114" />
+            app:layout_constraintVertical_bias="0.37" />
 
         <Spinner
             android:id="@+id/userTypeSpinner"
-            android:layout_width="237dp"
-            android:layout_height="19dp"
+            android:layout_width="240dp"
+            android:layout_height="37dp"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/userTextBox"
-            app:layout_constraintVertical_bias="0.324" />
+            app:layout_constraintVertical_bias="0.418" />
 
         <TextView
             android:id="@+id/userTypeDesc"
@@ -93,4 +78,19 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="207dp"
+        android:layout_height="73dp"
+        android:fontFamily="@font/nunito_light"
+        android:text="@string/registerUser"
+        android:textSize="45dp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,13 +18,17 @@ import com.neiapp.spocan.Models.UserType;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 
-public class RegisterUserActivity extends Activity implements AdapterView.OnItemSelectedListener {
+import org.w3c.dom.Text;
+
+public class RegisterUserActivity extends Activity {
 
     private Spinner spinner;
     private UserType type;
+    private UserType otherType;
+    private String selectedType;
     private Button registerButton;
     private TextView userNicknameInput;
-    private String userNickname;
+    private CharSequence userNickname;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,44 +37,36 @@ public class RegisterUserActivity extends Activity implements AdapterView.OnItem
 
         //Construccion del dropdown para seleccionar tipo de usuario
         spinner = findViewById(R.id.userTypeSpinner);
-        spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.userTypes, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        UserType[] userTypeOptions = UserType.values();
+        ArrayAdapter<UserType> adapter = new ArrayAdapter<UserType>(this, android.R.layout.simple_spinner_dropdown_item, userTypeOptions);
         spinner.setAdapter(adapter);
 
         //Obtener nickname del input
         userNicknameInput = findViewById(R.id.userTextBox);
-        userNickname = (String) userNicknameInput.getText();
+        userNickname = userNicknameInput.getText();
+
+        //Obtener tipo seleccionado
+        selectedType = spinner.getSelectedItem().toString();
+        otherType = UserType.valueOf(selectedType);
 
         registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Acá pasarle al BE los datos del form para registrar al usuario nuevo (nickname del input y la opcion seleccionada del dropdown)
-                try{
+                if (!userNickname.toString().isEmpty() && otherType != null) {
 
+                    Log.d("valid user data", "Datos bien enviados");
+                    Toast.makeText(getApplicationContext(), "usuario: " + userNickname + " tipo: " + otherType, Toast.LENGTH_LONG).show();
 
-                }catch (RuntimeException e){
-                    e.getMessage();
-                    e.getStackTrace();
-
+                    //TODO: Despues tiene que redirigir al main activity
+                    //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    //startActivity(intent);
+                } else {
+                    //Codigo si alguno de los datos no esta ingresado/seleccionado
+                    Toast.makeText(getApplicationContext(), "Ingrese un usuario para continuar", Toast.LENGTH_SHORT).show();
                 }
-
-                //TODO: Despues tiene que redirigir al main activity
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
             }
         });
-    }
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.type = (UserType) parent.getItemAtPosition(position);
-        Log.d("El tipo usuario seleccionado es: ", type.toString());
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        Toast.makeText(getApplicationContext(), "Tiene que seleccionar una opcion", Toast.LENGTH_SHORT).show();
-        throw new RuntimeException("No se elegió ninguna opcion");
     }
 }
