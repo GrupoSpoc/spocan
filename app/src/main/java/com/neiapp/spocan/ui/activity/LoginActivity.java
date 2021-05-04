@@ -26,7 +26,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.neiapp.spocan.Models.User;
 import com.neiapp.spocan.R;
+import com.neiapp.spocan.backend.Backend;
+import com.neiapp.spocan.backend.callback.CallbackInstance;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -37,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     Button mSignOutBtn;
-
 
 
     @Override
@@ -126,16 +128,34 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser firebaseUser) {
         mSignOutBtn.setVisibility(View.VISIBLE);
-        firebaseUser.getIdToken(true).addOnCompleteListener(task ->{
+        firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
             GetTokenResult result = task.getResult();
             String token = result.getToken();
 
             // Todo llamar a Backend.authenticate(token, CallbackInstance<User>)
             // Ese método va a autenticar el token de firebase contra el backend y guardar el jwt estático en RestClientBackend,
-            // finalmente va a devolver el User. Si no es nulo redirigir al main, si es nulo redirigir al registro.
+            // finalmente va a devolver el User.
+            Backend.authenticate(token, new CallbackInstance<User>() {
+                @Override
+                public void onFailure(String message, Integer httpStatus) {
+                    //TODO : toast o algun mensaje de error
+                    if (httpStatus == 406) {
+                    }
+                }
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+                @Override
+                public void onSuccess(User instance) {
+                    // TODO: (SPOCAN- 32) Si no es nulo redirigir al main, si es nulo redirigir al registro.
+                    final Intent intent;
+
+                    if (instance != null) {
+                        intent = new Intent(getApplicationContext(), MainActivity.class);
+                    } else {
+                        //intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
+                    }
+                    //startActivity(intent);
+                }
+            });
         });
     }
 

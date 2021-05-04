@@ -25,7 +25,7 @@ public class MockedBackend implements Backend {
     }
 
     public static void doAuthenticate(CallbackInstance<User> callback) {
-        callback.onSuccess(USER);
+        callback.onSuccess(null);
     }
 
     @Override

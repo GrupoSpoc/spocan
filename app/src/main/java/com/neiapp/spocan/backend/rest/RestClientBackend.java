@@ -1,8 +1,9 @@
-package com.neiapp.spocan.backend.callback.rest;
+package com.neiapp.spocan.backend.rest;
 
 import androidx.annotation.Nullable;
 
 import com.neiapp.spocan.Models.Initiative;
+import com.neiapp.spocan.Models.TokenInfo;
 import com.neiapp.spocan.Models.User;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
@@ -23,8 +24,22 @@ public class RestClientBackend implements Backend {
         this.performer = new RestPerformer(jwt);
     }
 
+    //POST
     public static void doAuthenticate(String firebaseToken, CallbackInstance<User> callback) {
-        callback.onSuccess(null);
+        RestPerformer testRestPerformer = new RestPerformer(" testToken");
+        testRestPerformer.post(Paths.BASE_TEST + Paths.AUTHENTICATE, firebaseToken, new ServerEnsureResponseCallback() {
+            @Override
+            void doSuccess(@NotNull String serverResponse) {
+                TokenInfo tokenInfo = TokenInfo.convertJson(serverResponse);
+                jwt = tokenInfo.getJwt();
+                callback.onSuccess(tokenInfo.getUser());
+            }
+
+            @Override
+            void failure(int statusCode, @Nullable String serverResponse) {
+                callback.onFailure(serverResponse, statusCode);
+            }
+        });
     }
 
     @Override

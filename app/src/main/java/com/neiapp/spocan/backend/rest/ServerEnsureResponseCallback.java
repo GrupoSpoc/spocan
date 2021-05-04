@@ -1,4 +1,4 @@
-package com.neiapp.spocan.backend.callback.rest;
+package com.neiapp.spocan.backend.rest;
 
 import androidx.annotation.Nullable;
 
