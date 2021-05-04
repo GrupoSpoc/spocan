@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String nickname;
     private UserType type;
 
