@@ -10,4 +10,19 @@
     <color name="green_buttons">#33AF28</color>
     <color name="grey_backgrounds">#808F99</color>
     <color name="black_details">#011F32</color>
+    <color name="primary_profile">#49BEFF</color>
+    <color name="primary_dark_profile">#65DCE5</color>
+    <color name="accent_profile">#0D5D98</color>
+    <color name="address_profile">#2F7092</color>
+    <color name="followers_profile">#0D5D98</color>
+    <color name="headings_profile">#3797CF</color>
+    <color name="solid_circle_profile">#AAFFFFFF</color>
+    <color name="circle_border_profile">#50FFFFFF</color>
+    <color name="grand_end_profile">#67EFC8</color>
+    <color name="grand_start_profile">#63C9FF</color>
+    <color name="followers_bg_profile">#65DCE5</color>
+    <color name="following_bg_profile">#49BEFF</color>
+    <color name="grey_profile">#E5E5E5</color>
+
+
 </resources>

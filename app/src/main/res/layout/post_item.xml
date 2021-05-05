@@ -65,23 +65,11 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_like_sin_relleno"
-                android:id="@+id/like"/>
+
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:id="@+id/likes_number"
-            android:text="123"
-            android:textStyle="bold"
-            android:textColor="@color/cardview_dark_background"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
