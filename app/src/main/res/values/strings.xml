@@ -10,10 +10,8 @@
     ##Strings usados para la vista de registrarse
     <string name="registerUser">Registrate</string>
     <string name="nicknamePlaceholder"> Ingresa tu usuario</string>
-    <string name="radioOption1">Individuo</string>
-    <string name="radioOption2">Organización</string>
     <string name="registerButton">Registrate</string>
-    <string name="radioOptionsDescription">Sos:</string>
+    <string name="dropDownOptionsDescription">Sos:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -23,7 +21,7 @@
     <string name="description">Descripcion de la publicacion</string>
 
     ##Strings usados para el splash screen
-    <string name="appTitle">CollaborAR App</string>
+    <string name="appTitle">CollaborAR</string>
     <string name="legalInformation">S.P.O.C Dev 2021 ®</string>
 
     ##Strings usados para el log-in
@@ -32,5 +30,13 @@
     <string name="loginWithGoogleBtn">Login con Google</string>
     <string name="registerBottomButton">Registrate</string>
     <string name="dontHaveAccount">Todavia no tenés cuenta? </string>
+
+    ##Strings para el profile
+    <string name="name_organitation_profile">Grupo SPOC</string>
+    <string name="post_string_profile">Iniciativas</string>
+    <string name="typeOfUserPersonProfile">Tipo de usuario: Persona</string>
+    <string name="typeOfUserOrganitationProfile">Tipo de usuario: Organizacion</string>
+    <string name="email_indicator_profile">Email</string>
+    <string name="email_profile">spocproyectofinal@gmail.com</string>
 
 </resources>

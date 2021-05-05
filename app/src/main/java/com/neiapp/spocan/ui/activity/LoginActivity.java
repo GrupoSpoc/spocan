@@ -127,6 +127,15 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            updateUI(currentUser);
+        }
+    }
+
     private void updateUI(FirebaseUser firebaseUser) {
         mSignOutBtn.setVisibility(View.VISIBLE);
         firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
@@ -149,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
                         }
 
+
                     }
 
                 }
@@ -166,16 +176,12 @@ public class LoginActivity extends AppCompatActivity {
                     //startActivity(intent);
                 }
             });
-        });
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            updateUI(currentUser);
-        }
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+
+        });
     }
 
 }
