@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         //intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                     }
-                    //startActivity(intent);
+                    startActivity(intent);
                 }
             });
         });
