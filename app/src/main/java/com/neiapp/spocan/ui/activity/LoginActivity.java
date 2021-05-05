@@ -124,6 +124,15 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            updateUI(currentUser);
+        }
+    }
+
     private void updateUI(FirebaseUser firebaseUser) {
         mSignOutBtn.setVisibility(View.VISIBLE);
         firebaseUser.getIdToken(true).addOnCompleteListener(task ->{
@@ -134,18 +143,10 @@ public class LoginActivity extends AppCompatActivity {
             // Ese método va a autenticar el token de firebase contra el backend y guardar el jwt estático en RestClientBackend,
             // finalmente va a devolver el User. Si no es nulo redirigir al main, si es nulo redirigir al registro.
 
+
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            updateUI(currentUser);
-        }
     }
 
 }
