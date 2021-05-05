@@ -1,7 +1,6 @@
 package com.neiapp.spocan.Models;
 
 import com.google.gson.JsonObject;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -10,8 +9,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+
 
 @RunWith(RobolectricTestRunner.class)
 public class UserTest {
@@ -20,8 +18,6 @@ public class UserTest {
     public static final UserType TYPE = UserType.PERSON;
     public static final int AMOUNT_INITIATIVES = 10;
     public static final boolean IS_NOT_ADMIN = false;
-    public static final boolean IS_ADMIN = true;
-
 
     @Test
     public void testConstructor() {
@@ -30,17 +26,16 @@ public class UserTest {
         assertEquals(NICKNAME, user.getNickname());
         assertEquals(TYPE, user.getType());
         assertFalse(user.isAdmin());
-        assertEquals(0, user.getAmountOfInititatives());
-
+        assertEquals(0, user.getAmountOfInitiatives());
     }
     @Test
     public void testConstructorWithWrongAmountInititatives() {
-        User user = new User(NICKNAME, TYPE, -4, IS_NOT_ADMIN);
+        User user = new User(NICKNAME, TYPE, AMOUNT_INITIATIVES, IS_NOT_ADMIN);
 
         assertEquals(NICKNAME, user.getNickname());
         assertEquals(TYPE, user.getType());
         assertFalse(IS_NOT_ADMIN);
-        assertEquals(0,user.getAmountOfInititatives());
+        assertEquals(AMOUNT_INITIATIVES,user.getAmountOfInitiatives());
 
     }
     @Test
@@ -59,7 +54,7 @@ public class UserTest {
         JsonObject jsonUser = new JsonObject();
         jsonUser.addProperty("nickname", NICKNAME);
         jsonUser.addProperty("type", TYPE.getId());
-        jsonUser.addProperty("amountOfInitiatives",AMOUNT_INITIATIVES);
+        jsonUser.addProperty("amount_of_initiatives",AMOUNT_INITIATIVES);
         jsonUser.addProperty("admin", IS_NOT_ADMIN);
 
 
@@ -67,33 +62,8 @@ public class UserTest {
 
         assertEquals(NICKNAME, result.getNickname());
         assertEquals(TYPE, result.getType());
-        assertEquals(AMOUNT_INITIATIVES,result.getAmountOfInititatives());
+        assertEquals(AMOUNT_INITIATIVES,result.getAmountOfInitiatives());
         assertFalse(result.isAdmin());
     }
 
-    @Test
-    public void testToJsonAndThenConvertJsonIfUserIsNotAdmin()  {
-        User user = new User(NICKNAME, TYPE,AMOUNT_INITIATIVES,IS_NOT_ADMIN);
-        String jsonUser = user.toJson();
-
-        User result = User.convertJson(jsonUser);
-
-        assertEquals(user.getNickname(), result.getNickname());
-        assertEquals(user.getType(), result.getType());
-        assertFalse(result.isAdmin());
-        assertEquals(user.getAmountOfInititatives(),result.getAmountOfInititatives());
-    }
-
-    @Test
-    public void testToJsonAndThenConvertJsonIfUserIsAdmin()  {
-        User user = new User(NICKNAME, TYPE,AMOUNT_INITIATIVES,IS_ADMIN);
-        String jsonUser = user.toJson();
-
-        User result = User.convertJson(jsonUser);
-
-        assertEquals(user.getNickname(), result.getNickname());
-        assertEquals(user.getType(), result.getType());
-        assertTrue(result.isAdmin());
-        assertEquals(user.getAmountOfInititatives(),result.getAmountOfInititatives());
-    }
 }
