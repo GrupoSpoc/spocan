@@ -33,4 +33,12 @@
     <string name="registerBottomButton">Registrate</string>
     <string name="dontHaveAccount">Todavia no tenés cuenta? </string>
 
+    ##Strings para el profile
+    <string name="name_organitation_profile">Grupo SPOC</string>
+    <string name="post_string_profile">Iniciativas</string>
+    <string name="typeOfUserPersonProfile">Tipo de usuario: Persona</string>
+    <string name="typeOfUserOrganitationProfile">Tipo de usuario: Organizacion</string>
+    <string name="email_indicator_profile">Email</string>
+    <string name="email_profile">spocproyectofinal@gmail.com</string>
+
 </resources>
