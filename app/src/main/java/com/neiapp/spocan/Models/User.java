@@ -17,11 +17,11 @@ public class User {
         this.admin = false;
 
     }
-    public User(String nickname, UserType type, int amountInitiative, boolean admin){
+    public User(String nickname, UserType type, int amountOfInitiatives, boolean admin){
         this.nickname = nickname;
         this.type = type;
         this.admin = admin;
-        this.amountOfInitiatives = amountInitiative;
+        this.amountOfInitiatives = amountOfInitiatives;
     }
 
     public boolean isAdmin() {return admin;}
@@ -65,7 +65,6 @@ public class User {
             return new User(nickname, UserType.fromIdOrElseThrow(typeId),amountOfInitiatives, admin);
         } catch (JSONException e) {
             throw new RuntimeException(e);
-
         }
     }
 }
