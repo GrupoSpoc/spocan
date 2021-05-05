@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(User instance) {
-                    // TODO: (SPOCAN- 32) Si no es nulo redirigir al main, si es nulo redirigir al registro.
+                    // TODO: (SPOCAN- 32) Si no es nulo redirigir al main, sino redirigir a registrarse
                     final Intent intent;
                     if (instance != null) {
                         intent = new Intent(getApplicationContext(), MainActivity.class);
