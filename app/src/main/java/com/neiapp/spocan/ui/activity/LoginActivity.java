@@ -129,6 +129,11 @@ public class LoginActivity extends AppCompatActivity {
         firebaseUser.getIdToken(true).addOnCompleteListener(task ->{
             GetTokenResult result = task.getResult();
             String token = result.getToken();
+
+            // Todo llamar a Backend.authenticate(token, CallbackInstance<User>)
+            // Ese método va a autenticar el token de firebase contra el backend y guardar el jwt estático en RestClientBackend,
+            // finalmente va a devolver el User. Si no es nulo redirigir al main, si es nulo redirigir al registro.
+
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
