@@ -14,11 +14,22 @@ public class RestPerformer {
 
     private final OkHttpClient httpClient;
     private final String jwt;
+    private final boolean authorizable;
 
 
     public RestPerformer(String jwt) {
+        this(jwt, true);
+    }
+
+    private RestPerformer(String jwt, boolean authorizable) {
         this.jwt = jwt;
         this.httpClient = new OkHttpClient();
+        this.authorizable = authorizable;
+    }
+
+    public static void postTextUnauthorizable(String url, String payload, Callback serverCallback) {
+        RestPerformer performer = new RestPerformer(null, false);
+        performer.postText(url, payload, serverCallback);
     }
 
     public void get(String url, Callback serverCallback) {
@@ -61,8 +72,12 @@ public class RestPerformer {
     }
 
     private Request.Builder commonRequestBuilder(String url) {
-        return new Request.Builder()
-                .url(url)
-                .addHeader(AUTHORIZATION_HEADER, "Bearer " + jwt);
+        Request.Builder builder = new Request.Builder().url(url);
+
+        if (this.authorizable) {
+            builder.addHeader(AUTHORIZATION_HEADER, "Bearer " + jwt);
+        }
+
+        return builder;
     }
 }
