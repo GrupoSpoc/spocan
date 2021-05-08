@@ -15,7 +15,7 @@ import com.neiapp.spocan.R;
 public class MainActivity extends AppCompatActivity {
 
 
-    final String USER = "User";
+    public static final String USER = "User";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +27,4 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
-
-    public String getUSER() {
-        return USER;
-    }
-
 }
