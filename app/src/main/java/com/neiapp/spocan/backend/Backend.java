@@ -6,7 +6,7 @@ import com.neiapp.spocan.Models.User;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
-import com.neiapp.spocan.backend.callback.rest.RestClientBackend;
+import com.neiapp.spocan.backend.rest.RestClientBackend;
 
 public interface Backend {
     void ping();
