@@ -43,7 +43,7 @@ public class RestPerformer {
     }
 
     public void postText(String url, String payload, Callback serverCallback) {
-        Request request = buildPostRequestJson(url, payload);
+        Request request = buildPostRequestText(url, payload);
         perform(request, serverCallback);
     }
 
