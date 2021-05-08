@@ -47,9 +47,7 @@ public class RestPerformer {
     }
 
     private Request buildPostRequestJson(String url, String payload) {
-        return commonRequestBuilder(url)
-                .post(RequestBody.create(MediaType.parse(APPLICATION_JSON_CHARSET_UTF_8), payload))
-                .build();
+        return buildPostRequest(url, payload, MediaType.parse(APPLICATION_JSON_CHARSET_UTF_8));
     }
 
     private Request buildPostRequestText(String url, String payload) {
