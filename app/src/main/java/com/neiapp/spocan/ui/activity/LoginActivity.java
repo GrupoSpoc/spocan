@@ -127,6 +127,15 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            updateUI(currentUser);
+        }
+    }
+
     private void updateUI(FirebaseUser firebaseUser) {
         mSignOutBtn.setVisibility(View.VISIBLE);
         firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
@@ -137,20 +146,15 @@ public class LoginActivity extends AppCompatActivity {
             Backend.authenticate(token, new CallbackInstance<User>() {
                 @Override
                 public void onFailure(String message, Integer httpStatus) {
-                    int errorCount = 0;
                     if (httpStatus != null) {
                         if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
                             Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
-                            errorCount++;
                         } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
                             Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
-                            errorCount++;
                         } else {
                             Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
                         }
-
                     }
-
                 }
 
                 @Override
@@ -159,23 +163,19 @@ public class LoginActivity extends AppCompatActivity {
                     final Intent intent;
                     if (instance != null) {
                         intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("Instancia BE", instance);
+                        intent.putExtra(MainActivity.USER, instance);
                     } else {
                         //intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                     }
                     startActivity(intent);
                 }
             });
-        });
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            updateUI(currentUser);
-        }
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+
+        });
     }
 
 }
