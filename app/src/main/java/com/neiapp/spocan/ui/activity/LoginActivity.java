@@ -159,22 +159,16 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(User instance) {
-                    // TODO: (SPOCAN- 32) Si no es nulo redirigir al main, sino redirigir a registrarse
                     final Intent intent;
                     if (instance != null) {
                         intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra(MainActivity.USER, instance);
                     } else {
-                        //intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
+                        intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                     }
                     startActivity(intent);
                 }
             });
-
-
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-
         });
     }
 
