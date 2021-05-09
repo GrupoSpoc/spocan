@@ -4,7 +4,9 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String nickname;
     private UserType type;
     private int amountOfInitiatives;
@@ -50,7 +52,7 @@ public class User {
         JsonObject json = new JsonObject();
 
         json.addProperty("nickname", this.nickname);
-        json.addProperty("type", this.type.getId());
+        json.addProperty("type_id", this.type.getId());
 
         return json.toString();
     }
@@ -59,7 +61,7 @@ public class User {
         try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
             final String nickname = jsonObject.getString("nickname");
-            final int typeId = jsonObject.getInt("type");
+            final int typeId = jsonObject.getInt("type_id");
             final boolean admin = jsonObject.getBoolean("admin");
             final int amountOfInitiatives = jsonObject.getInt("amount_of_initiatives");
             return new User(nickname, UserType.fromIdOrElseThrow(typeId),amountOfInitiatives, admin);
