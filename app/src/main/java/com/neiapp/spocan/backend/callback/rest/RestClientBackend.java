@@ -29,6 +29,18 @@ public class RestClientBackend implements Backend {
 
     @Override
     public void createInitiative(Initiative initiative, CallbackVoid callback) {
+        performer.post(Paths.BASE + Paths.INITIATIVE, initiative.toJson(), new ServerCallback() {
+            @Override
+            void success(@Nullable String serverResponse) {
+                callback.onSuccess();
+
+            }
+
+            @Override
+            void failure(int statusCode, @Nullable String serverResponse) {
+                callback.onFailure(serverResponse,statusCode);
+            }
+        });
 
     }
 
