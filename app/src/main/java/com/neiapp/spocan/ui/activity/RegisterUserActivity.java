@@ -3,6 +3,7 @@ package com.neiapp.spocan.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,9 +15,14 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.RuntimeExecutionException;
+import com.neiapp.spocan.Models.User;
 import com.neiapp.spocan.Models.UserType;
 import com.neiapp.spocan.R;
+import com.neiapp.spocan.backend.Backend;
+import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
+import com.neiapp.spocan.backend.rest.HTTPCodes;
 
 import org.w3c.dom.Text;
 
@@ -26,7 +32,7 @@ public class RegisterUserActivity extends Activity {
     private UserType selectedType;
     private Button registerButton;
     private TextView userNicknameInput;
-    private CharSequence userNickname;
+    private String userNickname;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,22 +50,41 @@ public class RegisterUserActivity extends Activity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Obtener nickname del input
-                userNickname = userNicknameInput.getText();
-                //Obtener tipo seleccionado
+
                 selectedType = (UserType) spinner.getSelectedItem();
-                //TODO: Acá pasarle al BE los datos del form para registrar al usuario nuevo (nickname del input y la opcion seleccionada del dropdown)
-                if (!userNickname.toString().isEmpty()) {
+                if (!validateEmptyTextView(userNicknameInput)) {
+                    userNickname = userNicknameInput.getText().toString();
 
-                    Toast.makeText(getApplicationContext(), "usuario: " + userNickname + " tipo: " + selectedType, Toast.LENGTH_LONG).show();
+                    User newUser = new User(userNickname, selectedType);
+                    Backend.getInstance().createUser(newUser, new CallbackInstance<User>() {
+                        @Override
+                        public void onSuccess(User user) {
+                            Toast.makeText(getApplicationContext(), "Usuario registrado con éxito!", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra(MainActivity.USER, user);
+                            startActivity(intent);
+                        }
 
-                    //TODO: Redirigir al main activity
-                    //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    //startActivity(intent);
+                        @Override
+                        public void onFailure(String message, Integer httpStatus) {
+                            if (httpStatus != null) {
+                                if (httpStatus == HTTPCodes.USER_NAME_ALREADY_TAKEN.getCode()) {
+                                    Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
+                                    userNicknameInput.clearComposingText();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                    });
                 } else {
                     Toast.makeText(getApplicationContext(), "Debe ingresar un usuario válido para continuar", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private boolean validateEmptyTextView(TextView userNicknameInput) {
+        return TextUtils.isEmpty(userNicknameInput.getText());
     }
 }
