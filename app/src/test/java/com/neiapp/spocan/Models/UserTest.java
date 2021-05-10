@@ -46,14 +46,14 @@ public class UserTest {
         JSONObject jsonObject = new JSONObject(json);
 
         assertEquals(NICKNAME, jsonObject.get("nickname").toString());
-        assertEquals(TYPE.getId(), jsonObject.getInt("type"));
+        assertEquals(TYPE.getId(), jsonObject.getInt("type_id"));
     }
 
     @Test
     public void testConvertJson() {
         JsonObject jsonUser = new JsonObject();
         jsonUser.addProperty("nickname", NICKNAME);
-        jsonUser.addProperty("type", TYPE.getId());
+        jsonUser.addProperty("type_id", TYPE.getId());
         jsonUser.addProperty("amount_of_initiatives",AMOUNT_INITIATIVES);
         jsonUser.addProperty("admin", IS_NOT_ADMIN);
 
