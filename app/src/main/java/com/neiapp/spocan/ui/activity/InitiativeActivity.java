@@ -58,7 +58,7 @@ public class InitiativeActivity extends AppCompatActivity {
         mCancelPublishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InitiativeActivity.this, MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -72,13 +72,13 @@ public class InitiativeActivity extends AppCompatActivity {
                     backend.createInitiative(intitiative, new CallbackVoid() {
                         @Override
                         public void onSuccess() {
-                            Intent intent = new Intent(InitiativeActivity.this, MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
-                            Toast.makeText(InitiativeActivity.this, "INICIATIVA CREADA", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "INICIATIVA CREADA", Toast.LENGTH_LONG).show();
                         }
                         @Override
                         public void onFailure(String message, Integer httpStatus) {
-                            Toast.makeText(InitiativeActivity.this, "NO SE PUDO PROCESAR LA OPERACION", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "NO SE PUDO PROCESAR LA OPERACION", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -91,11 +91,11 @@ public class InitiativeActivity extends AppCompatActivity {
         Boolean result = true;
         if (bitmap == null) {
             result = false;
-            Toast.makeText(InitiativeActivity.this, "DEBE AGREGAR UNA FOTO", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "DEBE AGREGAR UNA FOTO", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(textDescription.getText())) {
             result = false;
-            Toast.makeText(InitiativeActivity.this, "DEBE AGREGAR UNA DESCRIPCION", Toast.LENGTH_LONG).show();
+            Toast.makeText( getApplicationContext(), "DEBE AGREGAR UNA DESCRIPCION", Toast.LENGTH_LONG).show();
         }
         return result;
     }
@@ -120,7 +120,7 @@ public class InitiativeActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1001);
                 setResult(RESULT_OK);
             } else {
-                Toast.makeText(InitiativeActivity.this, "ES NECESARIO APROBAR LOS PERMISOS DE LA CAMARA PARA TOMAR LA FOTO", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "ES NECESARIO APROBAR LOS PERMISOS DE LA CAMARA PARA TOMAR LA FOTO", Toast.LENGTH_SHORT).show();
             }
         }
     }
