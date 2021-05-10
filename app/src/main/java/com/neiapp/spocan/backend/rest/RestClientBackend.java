@@ -42,6 +42,26 @@ public class RestClientBackend implements Backend {
         });
     }
 
+    //POST
+    @Override
+    public void createUser(User user, CallbackInstance<User>  callbackUser) {
+        performer.post(Paths.BASE + Paths.USER, user.toJson(), new ServerEnsureResponseCallback() {
+            @Override
+            void failure(int statusCode, @Nullable String serverResponse) {
+                callbackUser.onFailure(serverResponse, statusCode);
+                System.out.println(statusCode + "-Failure-" + serverResponse);
+            }
+
+            @Override
+            void doSuccess(@NotNull String serverResponse) {
+                callbackUser.onSuccess(User.convertJson(serverResponse));
+                System.out.println(serverResponse);
+            }
+        });
+
+    }
+
+
     @Override
     public void createInitiative(Initiative initiative, CallbackVoid callback) {
 
@@ -70,7 +90,6 @@ public class RestClientBackend implements Backend {
     }
 
     // ejemplo de POST
-    @Override
     public void createObject(Object o, CallbackVoid callbackVoid) {
         performer.post(Paths.BASE + Paths.OBJECT, o.toString(), new ServerCallback() {
             @Override
@@ -86,6 +105,7 @@ public class RestClientBackend implements Backend {
             }
         });
     }
+
 
     @Override
     public void ping() {

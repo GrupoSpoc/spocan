@@ -59,6 +59,8 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,8 +143,7 @@ public class LoginActivity extends AppCompatActivity {
         firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
             GetTokenResult result = task.getResult();
             String token = result.getToken();
-            // Ese método va a autenticar el token de firebase contra el backend y guardar el jwt estático en RestClientBackend,
-            // finalmente va a devolver el User.
+
             Backend.authenticate(token, new CallbackInstance<User>() {
                 @Override
                 public void onFailure(String message, Integer httpStatus) {
