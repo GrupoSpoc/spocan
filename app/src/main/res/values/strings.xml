@@ -9,11 +9,9 @@
 
     ##Strings usados para la vista de registrarse
     <string name="registerUser">Registrate</string>
-    <string name="nicknamePlaceholder"> Ingresa tu usuario</string>
+    <string name="nicknamePlaceholder"> Ingresa tu nickname</string>
     <string name="registerButton">Registrate</string>
     <string name="dropDownOptionsDescription">Sos:</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     ##Strings para las vistas de pantallas
     <string name="homeFragment">Home Fragment</string>
