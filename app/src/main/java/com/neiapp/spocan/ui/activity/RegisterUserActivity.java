@@ -54,7 +54,6 @@ public class RegisterUserActivity extends Activity {
                 selectedType = (UserType) spinner.getSelectedItem();
                 if (!validateEmptyTextView(userNicknameInput)) {
                     userNickname = userNicknameInput.getText().toString();
-
                     User newUser = new User(userNickname, selectedType);
                     Backend.getInstance().createUser(newUser, new CallbackInstance<User>() {
                         @Override

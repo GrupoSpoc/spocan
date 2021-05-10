@@ -45,7 +45,7 @@ public class RestClientBackend implements Backend {
     //POST
     @Override
     public void createUser(User user, CallbackInstance<User>  callbackUser) {
-        performer.post(Paths.BASE + Paths.USER, user.toString(), new ServerEnsureResponseCallback() {
+        performer.post(Paths.BASE + Paths.USER, user.toJson(), new ServerEnsureResponseCallback() {
             @Override
             void failure(int statusCode, @Nullable String serverResponse) {
                 callbackUser.onFailure(serverResponse, statusCode);
