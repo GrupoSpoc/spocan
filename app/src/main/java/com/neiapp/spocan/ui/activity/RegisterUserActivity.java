@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -15,16 +13,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.neiapp.spocan.Models.User;
 import com.neiapp.spocan.Models.UserType;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
-import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
-
-import org.w3c.dom.Text;
 
 public class RegisterUserActivity extends Activity {
 
@@ -38,7 +32,7 @@ public class RegisterUserActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_user);
-        userNicknameInput = findViewById(R.id.userTextBox);
+        userNicknameInput = findViewById(R.id.nicknameTextBox);
         registerButton = findViewById(R.id.registerButton);
 
         //Construccion del dropdown para seleccionar tipo de usuario
@@ -77,7 +71,7 @@ public class RegisterUserActivity extends Activity {
                         }
                     });
                 } else {
-                    Toast.makeText(getApplicationContext(), "Debe ingresar un usuario válido para continuar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Debe ingresar un nickname válido para continuar", Toast.LENGTH_SHORT).show();
                 }
             }
         });
