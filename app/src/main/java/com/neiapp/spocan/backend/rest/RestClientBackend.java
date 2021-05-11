@@ -24,10 +24,8 @@ public class RestClientBackend implements Backend {
         this.performer = new RestPerformer(jwt);
     }
 
-    //POST
     public static void doAuthenticate(String firebaseToken, CallbackInstance<User> callback) {
-        RestPerformer testRestPerformer = new RestPerformer(" testToken");
-        testRestPerformer.post(Paths.BASE_TEST + Paths.AUTHENTICATE, firebaseToken, new ServerEnsureResponseCallback() {
+        RestPerformer.postTextUnauthorizable(Paths.BASE + Paths.AUTHENTICATE, firebaseToken, new ServerEnsureResponseCallback() {
             @Override
             void doSuccess(@NotNull String serverResponse) {
                 TokenInfo tokenInfo = TokenInfo.convertJson(serverResponse);
