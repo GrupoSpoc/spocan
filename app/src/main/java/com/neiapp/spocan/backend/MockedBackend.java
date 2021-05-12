@@ -42,7 +42,7 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void getAll( CallbackCollection<Initiative> collection) {
+    public void getAll(CallbackCollection<Initiative> collection) {
         collection.onSuccess(initiative_store);
     }
 
@@ -51,9 +51,15 @@ public class MockedBackend implements Backend {
         callback.onSuccess(null);
     }
 
-    @Override
     public void createObject(Object o, CallbackVoid callbackVoid) {
         callbackVoid.onSuccess();
+    }
+
+    @Override
+    public void createUser(User user, CallbackInstance<User> callbackUser) {
+        user.setNickname(user.getNickname());
+        user.setType(user.getType());
+        callbackUser.onSuccess(user);
     }
 
     public static void resetStorage() {

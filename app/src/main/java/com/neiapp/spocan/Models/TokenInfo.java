@@ -33,8 +33,15 @@ public class TokenInfo {
         try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
             final String jwt = jsonObject.getString("jwt");
-            final String user = jsonObject.getString("user");
-            return new TokenInfo(jwt, User.convertJson(user));
+            final User user;
+
+            if (jsonObject.has("user")) {
+                user = User.convertJson(jsonObject.getString("user"));
+            } else {
+                user = null;
+            }
+
+            return new TokenInfo(jwt, user);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

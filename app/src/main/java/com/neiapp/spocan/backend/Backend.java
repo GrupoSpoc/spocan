@@ -10,18 +10,23 @@ import com.neiapp.spocan.backend.rest.RestClientBackend;
 
 public interface Backend {
     void ping();
+
     void createInitiative(Initiative initiative, CallbackVoid callback);
     void getAll(CallbackCollection<Initiative> collection);
     void getUser(CallbackInstance<User> callback);
     void getObject(CallbackInstance<Object> callback);
+<<<<<<< HEAD
     void createObject(Object o, CallbackVoid callbackVoid);
     void createUser(User U, CallbackVoid callbackVoid);
+=======
+    void createUser(User user, CallbackInstance<User> callbackUser);
+>>>>>>> master
 
     static Backend getInstance() {
         if (test()) {
             return new MockedBackend();
         } else {
-           return new RestClientBackend();
+            return new RestClientBackend();
         }
     }
 
