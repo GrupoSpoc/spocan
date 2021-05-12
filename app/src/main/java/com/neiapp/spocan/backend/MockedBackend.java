@@ -59,4 +59,14 @@ public class MockedBackend implements Backend {
     public static void resetStorage() {
         if (initiative_store != null) initiative_store.clear();
     }
+
+    @Override
+    public void getUser( CallbackInstance<User> callback){
+        callback.onSuccess(USER);
+    }
+
+    @Override
+    public void createUser(User u, CallbackVoid CallbackVoid){
+        CallbackVoid.onSuccess();
+    }
 }

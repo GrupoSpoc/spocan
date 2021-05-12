@@ -12,8 +12,10 @@ public interface Backend {
     void ping();
     void createInitiative(Initiative initiative, CallbackVoid callback);
     void getAll(CallbackCollection<Initiative> collection);
+    void getUser(CallbackInstance<User> callback);
     void getObject(CallbackInstance<Object> callback);
     void createObject(Object o, CallbackVoid callbackVoid);
+    void createUser(User U, CallbackVoid callbackVoid);
 
     static Backend getInstance() {
         if (test()) {
