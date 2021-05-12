@@ -146,21 +146,4 @@ public class RestClientBackend implements Backend {
             }
         });
     }
-
-    @Override
-    public void createUser(User u, CallbackVoid callbackVoid) {
-        performer.post(Paths.BASE + Paths.USER, u.toString(), new ServerCallback() {
-            @Override
-            void success(@Nullable String serverResponse) {
-                callbackVoid.onSuccess();
-                System.out.println(serverResponse);
-            }
-
-            @Override
-            void failure(int statusCode, @Nullable String serverResponse) {
-                callbackVoid.onSuccess();
-                System.out.println(statusCode + " - failure: " + serverResponse);
-            }
-        });
-    }
 }

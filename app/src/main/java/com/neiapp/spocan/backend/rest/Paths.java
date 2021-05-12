@@ -8,5 +8,4 @@ public class Paths {
     public static final String INITIATIVE = "/initiative";
     public static final String USER="/user";
     public static final String AUTHENTICATE = "/authenticate";
-    public static final String USER = "/user";
 }

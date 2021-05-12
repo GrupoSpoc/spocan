@@ -71,8 +71,5 @@ public class MockedBackend implements Backend {
         callback.onSuccess(USER);
     }
 
-    @Override
-    public void createUser(User u, CallbackVoid CallbackVoid){
-        CallbackVoid.onSuccess();
-    }
+
 }
