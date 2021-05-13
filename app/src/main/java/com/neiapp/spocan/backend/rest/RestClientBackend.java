@@ -131,4 +131,19 @@ public class RestClientBackend implements Backend {
             }
         });
     }
+
+    @Override
+    public void getUser(CallbackInstance<User> callback){
+        performer.get(Paths.BASE + Paths.USER, new ServerEnsureResponseCallback() {
+            @Override
+            void doSuccess(@NotNull String serverResponse) {
+                callback.onSuccess(User.convertJson(serverResponse));
+            }
+
+            @Override
+            void failure(int statusCode, @Nullable String serverResponse) {
+                callback.onFailure(serverResponse, statusCode);
+            }
+        });
+    }
 }

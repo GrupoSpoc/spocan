@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MockedBackend implements Backend {
     public static ArrayList<Initiative> initiative_store;
-    public static final User USER = new User("CurrentUser", UserType.PERSON);
+    public static final User USER = new User("CurrentUser", UserType.PERSON, 550, false);
 
     protected MockedBackend() {
         if (initiative_store == null) {
@@ -65,4 +65,10 @@ public class MockedBackend implements Backend {
     public static void resetStorage() {
         if (initiative_store != null) initiative_store.clear();
     }
+
+    public void getUser(CallbackInstance<User> callback){
+        callback.onSuccess(USER);
+    }
+
+
 }

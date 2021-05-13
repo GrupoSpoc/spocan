@@ -13,8 +13,12 @@ public interface Backend {
 
     void createInitiative(Initiative initiative, CallbackVoid callback);
     void getAll(CallbackCollection<Initiative> collection);
+    void getUser(CallbackInstance<User> callback);
     void getObject(CallbackInstance<Object> callback);
+
+    void createObject(Object o, CallbackVoid callbackVoid);
     void createUser(User user, CallbackInstance<User> callbackUser);
+
 
     static Backend getInstance() {
         if (test()) {
