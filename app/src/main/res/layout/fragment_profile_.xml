@@ -24,6 +24,7 @@
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:id="@+id/imagen_profile"
                 android:background="@drawable/circle_profile"
                 android:layout_margin="9dp"
                 android:padding="3dp"
@@ -40,7 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_profile_layout_profile"
             android:layout_centerHorizontal="true"
-            android:text="@string/name_organitation_profile"
             android:textSize="32sp"
             android:layout_marginTop="15sp"
             android:textColor="@color/white"
@@ -52,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/username_profile"
             android:layout_centerHorizontal="true"
-            android:text="@string/typeOfUserOrganitationProfile"
             android:textAllCaps="true"
             android:textSize="14sp"
             android:textColor="@color/address_profile"
@@ -86,9 +85,9 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/count_posts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="453"
                     android:textSize="25sp"
                     android:fontFamily="sans-serif-light"
                     android:textColor="@color/white"
@@ -121,33 +120,6 @@
             android:layout_marginRight="30dp"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/headings_profile"
-                    android:textSize="13sp"
-
-                    android:text="@string/email_indicator_profile"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="18sp"
-                    android:text="@string/email_profile"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/grey_profile"/>
-
-
-            </LinearLayout>
 
         </LinearLayout>
 
