@@ -51,12 +51,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onSuccess(User instance) {
                 // Inflate the layout for this fragment
-                textViewNickname = view.findViewById(R.id.username_profile);
-                textViewNickname.setText(instance.getNickname());
-                textViewTypeUser = view.findViewById(R.id.type_of_user_profile);
-                textViewTypeUser.setText(instance.getType().toString());
-                textViewCountPosts = view.findViewById(R.id.count_posts);
-                textViewCountPosts.setText(String.valueOf(instance.getAmountOfInitiatives()));
+                getActivity().runOnUiThread(() -> {
+                    textViewNickname = view.findViewById(R.id.username_profile);
+                    textViewNickname.setText(instance.getNickname());
+                    textViewTypeUser = view.findViewById(R.id.type_of_user_profile);
+                    textViewTypeUser.setText(instance.getType().toString());
+                    textViewCountPosts = view.findViewById(R.id.count_posts);
+                    textViewCountPosts.setText(String.valueOf(instance.getAmountOfInitiatives()));
+                });
             }
             @Override
             public void onFailure(String message, Integer httpStatus) {
