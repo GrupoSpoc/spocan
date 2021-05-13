@@ -1,24 +1,15 @@
 package com.neiapp.spocan.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.fragment.app.Fragment;
+
 import com.neiapp.spocan.Models.User;
-import com.neiapp.spocan.Models.UserType;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
@@ -26,14 +17,9 @@ import com.neiapp.spocan.backend.rest.HTTPCodes;
 
 public class ProfileFragment extends Fragment {
 
-    LayoutInflater layoutInflater;
-    LinearLayout mparent;
-    ImageView imgView;
     TextView textViewNickname;
     TextView textViewTypeUser;
     TextView textViewCountPosts;
-    TextView textEmail;
-    ImageView imgProfile;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,13 +30,11 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_, container, false);
         Backend backend = Backend.getInstance();
         backend.getUser(new CallbackInstance<User>() {
             @Override
             public void onSuccess(User instance) {
-                // Inflate the layout for this fragment
                 getActivity().runOnUiThread(() -> {
                     textViewNickname = view.findViewById(R.id.username_profile);
                     textViewNickname.setText(instance.getNickname());
@@ -60,6 +44,7 @@ public class ProfileFragment extends Fragment {
                     textViewCountPosts.setText(String.valueOf(instance.getAmountOfInitiatives()));
                 });
             }
+
             @Override
             public void onFailure(String message, Integer httpStatus) {
                 if (httpStatus != null) {
@@ -73,6 +58,7 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
         return view;
     }
 }
