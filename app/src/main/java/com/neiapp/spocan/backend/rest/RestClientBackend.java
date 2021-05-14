@@ -79,8 +79,17 @@ public class RestClientBackend implements Backend {
 
     @Override
     public void getAll(CallbackCollection<Initiative> callback) {
-        final List<Initiative> initiativeList = new ArrayList<>(); // hacer pegada al backend para obtener initiatives
-        callback.onSuccess(initiativeList);
+        performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, new ServerEnsureResponseCallback() {
+            @Override
+            void doSuccess(@NotNull String serverResponse) {
+                callback.onSuccess(null);
+            }
+
+            @Override
+            void failure(int statusCode, @Nullable String serverResponse) {
+                callback.onSuccess(null);
+            }
+        });
     }
 
     // Ejemplo de GET
