@@ -52,31 +52,39 @@ public class HomeFragment extends Fragment {
         backend.getAll(new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> collection) {
-                for(int i = 0; i < collection.size(); i++){
-                    View myView = layoutInflater.inflate(R.layout.post_item, null, false);
-                    TextView user;
-                    ImageView img;
-                    TextView desc;
-                    user = myView.findViewById(R.id.username);
-                    user.setText(collection.get(i).getNickname());
-                    img = myView.findViewById(R.id.post_image);
-                    img.setImageBitmap(collection.get(i).getImage());
-                    desc = myView.findViewById(R.id.description);
-                    desc.setText(collection.get(i).getDescription());
-                    mparent.addView(myView);
-                }
+                getActivity().runOnUiThread(() -> {
+                    for(int i = 0; i < collection.size(); i++){
+                        View myView = layoutInflater.inflate(R.layout.post_item, null, false);
+                        TextView user;
+                        ImageView img;
+                        TextView desc;
+                        TextView hora;
+                        Initiative initiative = collection.get(i);
+                        user = myView.findViewById(R.id.username);
+                        user.setText(initiative.getNickname());
+                        img = myView.findViewById(R.id.post_image);
+                        img.setImageBitmap(initiative.getImage());
+                        desc = myView.findViewById(R.id.description);
+                        desc.setText(initiative.getDescription());
+                        hora = myView.findViewById(R.id.horario);
+                        hora.setText(initiative.getDateLocal().toString());
+                        mparent.addView(myView);
+                    }
+                });
             }
             @Override
             public void onFailure(String message, Integer httpStatus){
-                if (httpStatus != null) {
-                    if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Comprobar la conexión a Internet", Toast.LENGTH_LONG).show();
-                    } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                getActivity().runOnUiThread(() -> {
+                    if (httpStatus != null) {
+                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Comprobar la conexión a Internet", Toast.LENGTH_LONG).show();
+                        } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                        }
                     }
-                }
+                });
             }
         });
 

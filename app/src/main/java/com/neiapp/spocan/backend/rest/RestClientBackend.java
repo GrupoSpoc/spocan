@@ -82,12 +82,12 @@ public class RestClientBackend implements Backend {
         performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, new ServerEnsureResponseCallback() {
             @Override
             void doSuccess(@NotNull String serverResponse) {
-                callback.onSuccess(null);
+                callback.onSuccess(Initiative.converJsonList(serverResponse));
             }
 
             @Override
             void failure(int statusCode, @Nullable String serverResponse) {
-                callback.onSuccess(null);
+                callback.onFailure(serverResponse, statusCode);
             }
         });
     }
