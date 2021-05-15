@@ -135,10 +135,10 @@ public class Initiative {
         }
     }
 
-    public static List<Initiative> converJsonList(String jsonList) {
+    public static List<Initiative> convertJsonList(String jsonToTransform) {
         try {
             List<Initiative> initiatives = new ArrayList<>();
-            JSONArray jsonArray = new JSONArray(jsonList);
+            JSONArray jsonArray = new JSONArray(jsonToTransform);
             for (int i = 0; i < jsonArray.length(); i ++) {
                 initiatives.add(convertJson(jsonArray.getString(i)));
             }
