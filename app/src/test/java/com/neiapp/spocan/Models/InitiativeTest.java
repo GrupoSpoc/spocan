@@ -4,6 +4,8 @@
 
  import com.google.gson.JsonObject;
 
+ import org.json.JSONException;
+ import org.json.JSONObject;
  import org.junit.Test;
  import org.junit.runner.RunWith;
  import org.robolectric.RobolectricTestRunner;
@@ -62,14 +64,36 @@ public class InitiativeTest {
     }
 
     @Test
+    public void testToJson() throws JSONException {
+        String  description = "description";
+        String  imageBase64 = "imageBase64";
+        boolean isFromCurrentUser = false;
+
+        Initiative initiative = new Initiative(description, imageBase64, isFromCurrentUser);
+
+        String json = initiative.toJson();
+
+        JSONObject jsonObject = new JSONObject(json);
+        assertEquals(description, jsonObject.getString("description"));
+        assertEquals(imageBase64, jsonObject.getString("image"));
+        assertTrue(jsonObject.has("date"));
+
+        String date = jsonObject.getString("date");
+        assertNotNull(LocalDateTime.parse(date));
+    }
+
+    @Test
     public void testInitiativeTransformJSON()  {
         JsonObject jsonInitiative = new JsonObject();
+        LocalDateTime date = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
+        String dateStrUTC = date.toString();
 
         jsonInitiative.addProperty("_id", "_id");
         jsonInitiative.addProperty("description", "description");
         jsonInitiative.addProperty("image", "imageBase64");
         jsonInitiative.addProperty("nickname", "nickname");
-        jsonInitiative.addProperty("isFromCurrentUser", "false");
+        jsonInitiative.addProperty("date", dateStrUTC);
+        jsonInitiative.addProperty("is_from_current_user", "true");
 
         Initiative result = Initiative.convertJson(jsonInitiative.toString());
 
@@ -77,30 +101,7 @@ public class InitiativeTest {
         assertEquals(result.getId(), jsonInitiative.get("_id").getAsString());
         assertEquals(result.getImageBase64(), jsonInitiative.get("image").getAsString());
         assertEquals(result.getNickname(), jsonInitiative.get("nickname").getAsString());
-        assertFalse(result.isFromCurrentUser());
-    }
-
-    @Test
-    public void  toJsonAndThemFromJson(){
-        String  description = "description";
-        String  imageBase64 = "imageBase64";
-        boolean isFromCurrentUser = true;
-        String nickname = "lolo";
-        String _id = "_id";
-        LocalDateTime date = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
-        String dateStrUTC = date.toString();
-
-        Initiative initiative = new Initiative(_id, description, imageBase64, nickname, dateStrUTC, isFromCurrentUser);
-
-        String jsonInitiative = initiative.toJson();
-        Initiative result = Initiative.convertJson(jsonInitiative);
-
-        assertEquals(description, result.getDescription());
-        assertEquals(imageBase64, result.getImageBase64());
         assertTrue(result.isFromCurrentUser());
-        assertEquals(_id, result.getId());
-        assertEquals(nickname, result.getNickname());
-        assertEquals(date, result.getDateUTC());
     }
 
     @Test

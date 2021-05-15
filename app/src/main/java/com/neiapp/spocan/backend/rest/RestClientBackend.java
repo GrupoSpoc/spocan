@@ -12,9 +12,6 @@ import com.neiapp.spocan.backend.callback.CallbackVoid;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RestClientBackend implements Backend {
     private static String jwt = "token";
     private final RestPerformer performer;
@@ -79,8 +76,17 @@ public class RestClientBackend implements Backend {
 
     @Override
     public void getAll(CallbackCollection<Initiative> callback) {
-        final List<Initiative> initiativeList = new ArrayList<>(); // hacer pegada al backend para obtener initiatives
-        callback.onSuccess(initiativeList);
+        performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, new ServerEnsureResponseCallback() {
+            @Override
+            void doSuccess(@NotNull String serverResponse) {
+                callback.onSuccess(Initiative.convertJsonList(serverResponse));
+            }
+
+            @Override
+            void failure(int statusCode, @Nullable String serverResponse) {
+                callback.onFailure(serverResponse, statusCode);
+            }
+        });
     }
 
     // Ejemplo de GET

@@ -6,14 +6,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.neiapp.spocan.Models.Initiative;
 import com.neiapp.spocan.R;
+import com.neiapp.spocan.backend.Backend;
+import com.neiapp.spocan.backend.callback.CallbackCollection;
+import com.neiapp.spocan.backend.rest.HTTPCodes;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
+
+import org.w3c.dom.Text;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -34,19 +44,49 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View eso = inflater.inflate(R.layout.fragment_home_, container, false);
-
         //publicaciones
         mparent = eso.findViewById(R.id.mParent);
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //View myView = layoutInflater.inflate(R.layout.post_item, null, false);
-        //mparent.addView(myView);
-        for(int i = 0; i < 10; i++){
-            View myView = layoutInflater.inflate(R.layout.post_item, null, false);
-            TextView user;
-            user = myView.findViewById(R.id.username);
-            user.setText("nicooooo");
-            mparent.addView(myView);
-        }
+        //backend
+        Backend backend = Backend.getInstance();
+        backend.getAll(new CallbackCollection<Initiative>() {
+            @Override
+            public void onSuccess(List<Initiative> collection) {
+                getActivity().runOnUiThread(() -> {
+                    for(int i = 0; i < collection.size(); i++){
+                        View myView = layoutInflater.inflate(R.layout.post_item, null, false);
+                        TextView user;
+                        ImageView img;
+                        TextView desc;
+                        TextView hora;
+                        Initiative initiative = collection.get(i);
+                        user = myView.findViewById(R.id.username);
+                        user.setText(initiative.getNickname());
+                        img = myView.findViewById(R.id.post_image);
+                        img.setImageBitmap(initiative.getImage());
+                        desc = myView.findViewById(R.id.description);
+                        desc.setText(initiative.getDescription());
+                        hora = myView.findViewById(R.id.horario);
+                        hora.setText(initiative.getDateLocal().toString());
+                        mparent.addView(myView);
+                    }
+                });
+            }
+            @Override
+            public void onFailure(String message, Integer httpStatus){
+                getActivity().runOnUiThread(() -> {
+                    if (httpStatus != null) {
+                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Comprobar la conexión a Internet", Toast.LENGTH_LONG).show();
+                        } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
 
         //publicar
         post = eso.findViewById(R.id.CrearPost);

@@ -6,10 +6,17 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.neiapp.spocan.util.Base64Converter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -99,15 +106,46 @@ public class Initiative {
     }
 
     public String toJson(){
-        Gson gson = new Gson();
-        return  gson.toJson(this);
+        JsonObject json = new JsonObject();
+
+        json.addProperty("description", this.description);
+        json.addProperty("image", this.image);
+        json.addProperty("date", this.date.toString());
+
+        return json.toString();
     }
 
-
-    public  static Initiative convertJson (String jsonToTransform){
-        Gson gson = new Gson();
-        return  gson.fromJson(jsonToTransform, Initiative.class);
+    public static Initiative convertJson(String jsonToTransform){
+        try {
+            JSONObject jsonObject = new JSONObject(jsonToTransform);
+            final String _id = jsonObject.getString("_id");
+            final String description = jsonObject.getString("description");
+            final String image = jsonObject.getString("image");
+            final String nickname = jsonObject.getString("nickname");
+            final String date = jsonObject.getString("date");
+            final boolean isFromCurrentUser;
+            if (jsonObject.has("is_from_current_user")) {
+                isFromCurrentUser = jsonObject.getBoolean("is_from_current_user");
+            } else {
+                isFromCurrentUser = false;
+            }
+            return new Initiative(_id, description, image, nickname, date, isFromCurrentUser);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    public static List<Initiative> convertJsonList(String jsonToTransform) {
+        try {
+            List<Initiative> initiatives = new ArrayList<>();
+            JSONArray jsonArray = new JSONArray(jsonToTransform);
+            for (int i = 0; i < jsonArray.length(); i ++) {
+                initiatives.add(convertJson(jsonArray.getString(i)));
+            }
+            return initiatives;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
