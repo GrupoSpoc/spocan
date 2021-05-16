@@ -64,7 +64,7 @@ public class RegisterUserActivity extends Activity {
                         public void onFailure(String message, Integer httpStatus) {
                             runOnUiThread(() -> {
                                 if (httpStatus != null) {
-                                    if (httpStatus == HTTPCodes.USER_NAME_ALREADY_TAKEN.getCode()) {
+                                    if (httpStatus == HTTPCodes.NICKNAME_ALREADY_TAKEN.getCode()) {
                                         Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
                                         userNicknameInput.setText("");
                                     } else {
