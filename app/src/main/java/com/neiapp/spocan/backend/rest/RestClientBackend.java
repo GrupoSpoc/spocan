@@ -10,7 +10,7 @@ import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.backend.rest.query.QueryParam;
-import com.neiapp.spocan.backend.rest.query.QueryParamBuilder;
+import com.neiapp.spocan.backend.rest.query.QueryParamsBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -91,7 +91,7 @@ public class RestClientBackend implements Backend {
 
     @Override
     public void getAllInitiatives(CallbackCollection<Initiative> callback) {
-        Map<String, String> queryParams = new QueryParamBuilder().withParam(QueryParam.ORDER, "1").build();
+        Map<String, String> queryParams = new QueryParamsBuilder().withParam(QueryParam.ORDER, "1").build();
 
         performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, queryParams, new ServerEnsureResponseCallback() {
             @Override
