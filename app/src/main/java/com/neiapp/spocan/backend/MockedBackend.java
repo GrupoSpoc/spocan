@@ -29,11 +29,6 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void ping() {
-        System.out.println("Mocked pong");
-    }
-
-    @Override
     public void createInitiative(Initiative initiative, CallbackVoid callback) {
         String assignedId = Integer.toString(initiative_store.size() + 1);
         initiative.setId(assignedId);
@@ -44,15 +39,6 @@ public class MockedBackend implements Backend {
     @Override
     public void getAllInitiatives(CallbackCollection<Initiative> collection) {
         collection.onSuccess(initiative_store);
-    }
-
-    @Override
-    public void getObject(CallbackInstance<Object> callback) {
-        callback.onSuccess(null);
-    }
-
-    public void createObject(Object o, CallbackVoid callbackVoid) {
-        callbackVoid.onSuccess();
     }
 
     @Override
@@ -69,6 +55,5 @@ public class MockedBackend implements Backend {
     public void getUser(CallbackInstance<User> callback){
         callback.onSuccess(USER);
     }
-
 
 }
