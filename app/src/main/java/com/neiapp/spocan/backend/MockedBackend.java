@@ -42,7 +42,7 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void getAll(CallbackCollection<Initiative> collection) {
+    public void getAllInitiatives(CallbackCollection<Initiative> collection) {
         collection.onSuccess(initiative_store);
     }
 

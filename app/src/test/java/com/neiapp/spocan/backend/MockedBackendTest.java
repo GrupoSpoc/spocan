@@ -1,10 +1,8 @@
 package com.neiapp.spocan.backend;
 
 import com.neiapp.spocan.Models.Initiative;
-import com.neiapp.spocan.Models.User;
 import com.neiapp.spocan.Models.UserType;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
-import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 
 import org.junit.After;
@@ -53,7 +51,7 @@ public class MockedBackendTest {
 
         fakeBackend.createInitiative(initiative_first, call);
         fakeBackend.createInitiative(initiative_second, call);
-        fakeBackend.getAll(new CallbackCollection<Initiative>() {
+        fakeBackend.getAllInitiatives(new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> collection) {
                 assertEquals(originalSize + 2, MockedBackend.initiative_store.size());

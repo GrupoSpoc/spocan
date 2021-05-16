@@ -21,8 +21,6 @@ import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -49,7 +47,7 @@ public class HomeFragment extends Fragment {
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //backend
         Backend backend = Backend.getInstance();
-        backend.getAll(new CallbackCollection<Initiative>() {
+        backend.getAllInitiatives(new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> collection) {
                 getActivity().runOnUiThread(() -> {
