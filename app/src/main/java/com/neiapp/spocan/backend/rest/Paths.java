@@ -1,6 +1,7 @@
 package com.neiapp.spocan.backend.rest;
 
 public class Paths {
+
     // PROD
     public static final String BASE = "https://spochi.herokuapp.com";
 
