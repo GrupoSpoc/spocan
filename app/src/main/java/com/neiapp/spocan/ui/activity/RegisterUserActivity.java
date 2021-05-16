@@ -52,22 +52,26 @@ public class RegisterUserActivity extends Activity {
                     Backend.getInstance().createUser(newUser, new CallbackInstance<User>() {
                         @Override
                         public void onSuccess(User user) {
-                            Toast.makeText(getApplicationContext(), "Usuario registrado con éxito!", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra(MainActivity.USER, user);
-                            startActivity(intent);
+                            runOnUiThread(() -> {
+                                Toast.makeText(getApplicationContext(), "Usuario registrado con éxito!", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra(MainActivity.USER, user);
+                                startActivity(intent);
+                            });
                         }
 
                         @Override
                         public void onFailure(String message, Integer httpStatus) {
-                            if (httpStatus != null) {
-                                if (httpStatus == HTTPCodes.USER_NAME_ALREADY_TAKEN.getCode()) {
-                                    Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
-                                    userNicknameInput.setText("");
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                            runOnUiThread(() -> {
+                                if (httpStatus != null) {
+                                    if (httpStatus == HTTPCodes.USER_NAME_ALREADY_TAKEN.getCode()) {
+                                        Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
+                                        userNicknameInput.setText("");
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                                    }
                                 }
-                            }
+                            });
                         }
                     });
                 } else {

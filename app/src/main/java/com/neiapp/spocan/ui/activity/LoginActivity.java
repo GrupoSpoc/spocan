@@ -146,28 +146,32 @@ public class LoginActivity extends AppCompatActivity {
 
             Backend.authenticate(token, new CallbackInstance<User>() {
                 @Override
-                public void onFailure(String message, Integer httpStatus) {
-                    if (httpStatus != null) {
-                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
-                            Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
-                        } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                            Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                public void onSuccess(User instance) {
+                    runOnUiThread(() -> {
+                        final Intent intent;
+                        if (instance != null) {
+                            intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra(MainActivity.USER, instance);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                            intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                         }
-                    }
+                        startActivity(intent);
+                    });
                 }
 
                 @Override
-                public void onSuccess(User instance) {
-                    final Intent intent;
-                    if (instance != null) {
-                        intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra(MainActivity.USER, instance);
-                    } else {
-                        intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
-                    }
-                    startActivity(intent);
+                public void onFailure(String message, Integer httpStatus) {
+                    runOnUiThread(() -> {
+                        if (httpStatus != null) {
+                            if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
+                                Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
+                            } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
+                                Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                 }
             });
         });
