@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onFailure(String message, Integer httpStatus) {
                     runOnUiThread(() -> {
                         if (httpStatus != null) {
-                            if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
+                            if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
                                 Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
                             } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
                                 Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
