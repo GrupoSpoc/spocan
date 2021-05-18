@@ -123,9 +123,9 @@ public class RestClientBackend implements Backend {
     }
 
     @Override
-    public void logOut(CallbackVoid callbackVoid) {
+    public void logOut(CallbackVoid callback) {
         jwt = null;
-        callbackVoid.onSuccess();
+        callback.onSuccess();
     }
 
 

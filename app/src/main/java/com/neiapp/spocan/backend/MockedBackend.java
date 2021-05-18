@@ -58,9 +58,9 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void logOut(CallbackVoid callbackVoid) {
+    public void logOut(CallbackVoid callback) {
         CURRENT_USER = null;
-        callbackVoid.onSuccess();
+        callback.onSuccess();
     }
 
     @Override
