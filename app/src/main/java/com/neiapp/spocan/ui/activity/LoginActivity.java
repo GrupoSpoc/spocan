@@ -3,6 +3,7 @@ package com.neiapp.spocan.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
+
+import static okhttp3.internal.Internal.instance;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -123,7 +126,6 @@ public class LoginActivity extends AppCompatActivity {
 
             Backend.authenticate(token, new CallbackInstance<User>() {
                 @Override
-
                 public void onFailure(String message, int httpStatus) {
                     if (httpStatus != 0) {
                         if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
@@ -131,12 +133,12 @@ public class LoginActivity extends AppCompatActivity {
                         } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
                             Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
 
-                public void onSuccess(User instance) {
+                            public void onSuccess(User instance) {
                     runOnUiThread(() -> {
                         final Intent intent;
                         if (instance != null) {
                             intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra(MainActivity.USER, instance);
+                            intent.putExtra(MainActivity.USER, (Parcelable) instance);
 
                         } else {
                             intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
@@ -146,9 +148,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(String message, Integer httpStatus) {
+                public void onFailure(String message, int httpStatus) {
                     runOnUiThread(() -> {
-                        if (httpStatus != null) {
+                        if (httpStatus != 0) {
                             if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
                                 Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
                             } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
