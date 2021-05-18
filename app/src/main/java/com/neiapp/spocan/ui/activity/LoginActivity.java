@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -74,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public  GoogleSignInClient getSignInClient(){
+    public GoogleSignInClient getSignInClient() {
         return this.mGoogleSignInClient;
     }
 
@@ -124,46 +125,40 @@ public class LoginActivity extends AppCompatActivity {
             GetTokenResult result = task.getResult();
             String token = result.getToken();
 
-            Backend.authenticate(token, new CallbackInstance<User>() {
-                @Override
-                public void onFailure(String message, int httpStatus) {
-                    if (httpStatus != 0) {
-                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
-                            Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
-                        } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                            Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+            Backend.authenticate(token,
+                    new CallbackInstance<User>() {
+                        @Override
+                        public void onSuccess(User instance) {
+                            runOnUiThread(() -> {
+                                final Intent intent;
+                                if (instance != null) {
+                                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.putExtra(MainActivity.USER, (Parcelable) instance);
 
-                            public void onSuccess(User instance) {
-                    runOnUiThread(() -> {
-                        final Intent intent;
-                        if (instance != null) {
-                            intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra(MainActivity.USER, (Parcelable) instance);
-
-                        } else {
-                            intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
+                                } else {
+                                    intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
+                                }
+                                startActivity(intent);
+                            });
                         }
-                        startActivity(intent);
-                    });
-                }
 
-                @Override
-                public void onFailure(String message, int httpStatus) {
-                    runOnUiThread(() -> {
-                        if (httpStatus != 0) {
-                            if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
-                                Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
-                            } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                                Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
-                            }
+                        @Override
+                        public void onFailure(String message, int httpStatus) {
+                            runOnUiThread(() -> {
+                                if (httpStatus != 0)
+                                    if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
+                                        Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
+                                    } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
+                                        Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                                    }
+                            });
                         }
                     });
-                }
-            });
         });
     }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
