@@ -77,7 +77,7 @@ public class InitiativeActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "INICIATIVA CREADA", Toast.LENGTH_LONG).show();
                         }
                         @Override
-                        public void onFailure(String message, Integer httpStatus) {
+                        public void onFailure(String message, int httpStatus) {
                             Toast.makeText(getApplicationContext(), "NO SE PUDO PROCESAR LA OPERACION", Toast.LENGTH_LONG).show();
                         }
                     });

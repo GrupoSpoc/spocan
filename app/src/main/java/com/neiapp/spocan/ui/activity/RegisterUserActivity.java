@@ -59,7 +59,7 @@ public class RegisterUserActivity extends Activity {
                         }
 
                         @Override
-                        public void onFailure(String message, Integer httpStatus) {
+                        public void onFailure(String message, int httpStatus) {
                             if (httpStatus != null) {
                                 if (httpStatus == HTTPCodes.USER_NAME_ALREADY_TAKEN.getCode()) {
                                     Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();

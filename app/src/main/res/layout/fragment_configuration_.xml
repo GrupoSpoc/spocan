@@ -37,6 +37,7 @@
             android:id="@+id/changeAccountBtn"
             android:layout_width="223dp"
             android:layout_height="59dp"
+            android:layout_marginTop="156dp"
             android:background="@drawable/diseno_botones_verdes"
             android:drawableLeft="@drawable/add_user_icon"
             android:fontFamily="@font/nunito_light"
@@ -45,29 +46,13 @@
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/logOutBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintHorizontal_bias="0.455"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.573"
             tools:layout_conversion_absoluteHeight="48dp"
             tools:layout_conversion_absoluteWidth="194dp" />
 
-        <Button
-            android:id="@+id/logOutBtn"
-            android:layout_width="219dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="160dp"
-            android:background="@drawable/diseno_botones_verdes"
-            android:drawableLeft="@android:drawable/ic_menu_close_clear_cancel"
-            android:fontFamily="@font/nunito_light"
-            android:text="@string/logOut_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_conversion_absoluteWidth="193dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

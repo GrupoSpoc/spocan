@@ -21,8 +21,6 @@ import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -73,7 +71,7 @@ public class HomeFragment extends Fragment {
                 });
             }
             @Override
-            public void onFailure(String message, Integer httpStatus){
+            public void onFailure(String message, int httpStatus){
                 getActivity().runOnUiThread(() -> {
                     if (httpStatus != null) {
                         if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {

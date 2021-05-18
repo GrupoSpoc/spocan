@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -72,6 +71,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public  GoogleSignInClient getSignInClient(){
+        return this.mGoogleSignInClient;
+    }
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
 
         try {
@@ -120,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Backend.authenticate(token, new CallbackInstance<User>() {
                 @Override
-                public void onFailure(String message, Integer httpStatus) {
+                public void onFailure(String message, int httpStatus) {
                     if (httpStatus != null) {
                         if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
                             Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
