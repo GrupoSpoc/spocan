@@ -72,13 +72,17 @@ public class InitiativeActivity extends AppCompatActivity {
                     backend.createInitiative(intitiative, new CallbackVoid() {
                         @Override
                         public void onSuccess() {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(getApplicationContext(), "INICIATIVA CREADA", Toast.LENGTH_LONG).show();
+                            runOnUiThread(() -> {
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(getApplicationContext(), "INICIATIVA CREADA", Toast.LENGTH_LONG).show();
+                            });
                         }
                         @Override
+
                         public void onFailure(String message, int httpStatus) {
                             Toast.makeText(getApplicationContext(), "NO SE PUDO PROCESAR LA OPERACION", Toast.LENGTH_LONG).show();
+
                         }
                     });
                 }
