@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,7 +17,6 @@ import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.ui.activity.LoginActivity;
-import com.neiapp.spocan.ui.activity.MainActivity;
 
 
 public class ConfigurationFragment extends Fragment {
@@ -49,6 +47,7 @@ public class ConfigurationFragment extends Fragment {
                 @Override
                 public void onSuccess() {
                     getActivity().runOnUiThread(() -> {
+                        // liberar currentUser para evitar login automatico
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         firebaseAuth.signOut();
 
@@ -65,10 +64,5 @@ public class ConfigurationFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void changeAccount() {
-        // liberar currentUser para evitar autoLogin
-
     }
 }
