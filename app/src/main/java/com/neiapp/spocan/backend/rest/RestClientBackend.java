@@ -122,6 +122,12 @@ public class RestClientBackend implements Backend {
         });
     }
 
+    @Override
+    public void logOut(CallbackVoid callback) {
+        jwt = null;
+        callback.onSuccess();
+    }
+
 
     @Override
     public void ping() {
