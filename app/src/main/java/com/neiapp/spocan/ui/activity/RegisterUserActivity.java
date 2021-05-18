@@ -24,7 +24,6 @@ public class RegisterUserActivity extends Activity {
 
     private Spinner spinner;
     private UserType selectedType;
-    private Button registerButton;
     private TextView userNicknameInput;
     private String userNickname;
 
@@ -33,7 +32,7 @@ public class RegisterUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_user);
         userNicknameInput = findViewById(R.id.nicknameTextBox);
-        registerButton = findViewById(R.id.registerButton);
+        Button registerButton = findViewById(R.id.registerButton);
 
         //Construccion del dropdown para seleccionar tipo de usuario
         spinner = findViewById(R.id.userTypeSpinner);
@@ -63,14 +62,12 @@ public class RegisterUserActivity extends Activity {
                         @Override
 
                         public void onFailure(String message, int httpStatus) {
-                            if (httpStatus != null) {
-                                if (httpStatus == HTTPCodes.USER_NAME_ALREADY_TAKEN.getCode()) {
-                                    Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
-                                    userNicknameInput.setText("");
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            if (httpStatus == HTTPCodes.NICKNAME_ALREADY_TAKEN.getCode()) {
+                                Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
+                                userNicknameInput.setText("");
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
                 } else {
