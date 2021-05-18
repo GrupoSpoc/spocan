@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                                 final Intent intent;
                                 if (instance != null) {
                                     intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    intent.putExtra(MainActivity.USER, (Parcelable) instance);
+                                    intent.putExtra(MainActivity.USER, instance);
 
                                 } else {
                                     intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
