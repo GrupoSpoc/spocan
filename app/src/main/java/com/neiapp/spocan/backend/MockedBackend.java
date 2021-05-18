@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class MockedBackend implements Backend {
     public static ArrayList<Initiative> initiative_store;
-    public static final User USER = new User("CurrentUser", UserType.PERSON, 550, false);
+    public static final User USER = new User("TestUser", UserType.PERSON, 550, false);
+    public static User CURRENT_USER;
 
     protected MockedBackend() {
         if (initiative_store == null) {
@@ -25,7 +26,8 @@ public class MockedBackend implements Backend {
     }
 
     public static void doAuthenticate(CallbackInstance<User> callback) {
-        callback.onSuccess(USER);
+        CURRENT_USER = USER;
+        callback.onSuccess(CURRENT_USER);
     }
 
     @Override
@@ -56,6 +58,12 @@ public class MockedBackend implements Backend {
     }
 
     @Override
+    public void logOut(CallbackVoid callbackVoid) {
+        CURRENT_USER = null;
+        callbackVoid.onSuccess();
+    }
+
+    @Override
     public void createUser(User user, CallbackInstance<User> callbackUser) {
         user.setNickname(user.getNickname());
         user.setType(user.getType());
@@ -67,7 +75,7 @@ public class MockedBackend implements Backend {
     }
 
     public void getUser(CallbackInstance<User> callback){
-        callback.onSuccess(USER);
+        callback.onSuccess(CURRENT_USER);
     }
 
 
