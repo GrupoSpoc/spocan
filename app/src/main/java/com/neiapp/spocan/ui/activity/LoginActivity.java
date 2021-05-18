@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
             Backend.authenticate(token, new CallbackInstance<User>() {
                 @Override
                 public void onFailure(String message, int httpStatus) {
-                    if (httpStatus != null) {
+                    if (httpStatus != 0) {
                         if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
                             Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
                         } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
