@@ -38,9 +38,8 @@ import static okhttp3.internal.Internal.instance;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
-    private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private String TAG = "MainActivity";
+    private final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
 
     @Override
@@ -49,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_user);
 
         mAuth = FirebaseAuth.getInstance();
-        signInButton = findViewById(R.id.sign_in_button);
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -145,15 +144,15 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(String message, int httpStatus) {
                             runOnUiThread(() -> {
-                                if (httpStatus != 0)
-                                    if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
-                                        Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
-                                    } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                                        Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
-                                    }
+                                if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
+                                    Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
+                                } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
+                                    Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                                }
                             });
+
                         }
                     });
         });
