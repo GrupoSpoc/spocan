@@ -31,6 +31,7 @@ import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
+import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -140,6 +141,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser firebaseUser) {
         mSignOutBtn.setVisibility(View.VISIBLE);
+
+        // Defino una instancia de SpinnerDialog, pasando el activity y (opcional) el mensaje de carga
+        // sino se le pasa un mensaje, por defecto se muestra 'Cargando'
+        // Para el context, si estoy en una Activity le paso 'this'. Si estoy en un fragment le paso getActivity()
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Ingresando...");
+
+        // Muestro el spinner antes de ejecutar el proceso con espera
+        spinnerDialog.start();
+
         firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
             GetTokenResult result = task.getResult();
             String token = result.getToken();
@@ -157,6 +167,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         startActivity(intent);
                     });
+
+                    // Oculto el spinner dentro del runOnUiThread
+                    spinnerDialog.stop();
                 }
 
                 @Override
@@ -171,6 +184,9 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
                             }
                         }
+
+                        // Oculto el spinner dentro del runOnUiThread
+                        spinnerDialog.stop();
                     });
                 }
             });
