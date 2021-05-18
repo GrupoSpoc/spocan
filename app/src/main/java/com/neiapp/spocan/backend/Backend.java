@@ -15,7 +15,6 @@ public interface Backend {
     void getAll(CallbackCollection<Initiative> collection);
     void getUser(CallbackInstance<User> callback);
     void getObject(CallbackInstance<Object> callback);
-
     void createObject(Object o, CallbackVoid callbackVoid);
     void createUser(User user, CallbackInstance<User> callbackUser);
 
