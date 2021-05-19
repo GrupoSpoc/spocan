@@ -3,6 +3,7 @@
  import android.graphics.Bitmap;
 
  import com.google.gson.JsonObject;
+ import com.neiapp.spocan.backend.ParseJsonException;
 
  import org.json.JSONException;
  import org.json.JSONObject;
@@ -18,6 +19,7 @@
  import static org.junit.Assert.assertFalse;
  import static org.junit.Assert.assertNotNull;
  import static org.junit.Assert.assertNull;
+ import static org.junit.Assert.assertThrows;
  import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -83,7 +85,7 @@ public class InitiativeTest {
     }
 
     @Test
-    public void testInitiativeTransformJSON()  {
+    public void testInitiativeTransformJSON() throws ParseJsonException {
         JsonObject jsonInitiative = new JsonObject();
         LocalDateTime date = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
         String dateStrUTC = date.toString();
@@ -155,4 +157,12 @@ public class InitiativeTest {
         assertEquals(dateUTC, initiative.getDateUTC());
         assertEquals(zonedBsAsDate, initiative.getDateLocal());
     }
+
+    @Test
+    public void convertJsonThrowException(){
+        JsonObject wrong_jsonInitiative = new JsonObject();
+
+        assertThrows(ParseJsonException.class,()-> User.convertJson(wrong_jsonInitiative.toString()));
+    }
+
 }

@@ -4,7 +4,8 @@ public enum HTTPCodes {
     NOT_ACCEPTABLE(406),
     BAD_REQUEST_ERROR(400),
     USER_NAME_ALREADY_TAKEN(4000),
-    SERVER_ERROR(500);
+    SERVER_ERROR(500),
+    ERROR_PARSE_JSON(409);
 
     private final int code;
 

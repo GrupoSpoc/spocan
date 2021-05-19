@@ -5,12 +5,11 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.neiapp.spocan.backend.ParseJsonException;
 import com.neiapp.spocan.util.Base64Converter;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
@@ -105,17 +104,21 @@ public class Initiative {
         return date.minusHours(ZONE_BS_AS_HOURS);
     }
 
-    public String toJson(){
-        JsonObject json = new JsonObject();
+    public String toJson() throws ParseJsonException {
+        try {
+            JsonObject json = new JsonObject();
 
-        json.addProperty("description", this.description);
-        json.addProperty("image", this.image);
-        json.addProperty("date", this.date.toString());
+            json.addProperty("description", this.description);
+            json.addProperty("image", this.image);
+            json.addProperty("date", this.date.toString());
 
-        return json.toString();
+            return json.toString();
+        }catch (Exception e){
+            throw new ParseJsonException("failed to convert initiative to json");
+        }
     }
 
-    public static Initiative convertJson(String jsonToTransform){
+    public static Initiative convertJson(String jsonToTransform) throws ParseJsonException {
         try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
             final String _id = jsonObject.getString("_id");
@@ -130,12 +133,12 @@ public class Initiative {
                 isFromCurrentUser = false;
             }
             return new Initiative(_id, description, image, nickname, date, isFromCurrentUser);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new ParseJsonException("failed to convert jsno to initiative");
         }
     }
 
-    public static List<Initiative> convertJsonList(String jsonToTransform) {
+    public static List<Initiative> convertJsonList(String jsonToTransform) throws ParseJsonException {
         try {
             List<Initiative> initiatives = new ArrayList<>();
             JSONArray jsonArray = new JSONArray(jsonToTransform);
@@ -144,8 +147,10 @@ public class Initiative {
             }
             return initiatives;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ParseJsonException("failed to convert  the list of initiative to json");
         }
     }
+
+
 
 }

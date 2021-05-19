@@ -1,5 +1,7 @@
 package com.neiapp.spocan.Models;
 
+import com.neiapp.spocan.backend.ParseJsonException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +31,7 @@ public class TokenInfo {
         this.user = user;
     }
 
-    public static TokenInfo convertJson(String jsonToTransform) {
+    public static TokenInfo convertJson(String jsonToTransform) throws ParseJsonException{
         try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
             final String jwt = jsonObject.getString("jwt");
@@ -42,8 +44,8 @@ public class TokenInfo {
             }
 
             return new TokenInfo(jwt, user);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new ParseJsonException(e.getMessage());
         }
     }
 }
