@@ -66,7 +66,7 @@ public class InitiativeTest {
     }
 
     @Test
-    public void testToJson() throws JSONException {
+    public void testToJson() throws JSONException, ParseJsonException {
         String  description = "description";
         String  imageBase64 = "imageBase64";
         boolean isFromCurrentUser = false;
