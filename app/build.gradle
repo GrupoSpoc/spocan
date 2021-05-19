@@ -74,6 +74,5 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics'
 
-    testCompile 'org.robolectric:robolectric:4.0.2'
-
+    testImplementation 'org.robolectric:robolectric:4.0.2'
 }

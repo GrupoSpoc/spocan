@@ -46,8 +46,7 @@
             android:id="@+id/app_title_splash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
+            android:layout_marginStart="76dp"
             android:fontFamily="@font/nunito_light"
             android:text="@string/appTitle"
             android:textColor="@color/black"
@@ -55,7 +54,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.836" />
+            app:layout_constraintVertical_bias="0.833" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
