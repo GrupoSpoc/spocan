@@ -46,17 +46,15 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(String message, Integer httpStatus) {
+            public void onFailure(String message, int httpStatus) {
                 getActivity().runOnUiThread(() -> {
-                    if (httpStatus != null) {
-                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_ERROR.getCode()) {
+                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
                             Toast.makeText(getActivity().getApplicationContext(), "Comprobar la conexión a Internet", Toast.LENGTH_LONG).show();
                         } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
                             Toast.makeText(getActivity().getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
                         }
-                    }
                 });
             }
         });
