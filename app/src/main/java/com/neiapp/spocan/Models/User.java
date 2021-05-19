@@ -50,7 +50,7 @@ public class User implements Serializable {
     }
 
     public String toJson() throws ParseJsonException {
-        try {
+       try {
             JsonObject json = new JsonObject();
 
             json.addProperty("nickname", this.nickname);
@@ -58,12 +58,14 @@ public class User implements Serializable {
 
             return json.toString();
         }catch (Exception e){
-            throw  new ParseJsonException("failed to convert user to json");
+           String message = "failed to convert user to json"+ e.getMessage();
+           System.out.println(message);
+           throw new ParseJsonException(message);
         }
     }
 
     public static User convertJson(String jsonToTransform) throws ParseJsonException {
-        try {
+       try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
 
             final String nickname = jsonObject.getString("nickname");
@@ -72,7 +74,9 @@ public class User implements Serializable {
             final int amountOfInitiatives = jsonObject.getInt("amount_of_initiatives");
             return new User(nickname, UserType.fromIdOrElseThrow(typeId),amountOfInitiatives, admin);
         } catch (Exception e) {
-            throw new ParseJsonException("failed to convert json to user");
+           String message = "failed to convert json to user" + e.getMessage();
+           System.out.println(message);
+           throw new ParseJsonException(message);
         }
     }
 }

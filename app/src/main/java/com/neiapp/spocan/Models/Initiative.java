@@ -114,7 +114,10 @@ public class Initiative {
 
             return json.toString();
         }catch (Exception e){
-            throw new ParseJsonException("failed to convert initiative to json");
+            String message = "failed to convert initiative to json"+e.getMessage();
+            System.out.println(message);
+            throw new ParseJsonException(message);
+
         }
     }
 
@@ -134,7 +137,9 @@ public class Initiative {
             }
             return new Initiative(_id, description, image, nickname, date, isFromCurrentUser);
         } catch (Exception e) {
-            throw new ParseJsonException("failed to convert jsno to initiative");
+            String message = "failed to convert jsno to initiative"+e.getMessage();
+            System.out.println(message);
+            throw new ParseJsonException(message);
         }
     }
 
@@ -147,7 +152,9 @@ public class Initiative {
             }
             return initiatives;
         } catch (Exception e) {
-            throw new ParseJsonException("failed to convert  the list of initiative to json");
+            String message = "failed to convert  the list of initiative to json"+ e.getMessage();
+            System.out.println(message);
+            throw new ParseJsonException(message);
         }
     }
 

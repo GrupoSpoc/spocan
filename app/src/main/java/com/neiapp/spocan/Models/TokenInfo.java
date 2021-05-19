@@ -31,8 +31,8 @@ public class TokenInfo {
         this.user = user;
     }
 
-    public static TokenInfo convertJson(String jsonToTransform) throws ParseJsonException{
-        try {
+    public static TokenInfo convertJson(String jsonToTransform) throws ParseJsonException {
+       try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
             final String jwt = jsonObject.getString("jwt");
             final User user;
@@ -45,7 +45,9 @@ public class TokenInfo {
 
             return new TokenInfo(jwt, user);
         } catch (Exception e) {
-            throw new ParseJsonException(e.getMessage());
+            String message = "failed to convert json to TokenInfo"+ e.getMessage();
+            System.out.println(message);
+            throw new ParseJsonException(message);
         }
     }
 }
