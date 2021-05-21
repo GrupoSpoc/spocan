@@ -11,10 +11,15 @@ import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.backend.callback.Fallible;
+import com.neiapp.spocan.backend.rest.query.QueryParam;
+import com.neiapp.spocan.backend.rest.query.QueryParamsBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 import static com.neiapp.spocan.backend.rest.HTTPCodes.ERROR_PARSE_JSON;
+
 
 public class RestClientBackend implements Backend {
     private static String jwt = "token";
@@ -44,7 +49,6 @@ public class RestClientBackend implements Backend {
         });
     }
 
-    //POST
     @Override
     public void createUser(User user, CallbackInstance<User> callbackUser) {
         executeJsonAction(() -> performer.post(Paths.BASE + Paths.USER, user.toJson(), new ServerEnsureResponseCallback() {
@@ -59,96 +63,6 @@ public class RestClientBackend implements Backend {
                 executeJsonAction(() -> callbackUser.onSuccess(User.convertJson(serverResponse)), callbackUser);
             }
         }), callbackUser);
-
-
-    }
-
-
-    @Override
-    public void createInitiative(Initiative initiative, CallbackVoid callback) {
-        executeJsonAction(() -> performer.post(Paths.BASE + Paths.INITIATIVE, initiative.toJson(), new ServerCallback() {
-            @Override
-            void success(@Nullable String serverResponse) {
-                callback.onSuccess();
-            }
-
-            @Override
-            void failure(int statusCode, @Nullable String serverResponse) {
-                callback.onFailure(serverResponse, statusCode);
-            }
-        }), callback);
-
-    }
-
-    @Override
-    public void getAll(CallbackCollection<Initiative> callback) {
-        executeJsonAction(() ->
-                performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, new ServerEnsureResponseCallback() {
-                    @Override
-                    void doSuccess(@NotNull String serverResponse) {
-                        executeJsonAction(() -> callback.onSuccess(Initiative.convertJsonList(serverResponse)), callback);
-                    }
-
-                    @Override
-                    void failure(int statusCode, @Nullable String serverResponse) {
-                        callback.onFailure(serverResponse, statusCode);
-                    }
-                }), callback);
-    }
-
-    // Ejemplo de GET
-    @Override
-    public void getObject(CallbackInstance<Object> callback) {
-        performer.get(Paths.BASE + Paths.OBJECT, new ServerEnsureResponseCallback() {
-            @Override
-            void doSuccess(@NotNull String serverResponse) {
-                callback.onSuccess(serverResponse);
-            }
-
-            @Override
-            void failure(int statusCode, @Nullable String serverResponse) {
-                callback.onSuccess(serverResponse);
-            }
-        });
-    }
-
-    // ejemplo de POST
-    public void createObject(Object o, CallbackVoid callbackVoid) {
-        performer.post(Paths.BASE + Paths.OBJECT, o.toString(), new ServerCallback() {
-            @Override
-            void success(@Nullable String serverResponse) {
-                callbackVoid.onSuccess();
-                System.out.println(serverResponse);
-            }
-
-            @Override
-            void failure(int statusCode, @Nullable String serverResponse) {
-                callbackVoid.onSuccess();
-                System.out.println(statusCode + " - failure: " + serverResponse);
-            }
-        });
-    }
-
-    @Override
-    public void logOut(CallbackVoid callback) {
-        jwt = null;
-        callback.onSuccess();
-    }
-
-
-    @Override
-    public void ping() {
-        performer.get(Paths.BASE + Paths.PING, new ServerCallback() {
-            @Override
-            void success(@Nullable String serverResponse) {
-                System.out.println(serverResponse);
-            }
-
-            @Override
-            void failure(int statusCode, @Nullable String serverResponse) {
-                System.out.println(statusCode + " - failure: " + serverResponse);
-            }
-        });
     }
 
     @Override
@@ -165,6 +79,48 @@ public class RestClientBackend implements Backend {
             }
         }), callback);
     }
+
+
+    @Override
+    public void createInitiative(Initiative initiative, CallbackVoid callback) {
+        executeJsonAction(() -> performer.post(Paths.BASE + Paths.INITIATIVE, initiative.toJson(), new ServerCallback() {
+            @Override
+            void success(@Nullable String serverResponse) {
+                callback.onSuccess();
+            }
+
+            @Override
+            void failure(int statusCode, @Nullable String serverResponse) {
+                callback.onFailure(serverResponse, statusCode);
+            }
+        }), callback);
+    }
+
+
+    @Override
+    public void logOut(CallbackVoid callback) {
+        jwt = null;
+        callback.onSuccess();
+    }
+
+
+    @Override
+    public void getAllInitiatives(CallbackCollection<Initiative> callback) {
+        Map<String, String> queryParams = new QueryParamsBuilder().withParam(QueryParam.ORDER, "1").build();
+
+        performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, queryParams, new ServerEnsureResponseCallback() {
+            @Override
+            void doSuccess(@NotNull String serverResponse) {
+                executeJsonAction(() -> callback.onSuccess(Initiative.convertJsonList(serverResponse)), callback);
+            }
+
+            @Override
+            void failure(int statusCode, @Nullable String serverResponse) {
+                callback.onFailure(serverResponse, statusCode);
+            }
+        });
+    }
+
 
     // Recibe una acción que puede fallar por la nueva excepción y un Fallible (CallbackInstance - CallbackCollection)
     private static void executeJsonAction(FallibleExecutable executable, Fallible fallible) {
