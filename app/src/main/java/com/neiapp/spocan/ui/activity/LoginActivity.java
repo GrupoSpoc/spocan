@@ -35,7 +35,7 @@ import com.neiapp.spocan.backend.rest.HTTPCodes;
 import static okhttp3.internal.Internal.instance;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends SpocanActivity {
 
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
@@ -72,10 +72,6 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-    }
-
-    public GoogleSignInClient getSignInClient() {
-        return this.mGoogleSignInClient;
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -144,15 +140,14 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(String message, int httpStatus) {
                             runOnUiThread(() -> {
-                                if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
-                                    Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
-                                } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                                    Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                                //El not acceptable ya esta dentro de handleError, es necesario acá por el paso extra del logOut?
+                                if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode()) {
+                                    Toast.makeText(getApplicationContext(), "Su sesión ha caducado, incie sesión nuevamente", Toast.LENGTH_LONG).show();
+                                    logOut();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                                    handleError(message, httpStatus);
                                 }
                             });
-
                         }
                     });
         });
