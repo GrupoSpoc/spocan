@@ -1,7 +1,8 @@
 package com.neiapp.spocan.Models;
 
 import com.google.gson.JsonObject;
-import org.json.JSONException;
+import com.neiapp.spocan.backend.ParseJsonException;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -48,25 +49,34 @@ public class User implements Serializable {
         this.type = type;
     }
 
-    public String toJson() {
-        JsonObject json = new JsonObject();
+    public String toJson() throws ParseJsonException {
+       try {
+            JsonObject json = new JsonObject();
 
-        json.addProperty("nickname", this.nickname);
-        json.addProperty("type_id", this.type.getId());
+            json.addProperty("nickname", this.nickname);
+            json.addProperty("type_id", this.type.getId());
 
-        return json.toString();
+            return json.toString();
+        }catch (Exception e){
+           String message = "failed to convert user to json"+ e.getMessage();
+           System.out.println(message);
+           throw new ParseJsonException(message);
+        }
     }
 
-    public static User convertJson(String jsonToTransform) {
-        try {
+    public static User convertJson(String jsonToTransform) throws ParseJsonException {
+       try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
+
             final String nickname = jsonObject.getString("nickname");
             final int typeId = jsonObject.getInt("type_id");
             final boolean admin = jsonObject.getBoolean("admin");
             final int amountOfInitiatives = jsonObject.getInt("amount_of_initiatives");
             return new User(nickname, UserType.fromIdOrElseThrow(typeId),amountOfInitiatives, admin);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+           String message = "failed to convert json to user" + e.getMessage();
+           System.out.println(message);
+           throw new ParseJsonException(message);
         }
     }
 }
