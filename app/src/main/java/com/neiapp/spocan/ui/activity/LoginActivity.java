@@ -40,6 +40,7 @@ public class LoginActivity extends SpocanActivity {
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
     private final String TAG = "MainActivity";
+    private final int LOG_IN_MAX_ATTEMPTS = 3;
     private FirebaseAuth mAuth;
 
     @Override
@@ -140,9 +141,8 @@ public class LoginActivity extends SpocanActivity {
                         @Override
                         public void onFailure(String message, int httpStatus) {
                             runOnUiThread(() -> {
-                                //El not acceptable ya esta dentro de handleError, es necesario acá por el paso extra del logOut?
                                 if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode()) {
-                                    Toast.makeText(getApplicationContext(), "Su sesión ha caducado, incie sesión nuevamente", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Debe iniciar sesión  nuevamente", Toast.LENGTH_LONG).show();
                                     logOut();
                                 } else {
                                     handleError(message, httpStatus);
