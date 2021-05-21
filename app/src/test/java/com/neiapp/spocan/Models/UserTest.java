@@ -1,6 +1,8 @@
 package com.neiapp.spocan.Models;
 
 import com.google.gson.JsonObject;
+import com.neiapp.spocan.backend.ParseJsonException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -9,6 +11,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 
 
 @RunWith(RobolectricTestRunner.class)
@@ -39,7 +42,7 @@ public class UserTest {
 
     }
     @Test
-    public void testToJson() throws JSONException {
+    public void testToJson() throws Exception {
         User user = new User(NICKNAME, TYPE);
         String json = user.toJson();
 
@@ -50,7 +53,7 @@ public class UserTest {
     }
 
     @Test
-    public void testConvertJson() {
+    public void testConvertJson() throws ParseJsonException {
         JsonObject jsonUser = new JsonObject();
         jsonUser.addProperty("nickname", NICKNAME);
         jsonUser.addProperty("type_id", TYPE.getId());
@@ -64,6 +67,14 @@ public class UserTest {
         assertEquals(TYPE, result.getType());
         assertEquals(AMOUNT_INITIATIVES,result.getAmountOfInitiatives());
         assertFalse(result.isAdmin());
+
+
     }
 
+    @Test
+    public void convertJsonThrowException(){
+        JsonObject wrong_jsonUser = new JsonObject();
+
+      assertThrows(ParseJsonException.class,()-> User.convertJson(wrong_jsonUser.toString()));
+    }
 }
