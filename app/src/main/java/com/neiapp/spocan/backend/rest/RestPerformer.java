@@ -1,6 +1,10 @@
 package com.neiapp.spocan.backend.rest;
 
+import java.util.Collections;
+import java.util.Map;
+
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -32,8 +36,13 @@ public class RestPerformer {
         performer.postText(url, payload, serverCallback);
     }
 
+
     public void get(String url, Callback serverCallback) {
-        Request request = buildGetRequest(url);
+        get(url, Collections.emptyMap(), serverCallback);
+    }
+
+    public void get(String url, Map<String, String> queryParams, Callback serverCallback) {
+        Request request = buildGetRequest(url, queryParams);
         perform(request, serverCallback);
     }
 
@@ -51,8 +60,8 @@ public class RestPerformer {
         httpClient.newCall(request).enqueue(serverCallback);
     }
 
-    private Request buildGetRequest(String url) {
-        return commonRequestBuilder(url)
+    private Request buildGetRequest(String url, Map<String, String> queryParams) {
+        return commonRequestBuilder(url, queryParams)
                 .get()
                 .build();
     }
@@ -72,7 +81,14 @@ public class RestPerformer {
     }
 
     private Request.Builder commonRequestBuilder(String url) {
-        Request.Builder builder = new Request.Builder().url(url);
+        return commonRequestBuilder(url, Collections.emptyMap());
+    }
+
+    private Request.Builder commonRequestBuilder(String url, Map<String, String> queryParams) {
+        final HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
+        queryParams.forEach(httpBuilder::addQueryParameter);
+
+        final Request.Builder builder = new Request.Builder().url(httpBuilder.build());
 
         if (this.authorizable) {
             builder.addHeader(AUTHORIZATION_HEADER, "Bearer " + jwt);
