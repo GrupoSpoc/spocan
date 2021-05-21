@@ -66,7 +66,7 @@ public class MockedBackendTest {
     @Test
     public void doAuthenticate() {
         MockedBackend.doAuthenticate(user -> {
-            assertEquals("CurrentUser", user.getNickname());
+            assertEquals("TestUser", user.getNickname());
             assertEquals(UserType.PERSON, user.getType());
         });
     }

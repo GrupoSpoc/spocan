@@ -13,6 +13,7 @@ public interface Backend {
     void createInitiative(Initiative initiative, CallbackVoid callback);
     void getAllInitiatives(CallbackCollection<Initiative> collection);
     void getUser(CallbackInstance<User> callback);
+    void logOut(CallbackVoid callback);
     void createUser(User user, CallbackInstance<User> callbackUser);
 
 
