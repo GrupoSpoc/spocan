@@ -40,7 +40,6 @@ public class LoginActivity extends SpocanActivity {
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
     private final String TAG = "MainActivity";
-    private final int LOG_IN_MAX_ATTEMPTS = 3;
     private FirebaseAuth mAuth;
 
     @Override
