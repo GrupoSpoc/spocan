@@ -23,6 +23,7 @@ public class SplashActivity extends Activity {
     ImageView logo;
     TextView company;
     TextView slogan;
+    TextView fiware;
 
 
     @Override
@@ -40,6 +41,8 @@ public class SplashActivity extends Activity {
         logo.setAnimation(top_animation);
         company.setAnimation(bottom_animation);
         slogan.setAnimation(bottom_animation);
+        fiware = findViewById(R.id.textViewFireware);
+        fiware.setAnimation(bottom_animation);
 
 
         handler = new Handler();
