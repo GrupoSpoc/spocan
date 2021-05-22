@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,7 +32,7 @@ import com.neiapp.spocan.backend.rest.HTTPCodes;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends SpocanActivity {
 
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
@@ -70,10 +69,6 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-    }
-
-    public GoogleSignInClient getSignInClient() {
-        return this.mGoogleSignInClient;
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -149,17 +144,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
 
+
                 @Override
                 public void onFailure(String message, int httpStatus) {
                     runOnUiThread(() -> {
-                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
-                            Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
-                        } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                            Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode()) {
+                            Toast.makeText(getApplicationContext(), "Debe iniciar sesión nuevamente, algo salió mal", Toast.LENGTH_LONG).show();
+                            logOut();
                         } else {
-                            Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
+                            handleError(message, httpStatus);
                         }
-
                         // Oculto el spinner dentro del runOnUiThread
                         spinnerDialog.stop();
                     });
