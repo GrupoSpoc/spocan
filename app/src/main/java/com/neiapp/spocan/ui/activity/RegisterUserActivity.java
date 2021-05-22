@@ -20,7 +20,7 @@ import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
 
-public class RegisterUserActivity extends Activity {
+public class RegisterUserActivity extends SpocanActivity {
 
     private Spinner spinner;
     private UserType selectedType;
@@ -60,16 +60,18 @@ public class RegisterUserActivity extends Activity {
                         }
 
                         @Override
-
                         public void onFailure(String message, int httpStatus) {
-                            if (httpStatus == HTTPCodes.NICKNAME_ALREADY_TAKEN.getCode()) {
-                                Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
-                                userNicknameInput.setText("");
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
-                            }
+                            runOnUiThread(()->{
+                                if (httpStatus == HTTPCodes.NICKNAME_ALREADY_TAKEN.getCode()) {
+                                    Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
+                                    userNicknameInput.setText("");
+                                } else {
+                                    RegisterUserActivity.super.handleError(message,httpStatus);
+                                }
+                            });
                         }
                     });
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Debe ingresar un nickname válido para continuar", Toast.LENGTH_SHORT).show();
                 }
