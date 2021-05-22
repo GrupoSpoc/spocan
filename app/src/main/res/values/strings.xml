@@ -38,4 +38,9 @@
     <string name="email_indicator_profile">Email</string>
     <string name="email_profile">spocproyectofinal@gmail.com</string>
 
+    ##Strings para configuración
+    <string name="configuration_titile">Configuración</string>
+    <string name="change_user_button">Cambiar cuenta</string>
+    <string name="logOut_button">Cerrar Sesión</string>
+
 </resources>

@@ -20,11 +20,10 @@ import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
 
-public class RegisterUserActivity extends Activity {
+public class RegisterUserActivity extends SpocanActivity {
 
     private Spinner spinner;
     private UserType selectedType;
-    private Button registerButton;
     private TextView userNicknameInput;
     private String userNickname;
 
@@ -33,7 +32,7 @@ public class RegisterUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_user);
         userNicknameInput = findViewById(R.id.nicknameTextBox);
-        registerButton = findViewById(R.id.registerButton);
+        Button registerButton = findViewById(R.id.registerButton);
 
         //Construccion del dropdown para seleccionar tipo de usuario
         spinner = findViewById(R.id.userTypeSpinner);
@@ -61,19 +60,18 @@ public class RegisterUserActivity extends Activity {
                         }
 
                         @Override
-                        public void onFailure(String message, Integer httpStatus) {
-                            runOnUiThread(() -> {
-                                if (httpStatus != null) {
-                                    if (httpStatus == HTTPCodes.NICKNAME_ALREADY_TAKEN.getCode()) {
-                                        Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
-                                        userNicknameInput.setText("");
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
-                                    }
+                        public void onFailure(String message, int httpStatus) {
+                            runOnUiThread(()->{
+                                if (httpStatus == HTTPCodes.NICKNAME_ALREADY_TAKEN.getCode()) {
+                                    Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
+                                    userNicknameInput.setText("");
+                                } else {
+                                    RegisterUserActivity.super.handleError(message,httpStatus);
                                 }
                             });
                         }
                     });
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Debe ingresar un nickname válido para continuar", Toast.LENGTH_SHORT).show();
                 }

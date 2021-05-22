@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class MockedBackend implements Backend {
     public static ArrayList<Initiative> initiative_store;
-    public static final User USER = new User("CurrentUser", UserType.PERSON, 550, false);
+    public static final User USER = new User("TestUser", UserType.PERSON, 550, false);
+    public static User CURRENT_USER;
 
     protected MockedBackend() {
         if (initiative_store == null) {
@@ -25,12 +26,9 @@ public class MockedBackend implements Backend {
     }
 
     public static void doAuthenticate(CallbackInstance<User> callback) {
-        callback.onSuccess(USER);
-    }
-
-    @Override
-    public void ping() {
-        System.out.println("Mocked pong");
+        CURRENT_USER = USER;
+        //callback.onFailure("test", 400);
+        callback.onSuccess(CURRENT_USER);
     }
 
     @Override
@@ -42,17 +40,15 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void getAll(CallbackCollection<Initiative> collection) {
+    public void getAllInitiatives(CallbackCollection<Initiative> collection) {
         collection.onSuccess(initiative_store);
     }
 
-    @Override
-    public void getObject(CallbackInstance<Object> callback) {
-        callback.onSuccess(null);
-    }
 
-    public void createObject(Object o, CallbackVoid callbackVoid) {
-        callbackVoid.onSuccess();
+    @Override
+    public void logOut(CallbackVoid callback) {
+        CURRENT_USER = null;
+        callback.onSuccess();
     }
 
     @Override
@@ -67,8 +63,7 @@ public class MockedBackend implements Backend {
     }
 
     public void getUser(CallbackInstance<User> callback){
-        callback.onSuccess(USER);
+        callback.onSuccess(CURRENT_USER);
     }
-
 
 }

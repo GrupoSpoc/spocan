@@ -12,16 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import com.neiapp.spocan.Models.Initiative;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
+
 import java.util.Objects;
 
-public class InitiativeActivity extends AppCompatActivity {
+public class InitiativeActivity extends SpocanActivity {
 
     Button mAddPhotoBtn;
     Button mPublishInitiativeBtn;
@@ -78,9 +81,10 @@ public class InitiativeActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "INICIATIVA CREADA", Toast.LENGTH_LONG).show();
                             });
                         }
+
                         @Override
-                        public void onFailure(String message, Integer httpStatus) {
-                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "NO SE PUDO PROCESAR LA OPERACION", Toast.LENGTH_LONG).show());
+                        public void onFailure(String message, int httpStatus) {
+                            InitiativeActivity.super.handleError(message, httpStatus);
                         }
                     });
                 }
@@ -97,7 +101,7 @@ public class InitiativeActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(textDescription.getText())) {
             result = false;
-            Toast.makeText( getApplicationContext(), "DEBE AGREGAR UNA DESCRIPCION", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "DEBE AGREGAR UNA DESCRIPCION", Toast.LENGTH_LONG).show();
         }
         return result;
     }

@@ -14,7 +14,7 @@
         android:layout_height="58dp"
         android:paddingStart="8dp"
         android:layout_marginTop="4dp"
-        android:fontFamily="@font/nunito_light"
+        android:fontFamily="@font/nunito_extralight"
         android:text="@string/SubirIniciativaTitle"
         android:textSize="45sp"
         android:textStyle="bold"

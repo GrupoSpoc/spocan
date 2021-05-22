@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.neiapp.spocan.R;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SpocanActivity {
 
 
     public static final String USER = "User";

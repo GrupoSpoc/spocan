@@ -3,9 +3,9 @@ package com.neiapp.spocan.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,16 +32,15 @@ import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
 
+import static okhttp3.internal.Internal.instance;
 
-public class LoginActivity extends AppCompatActivity {
+
+public class LoginActivity extends SpocanActivity {
 
     private static final int RC_SIGN_IN = 1;
-    private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private String TAG = "MainActivity";
+    private final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
-    Button mSignOutBtn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_user);
 
         mAuth = FirebaseAuth.getInstance();
-        mSignOutBtn = findViewById(R.id.sign_out);
-        signInButton = findViewById(R.id.sign_in_button);
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -59,33 +57,12 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
-
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
             }
         });
-
-        mSignOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-        mGoogleSignInClient.signOut();
-        mSignOutBtn.setVisibility(View.INVISIBLE);
-
     }
 
     @Override
@@ -139,42 +116,45 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser firebaseUser) {
-        mSignOutBtn.setVisibility(View.VISIBLE);
         firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
             GetTokenResult result = task.getResult();
             String token = result.getToken();
 
-            Backend.authenticate(token, new CallbackInstance<User>() {
-                @Override
-                public void onSuccess(User instance) {
-                    runOnUiThread(() -> {
-                        final Intent intent;
-                        if (instance != null) {
-                            intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra(MainActivity.USER, instance);
-                        } else {
-                            intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
-                        }
-                        startActivity(intent);
-                    });
-                }
+            Backend.authenticate(token,
+                    new CallbackInstance<User>() {
+                        @Override
+                        public void onSuccess(User instance) {
+                            runOnUiThread(() -> {
+                                final Intent intent;
+                                if (instance != null) {
+                                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.putExtra(MainActivity.USER, instance);
 
-                @Override
-                public void onFailure(String message, Integer httpStatus) {
-                    runOnUiThread(() -> {
-                        if (httpStatus != null) {
-                            if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
-                                Toast.makeText(getApplicationContext(), "Token invalido o no autorizado", Toast.LENGTH_LONG).show();
-                            } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                                Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
-                            }
+                                } else {
+                                    intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
+                                }
+                                startActivity(intent);
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String message, int httpStatus) {
+                            runOnUiThread(() -> {
+                                if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode()) {
+                                    Toast.makeText(getApplicationContext(), "Debe iniciar sesión nuevamente, algo salió mal", Toast.LENGTH_LONG).show();
+                                    logOut();
+                                } else {
+                                    handleError(message, httpStatus);
+                                }
+                            });
                         }
                     });
-                }
-            });
         });
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
 }

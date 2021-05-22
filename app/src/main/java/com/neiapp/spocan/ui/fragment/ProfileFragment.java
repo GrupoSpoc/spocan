@@ -14,6 +14,7 @@ import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
+import com.neiapp.spocan.ui.activity.SpocanActivity;
 
 public class ProfileFragment extends Fragment {
 
@@ -46,21 +47,11 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(String message, Integer httpStatus) {
-                getActivity().runOnUiThread(() -> {
-                    if (httpStatus != null) {
-                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Comprobar la conexión a Internet", Toast.LENGTH_LONG).show();
-                        } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+            public void onFailure(String message, int httpStatus) {
+                SpocanActivity spocanActivity = (SpocanActivity) getActivity();
+                spocanActivity.handleError(message, httpStatus);
             }
         });
-
         return view;
     }
 }
