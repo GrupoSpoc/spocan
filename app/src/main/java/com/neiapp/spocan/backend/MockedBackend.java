@@ -27,7 +27,8 @@ public class MockedBackend implements Backend {
 
     public static void doAuthenticate(CallbackInstance<User> callback) {
         CURRENT_USER = USER;
-        callback.onFailure("test", 400);
+        //callback.onFailure("test", 400);
+        callback.onSuccess(CURRENT_USER);
     }
 
     @Override

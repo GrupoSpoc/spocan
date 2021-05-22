@@ -75,9 +75,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(String message, int httpStatus) {
                 SpocanActivity spocanActivity = (SpocanActivity) getActivity();
-                spocanActivity.runOnUiThread(() -> {
-                    spocanActivity.handleError(message, httpStatus);
-                });
+                spocanActivity.handleError(message, httpStatus);
             }
         });
 

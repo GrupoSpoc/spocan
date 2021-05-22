@@ -50,11 +50,7 @@ public class ProfileFragment extends Fragment {
             public void onFailure(String message, int httpStatus) {
                 SpocanActivity spocanActivity = (SpocanActivity) getActivity();
                 spocanActivity.runOnUiThread(() -> {
-                    if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode() || httpStatus == HTTPCodes.BAD_REQUEST_DEFAULT.getCode()) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Comprobar la conexión a Internet", Toast.LENGTH_LONG).show();
-                    } else {
-                        spocanActivity.handleError(message, httpStatus);
-                    }
+                    spocanActivity.handleError(message, httpStatus);
                 });
             }
         });

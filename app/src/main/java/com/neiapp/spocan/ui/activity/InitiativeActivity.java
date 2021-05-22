@@ -84,8 +84,8 @@ public class InitiativeActivity extends SpocanActivity {
 
                         @Override
                         public void onFailure(String message, int httpStatus) {
-                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "NO SE PUDO PROCESAR LA OPERACION", Toast.LENGTH_LONG).show());
-                            InitiativeActivity.super.handleError(message, httpStatus);
+                            runOnUiThread(() ->
+                                    InitiativeActivity.super.handleError(message, httpStatus));
                         }
                     });
                 }
