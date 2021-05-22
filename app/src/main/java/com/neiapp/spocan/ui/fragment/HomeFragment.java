@@ -57,6 +57,12 @@ public class HomeFragment extends Fragment {
                         ImageView img;
                         TextView desc;
                         TextView hora;
+                        String horaChica;
+                        String minuto;
+                        String dia;
+                        String mes;
+                        String año;
+                        String horaa;
                         Initiative initiative = collection.get(i);
                         user = myView.findViewById(R.id.username);
                         user.setText(initiative.getNickname());
@@ -65,7 +71,13 @@ public class HomeFragment extends Fragment {
                         desc = myView.findViewById(R.id.description);
                         desc.setText(initiative.getDescription());
                         hora = myView.findViewById(R.id.horario);
-                        hora.setText(initiative.getDateLocal().toString());
+                        minuto = String.valueOf(initiative.getDateLocal().getMinute());
+                        horaa = String.valueOf(initiative.getDateLocal().getHour());
+                        dia = String.valueOf(initiative.getDateLocal().getDayOfMonth());
+                        mes = String.valueOf(initiative.getDateLocal().getMonthValue());
+                        año = String.valueOf(initiative.getDateLocal().getYear());
+                        horaChica = horaa +":"+ minuto + " " + dia + "/" + mes + "/" + año;
+                        hora.setText(horaChica);
                         mparent.addView(myView);
                     }
                 });

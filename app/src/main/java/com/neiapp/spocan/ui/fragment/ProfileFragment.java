@@ -39,7 +39,7 @@ public class ProfileFragment extends Fragment {
                     textViewNickname = view.findViewById(R.id.username_profile);
                     textViewNickname.setText(instance.getNickname());
                     textViewTypeUser = view.findViewById(R.id.type_of_user_profile);
-                    textViewTypeUser.setText(instance.getType().toString());
+                    textViewTypeUser.setText("Tipo de usuario:" + instance.getType().toString());
                     textViewCountPosts = view.findViewById(R.id.count_posts);
                     textViewCountPosts.setText(String.valueOf(instance.getAmountOfInitiatives()));
                 });

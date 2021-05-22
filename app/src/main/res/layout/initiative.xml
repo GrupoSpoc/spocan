@@ -10,8 +10,9 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="305dp"
+        android:layout_width="match_parent"
         android:layout_height="58dp"
+        android:paddingStart="8dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/nunito_light"
         android:text="@string/SubirIniciativaTitle"
@@ -27,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/diseno_fondo_gris"
+        android:background="#00b34a"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -38,80 +39,83 @@
         <EditText
             android:id="@+id/editTextDescription"
             android:layout_width="323dp"
-            android:hint="@string/AddDescriptionBtn"
-            android:drawableRight="@drawable/add_description_icon"
             android:layout_height="85dp"
             android:layout_marginTop="89dp"
             android:layout_marginBottom="160dp"
+            android:drawableRight="@drawable/ic_chat"
             android:ems="10"
-            android:gravity="start|top"
+            android:hint="@string/AddDescriptionBtn"
+            android:textColorHint="@color/white"
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.363"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/publish_button"
-            android:background="@drawable/diseno_botones_verdes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="76dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginRight="80dp"
+            android:layout_marginEnd="84dp"
             android:fontFamily="@font/nunito_light"
             android:text="@string/PublishInitiativeBtn"
-            app:backgroundTint="@color/green_buttons"
+            android:background="@drawable/diseno_botones_verdes"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:backgroundTint="@color/ecologycal_green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDescription"
-            app:layout_constraintVertical_bias="0.025" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/addPhotoBtn"
-            android:background="@drawable/diseno_botones_verdes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/diseno_botones_verdes"
             android:fontFamily="@font/nunito_light"
             android:text="@string/AddPhotoBtn"
-            app:backgroundTint="@color/green_buttons"
+            app:backgroundTint="@color/ecologycal_green"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.061"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.603" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="376dp"
             android:layout_height="235dp"
-            android:background="@color/grey_backgrounds"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.457"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.246"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
+           android:src="@drawable/ic_image" />
 
         <Button
             android:id="@+id/cancel_button"
-            android:background="@drawable/diseno_botones_verdes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
-            android:layout_marginLeft="52dp"
+            android:layout_marginStart="64dp"
             android:layout_marginTop="70dp"
+            app:backgroundTint="@color/black"
+            android:background="@drawable/diseno_botones_verdes"
             android:fontFamily="@font/nunito_light"
             android:text="@string/CancelInitiativeBtn"
-            app:backgroundTint="@color/green_buttons"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDescription"
-            app:layout_constraintVertical_bias="0.161" />
+            app:layout_constraintVertical_bias="0.146" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
