@@ -9,13 +9,10 @@ import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.backend.rest.RestClientBackend;
 
 public interface Backend {
-    void ping();
 
     void createInitiative(Initiative initiative, CallbackVoid callback);
-    void getAll(CallbackCollection<Initiative> collection);
+    void getAllInitiatives(CallbackCollection<Initiative> collection);
     void getUser(CallbackInstance<User> callback);
-    void getObject(CallbackInstance<Object> callback);
-    void createObject(Object o, CallbackVoid callbackVoid);
     void logOut(CallbackVoid callback);
     void createUser(User user, CallbackInstance<User> callbackUser);
 
