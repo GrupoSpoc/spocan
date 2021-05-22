@@ -84,8 +84,7 @@ public class InitiativeActivity extends SpocanActivity {
 
                         @Override
                         public void onFailure(String message, int httpStatus) {
-                            runOnUiThread(() ->
-                                    InitiativeActivity.super.handleError(message, httpStatus));
+                            InitiativeActivity.super.handleError(message, httpStatus);
                         }
                     });
                 }

@@ -142,7 +142,7 @@ public class LoginActivity extends SpocanActivity {
                         public void onFailure(String message, int httpStatus) {
                             runOnUiThread(() -> {
                                 if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode()) {
-                                    Toast.makeText(getApplicationContext(), "Debe iniciar sesión  nuevamente", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Debe iniciar sesión nuevamente, algo salió mal", Toast.LENGTH_LONG).show();
                                     logOut();
                                 } else {
                                     handleError(message, httpStatus);

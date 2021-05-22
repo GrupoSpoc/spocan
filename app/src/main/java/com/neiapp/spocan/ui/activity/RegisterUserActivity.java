@@ -61,12 +61,14 @@ public class RegisterUserActivity extends SpocanActivity {
 
                         @Override
                         public void onFailure(String message, int httpStatus) {
-                            if (httpStatus == HTTPCodes.NICKNAME_ALREADY_TAKEN.getCode()) {
-                                Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
-                                userNicknameInput.setText("");
-                            } else {
-                                RegisterUserActivity.super.handleError(message,httpStatus);
-                            }
+                            runOnUiThread(()->{
+                                if (httpStatus == HTTPCodes.NICKNAME_ALREADY_TAKEN.getCode()) {
+                                    Toast.makeText(getApplicationContext(), "Ya existe el nickname de usuario", Toast.LENGTH_LONG).show();
+                                    userNicknameInput.setText("");
+                                } else {
+                                    RegisterUserActivity.super.handleError(message,httpStatus);
+                                }
+                            });
                         }
                     });
 
