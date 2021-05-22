@@ -24,7 +24,7 @@ import com.neiapp.spocan.backend.callback.CallbackVoid;
 
 import java.util.Objects;
 
-public class InitiativeActivity extends AppCompatActivity {
+public class InitiativeActivity extends SpocanActivity {
 
     Button mAddPhotoBtn;
     Button mPublishInitiativeBtn;
@@ -84,8 +84,7 @@ public class InitiativeActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(String message, int httpStatus) {
-                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "NO SE PUDO PROCESAR LA OPERACION", Toast.LENGTH_LONG).show());
-
+                            InitiativeActivity.super.handleError(message, httpStatus);
                         }
                     });
                 }

@@ -27,12 +27,8 @@ public class MockedBackend implements Backend {
 
     public static void doAuthenticate(CallbackInstance<User> callback) {
         CURRENT_USER = USER;
+        //callback.onFailure("test", 400);
         callback.onSuccess(CURRENT_USER);
-    }
-
-    @Override
-    public void ping() {
-        System.out.println("Mocked pong");
     }
 
     @Override
@@ -44,18 +40,10 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void getAll(CallbackCollection<Initiative> collection) {
+    public void getAllInitiatives(CallbackCollection<Initiative> collection) {
         collection.onSuccess(initiative_store);
     }
 
-    @Override
-    public void getObject(CallbackInstance<Object> callback) {
-        callback.onSuccess(null);
-    }
-
-    public void createObject(Object o, CallbackVoid callbackVoid) {
-        callbackVoid.onSuccess();
-    }
 
     @Override
     public void logOut(CallbackVoid callback) {
@@ -77,6 +65,5 @@ public class MockedBackend implements Backend {
     public void getUser(CallbackInstance<User> callback){
         callback.onSuccess(CURRENT_USER);
     }
-
 
 }
