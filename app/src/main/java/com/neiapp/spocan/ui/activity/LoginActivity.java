@@ -3,14 +3,12 @@ package com.neiapp.spocan.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,8 +29,7 @@ import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
-
-import static okhttp3.internal.Internal.instance;
+import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 
 public class LoginActivity extends SpocanActivity {
@@ -116,39 +113,52 @@ public class LoginActivity extends SpocanActivity {
     }
 
     private void updateUI(FirebaseUser firebaseUser) {
+        // Defino una instancia de SpinnerDialog, pasando el activity y (opcional) el mensaje de carga
+        // sino se le pasa un mensaje, por defecto se muestra 'Cargando'
+        // Para el 'activity', si estoy en un Activity le paso 'this'. Si estoy en un Fragment le paso getActivity()
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Ingresando...");
+
+        // Muestro el spinner antes de ejecutar el proceso con espera
+        spinnerDialog.start();
+
         firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
             GetTokenResult result = task.getResult();
             String token = result.getToken();
 
-            Backend.authenticate(token,
-                    new CallbackInstance<User>() {
-                        @Override
-                        public void onSuccess(User instance) {
-                            runOnUiThread(() -> {
-                                final Intent intent;
-                                if (instance != null) {
-                                    intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    intent.putExtra(MainActivity.USER, instance);
-
-                                } else {
-                                    intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
-                                }
-                                startActivity(intent);
-                            });
+            Backend.authenticate(token, new CallbackInstance<User>() {
+                @Override
+                public void onSuccess(User instance) {
+                    runOnUiThread(() -> {
+                        final Intent intent;
+                        if (instance != null) {
+                            intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra(MainActivity.USER, instance);
+                        } else {
+                            intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                         }
+                        startActivity(intent);
 
-                        @Override
-                        public void onFailure(String message, int httpStatus) {
-                            runOnUiThread(() -> {
-                                if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode()) {
-                                    Toast.makeText(getApplicationContext(), "Debe iniciar sesión nuevamente, algo salió mal", Toast.LENGTH_LONG).show();
-                                    logOut();
-                                } else {
-                                    handleError(message, httpStatus);
-                                }
-                            });
-                        }
+                        // Oculto el spinner dentro del runOnUiThread
+                        spinnerDialog.stop();
                     });
+                }
+
+
+
+                @Override
+                public void onFailure(String message, int httpStatus) {
+                    runOnUiThread(() -> {
+                        if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode()) {
+                            Toast.makeText(getApplicationContext(), "Debe iniciar sesión nuevamente, algo salió mal", Toast.LENGTH_LONG).show();
+                            logOut();
+                        } else {
+                            handleError(message, httpStatus);
+                        }
+                        // Oculto el spinner dentro del runOnUiThread
+                        spinnerDialog.stop();
+                    });
+                }
+            });
         });
     }
 
