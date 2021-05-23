@@ -2,7 +2,9 @@ package com.neiapp.spocan.ui.activity;
 
 import android.content.Intent;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -19,6 +21,8 @@ public abstract class SpocanActivity extends AppCompatActivity {
                 logOut();
             } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
                 Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
+            } else if (httpStatus == HTTPCodes.TIMEOUT.getCode()) {
+                Toast.makeText(getApplicationContext(), "No se pudo procesar la operación, reintentelo", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
             }

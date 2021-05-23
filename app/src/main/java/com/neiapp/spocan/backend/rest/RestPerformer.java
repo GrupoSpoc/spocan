@@ -2,6 +2,7 @@ package com.neiapp.spocan.backend.rest;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -16,6 +17,7 @@ public class RestPerformer {
     private static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json; " + CHARSET_UTF_8;
     private static final String TEXT_PLAIN_CHARSET_UTF_8 = "text/plain; " + CHARSET_UTF_8;
 
+    private final int TIMEOUT_VALUE = 30;
     private final OkHttpClient httpClient;
     private final String jwt;
     private final boolean authorizable;
@@ -27,8 +29,12 @@ public class RestPerformer {
 
     private RestPerformer(String jwt, boolean authorizable) {
         this.jwt = jwt;
-        this.httpClient = new OkHttpClient();
+        this.httpClient = buildHttpClient();
         this.authorizable = authorizable;
+    }
+
+    private OkHttpClient buildHttpClient(){
+        return new OkHttpClient.Builder().connectTimeout(TIMEOUT_VALUE, TimeUnit.SECONDS).build();
     }
 
     public static void postTextUnauthorizable(String url, String payload, Callback serverCallback) {

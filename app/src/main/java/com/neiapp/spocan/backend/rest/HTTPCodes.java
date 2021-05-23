@@ -4,6 +4,7 @@ public enum HTTPCodes {
     NOT_ACCEPTABLE(406),
     SERVER_ERROR(500),
     ERROR_PARSE_JSON(409),
+    TIMEOUT(5001),
     BAD_REQUEST_DEFAULT(400),
     // server bad requests
     BAD_REQUEST(800),
