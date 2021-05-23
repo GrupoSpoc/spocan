@@ -1,7 +1,7 @@
 <resources>
     ##Strings usados para la vista de publicar iniciativa
     <string name="app_name">spocan</string>
-    <string name="SubirIniciativaTitle">Subir Iniciativa</string>
+    <string name="SubirIniciativaTitle">Subi tu Iniciativa</string>
     <string name="AddPhotoBtn">Agregar foto</string>
     <string name="AddDescriptionBtn">Agregar una descripción</string>
     <string name="PublishInitiativeBtn">Publicar</string>
@@ -9,9 +9,9 @@
 
     ##Strings usados para la vista de registrarse
     <string name="registerUser">Registrate</string>
-    <string name="nicknamePlaceholder"> Ingresa tu nickname</string>
-    <string name="registerButton">Registrate</string>
-    <string name="dropDownOptionsDescription">Sos:</string>
+    <string name="nicknamePlaceholder"> Ingresa tu nuevo nickname</string>
+    <string name="registerButton">Registrarse</string>
+    <string name="dropDownOptionsDescription">Usted sera:</string>
 
     ##Strings para las vistas de pantallas
     <string name="homeFragment">Home Fragment</string>
@@ -19,8 +19,10 @@
     <string name="description">Descripcion de la publicacion</string>
 
     ##Strings usados para el splash screen
+    <string name="ciudadesDelFuturo">Ciudades del futuro</string>
     <string name="appTitle">CollaborAR</string>
-    <string name="legalInformation">S.P.O.C Dev 2021 ®</string>
+    <string name="legalInformation">S.P.O.C. Dev 2021 ®</string>
+    <string name="fiware">Powered by FIWARE</string>
 
     ##Strings usados para el log-in
     <string name="loginTitle"> Ingresá a CollaborAr</string>

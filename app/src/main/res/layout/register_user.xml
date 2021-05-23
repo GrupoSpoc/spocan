@@ -3,15 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/grad_profile"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:fontFamily="@font/nunito_light"
+        android:text="@string/registerUser"
+        android:textSize="45dp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout2"
         android:layout_width="425dp"
         android:layout_height="448dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/diseno_fondo_gris"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,31 +36,32 @@
             android:id="@+id/nicknameTextBox"
             android:layout_width="310dp"
             android:layout_height="68dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="108dp"
             android:drawableLeft="@drawable/add_user_icon"
             android:ems="10"
             android:fontFamily="@font/nunito_light"
             android:hint="@string/nicknamePlaceholder"
+            android:textColorHint="@color/white"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/registerButton"
             android:layout_width="230dp"
-            android:layout_height="77dp"
+            android:layout_height="55dp"
             android:background="@drawable/diseno_botones_verdes"
             android:fontFamily="@font/nunito_light"
             android:text="@string/registerButton"
-            app:backgroundTint="@color/green_buttons"
+            app:backgroundTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.525"
+            app:layout_constraintHorizontal_bias="0.523"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userTypeSpinner"
-            app:layout_constraintVertical_bias="0.37" />
+            app:layout_constraintVertical_bias="0.635" />
 
         <Spinner
             android:id="@+id/userTypeSpinner"
@@ -59,7 +74,7 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/nicknameTextBox"
-            app:layout_constraintVertical_bias="0.418" />
+            app:layout_constraintVertical_bias="0.526" />
 
         <TextView
             android:id="@+id/userTypeDesc"
@@ -72,26 +87,13 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/userTypeSpinner"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.227"
+            app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nicknameTextBox"
-            app:layout_constraintVertical_bias="0.333" />
+            app:layout_constraintVertical_bias="0.782" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="207dp"
-        android:layout_height="73dp"
-        android:fontFamily="@font/nunito_light"
-        android:text="@string/registerUser"
-        android:textSize="45dp"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

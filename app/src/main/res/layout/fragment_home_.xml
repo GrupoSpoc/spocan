@@ -32,6 +32,7 @@
         android:id="@+id/CrearPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/ecologycal_green"
         android:clickable="true"
         android:contentDescription="@string/PublishInitiativeBtn"
         android:focusable="true"

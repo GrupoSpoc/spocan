@@ -4,41 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:background="@drawable/grad_profile"
     android:layout_marginBottom="?attr/actionBarSize"
     tools:context=".ui.fragment.ConfigurationFragment">
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:fontFamily="@font/nunito_extralight"
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:fontFamily="@font/nunito_light"
         android:text="@string/configuration_titile"
-        android:textSize="45sp"
-        android:textStyle="bold"
+        android:textSize="45dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.426"
+        android:background="@color/white"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout3"
         android:layout_width="427dp"
         android:layout_height="402dp"
         android:layout_marginTop="45sp"
-        android:background="@drawable/diseno_fondo_gris"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
-        app:layout_constraintVertical_bias="0.115">
+        app:layout_constraintTop_toTopOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.399">
 
         <Button
             android:id="@+id/changeAccountBtn"
             android:layout_width="223dp"
             android:layout_height="59dp"
-            android:layout_marginTop="156dp"
+            android:layout_marginTop="152dp"
             android:background="@drawable/diseno_botones_verdes"
             android:drawableLeft="@drawable/add_user_icon"
             android:fontFamily="@font/nunito_light"
@@ -48,7 +48,6 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.455"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_conversion_absoluteHeight="48dp"

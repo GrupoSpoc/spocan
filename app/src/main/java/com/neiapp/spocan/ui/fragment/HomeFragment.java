@@ -57,7 +57,15 @@ public class HomeFragment extends Fragment {
                         TextView user;
                         ImageView img;
                         TextView desc;
-                        TextView hora;
+                        TextView horario;
+                        String horaChica;
+                        int minuto;
+                        String dia;
+                        String mes;
+                        String año;
+                        int hora;
+                        String horaConCero;
+                        String minutoConCero;
                         Initiative initiative = collection.get(i);
                         user = myView.findViewById(R.id.username);
                         user.setText(initiative.getNickname());
@@ -65,8 +73,16 @@ public class HomeFragment extends Fragment {
                         img.setImageBitmap(initiative.getImage());
                         desc = myView.findViewById(R.id.description);
                         desc.setText(initiative.getDescription());
-                        hora = myView.findViewById(R.id.horario);
-                        hora.setText(initiative.getDateLocal().toString());
+                        horario = myView.findViewById(R.id.horario);
+                        minuto = initiative.getDateLocal().getMinute();
+                        minutoConCero = String.format("%02d", minuto);
+                        hora = initiative.getDateLocal().getHour();
+                        horaConCero = String.format("%02d", hora);
+                        dia = String.valueOf(initiative.getDateLocal().getDayOfMonth());
+                        mes = String.valueOf(initiative.getDateLocal().getMonthValue());
+                        año = String.valueOf(initiative.getDateLocal().getYear());
+                        horaChica = horaConCero +":"+ minutoConCero + " " + dia + "/" + mes + "/" + año;
+                        horario.setText(horaChica);
                         mparent.addView(myView);
                     }
                 });
