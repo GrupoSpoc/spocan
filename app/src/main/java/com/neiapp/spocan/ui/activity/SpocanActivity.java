@@ -1,6 +1,9 @@
 package com.neiapp.spocan.ui.activity;
 
 import android.content.Intent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +16,25 @@ import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
 
 public abstract class SpocanActivity extends AppCompatActivity {
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        View autoHideKeyboardView = getViewForAutoHiddingKeyboard();
+        if (autoHideKeyboardView != null) {
+            autoHideKeyboardView.setOnTouchListener((view, motionEvent) -> {
+                final int action = motionEvent.getAction();
+                if (action == MotionEvent.ACTION_DOWN && getCurrentFocus() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                } else if (action == MotionEvent.ACTION_UP) {
+                    view.performClick();
+                }
+                return true;
+            });
+        }
+    }
 
     public void handleError(String message, int httpStatus) {
         runOnUiThread(() -> {
@@ -50,4 +72,7 @@ public abstract class SpocanActivity extends AppCompatActivity {
         });
     }
 
+    protected View getViewForAutoHiddingKeyboard() {
+        return null;
+    }
 }

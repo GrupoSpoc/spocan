@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.neiapp.spocan.Models.Initiative;
@@ -129,6 +128,11 @@ public class InitiativeActivity extends SpocanActivity {
                 Toast.makeText(getApplicationContext(), "ES NECESARIO APROBAR LOS PERMISOS DE LA CAMARA PARA TOMAR LA FOTO", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected View getViewForAutoHiddingKeyboard() {
+        return findViewById(R.id.initiativeView);
     }
 
 }
