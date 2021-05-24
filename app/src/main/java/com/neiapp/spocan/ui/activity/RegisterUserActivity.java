@@ -33,7 +33,6 @@ public class RegisterUserActivity extends SpocanActivity {
         setContentView(R.layout.register_user);
         userNicknameInput = findViewById(R.id.nicknameTextBox);
         Button registerButton = findViewById(R.id.registerButton);
-
         //Construccion del dropdown para seleccionar tipo de usuario
         spinner = findViewById(R.id.userTypeSpinner);
         UserType[] userTypeOptions = UserType.values();
@@ -77,6 +76,11 @@ public class RegisterUserActivity extends SpocanActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected View getViewForAutoHiddingKeyboard() {
+        return findViewById(R.id.registerUserView);
     }
 
     private boolean validateEmptyTextView(TextView userNicknameInput) {
