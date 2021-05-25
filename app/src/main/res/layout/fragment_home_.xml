@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:text="Switch"
         tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="445dp" />
+        tools:layout_editor_absoluteY="445dp"
+        tools:ignore="MissingConstraints"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
