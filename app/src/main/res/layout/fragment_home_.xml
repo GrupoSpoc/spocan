@@ -48,7 +48,7 @@
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Switch"
+        android:text="mis iniciativas"
         tools:layout_editor_absoluteX="161dp"
         tools:layout_editor_absoluteY="445dp"
         tools:ignore="MissingConstraints"/>
