@@ -133,7 +133,9 @@ public class Initiative {
             final boolean isFromCurrentUser;
             if (jsonObject.has("is_from_current_user")) {
                 isFromCurrentUser = jsonObject.getBoolean("is_from_current_user");
-            } else isFromCurrentUser = false;
+            } else {
+                isFromCurrentUser = false;
+            }
 
             return new Initiative(_id, description, image, nickname, date, isFromCurrentUser);
         } catch (Exception e) {
