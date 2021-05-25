@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -20,13 +21,16 @@ import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class HomeFragment extends Fragment {
 
     FloatingActionButton post;
     LinearLayout mparent;
     LayoutInflater layoutInflater;
+    List<Initiative> initiatives;
 
 
     @Override
@@ -43,6 +47,7 @@ public class HomeFragment extends Fragment {
         //publicaciones
         mparent = root.findViewById(R.id.mParent);
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        initiatives = new ArrayList<>();
 
         fetchInitiatives();
 
@@ -52,6 +57,11 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getContext(), InitiativeActivity.class);
             startActivity(intent);
         });
+
+        Switch switchButton = root.findViewById(R.id.switch1);
+
+        switchButton.setOnClickListener(new FilterByCurrentUserListener());
+
         return root;
     }
 
@@ -59,28 +69,11 @@ public class HomeFragment extends Fragment {
         Backend backend = Backend.getInstance();
         backend.getAllInitiatives(new CallbackCollection<Initiative>() {
             @Override
-            public void onSuccess(List<Initiative> collection) {
+            public void onSuccess(List<Initiative> initiatives) {
+
                 getActivity().runOnUiThread(() -> {
-                    for (int i = 0; i < collection.size(); i++) {
-                        final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
-                        final Initiative initiative = collection.get(i);
-
-                        final TextView user = myView.findViewById(R.id.username);
-                        user.setText(initiative.getNickname());
-
-                        final ImageView img = myView.findViewById(R.id.post_image);
-                        img.setImageBitmap(initiative.getImage());
-
-                        final TextView desc = myView.findViewById(R.id.description);
-                        desc.setText(initiative.getDescription());
-
-                        final String formattedDate = getFormattedDate(initiative);
-
-                        final TextView horario = myView.findViewById(R.id.horario);
-                        horario.setText(formattedDate);
-
-                        mparent.addView(myView);
-                    }
+                    HomeFragment.this.initiatives = initiatives;
+                    populatePostItemsWithEveryInitiative();
                 });
             }
 
@@ -89,20 +82,58 @@ public class HomeFragment extends Fragment {
                 SpocanActivity spocanActivity = (SpocanActivity) getActivity();
                 spocanActivity.handleError(message, httpStatus);
             }
-
-            private String getFormattedDate(Initiative initiative) {
-                int minuto = initiative.getDateLocal().getMinute();
-                String minutoConCero = String.format("%02d", minuto);
-                int hora = initiative.getDateLocal().getHour();
-                String horaConCero = String.format("%02d", hora);
-                String dia = String.valueOf(initiative.getDateLocal().getDayOfMonth());
-                String mes = String.valueOf(initiative.getDateLocal().getMonthValue());
-                String año = String.valueOf(initiative.getDateLocal().getYear());
-
-                return horaConCero +":"+ minutoConCero + " " + dia + "/" + mes + "/" + año;
-            }
         });
+    }
 
+    private void populatePostItemsWithEveryInitiative() {
+        populatePostItems(initiative -> true);
+    }
+
+    private void populatePostItems(Predicate<Initiative> predicate) {
+        mparent.removeAllViews();
+        initiatives.stream().filter(predicate).forEach(initiative ->  {
+            final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
+
+            final TextView user = myView.findViewById(R.id.username);
+            user.setText(initiative.getNickname());
+
+            final ImageView img = myView.findViewById(R.id.post_image);
+            img.setImageBitmap(initiative.getImage());
+
+            final TextView desc = myView.findViewById(R.id.description);
+            desc.setText(initiative.getDescription());
+
+            final String formattedDate = getFormattedDate(initiative);
+
+            final TextView horario = myView.findViewById(R.id.horario);
+            horario.setText(formattedDate);
+
+            mparent.addView(myView);
+        });
+    }
+
+    private String getFormattedDate(Initiative initiative) {
+        int minuto = initiative.getDateLocal().getMinute();
+        String minutoConCero = String.format("%02d", minuto);
+        int hora = initiative.getDateLocal().getHour();
+        String horaConCero = String.format("%02d", hora);
+        String dia = String.valueOf(initiative.getDateLocal().getDayOfMonth());
+        String mes = String.valueOf(initiative.getDateLocal().getMonthValue());
+        String año = String.valueOf(initiative.getDateLocal().getYear());
+
+        return horaConCero +":"+ minutoConCero + " " + dia + "/" + mes + "/" + año;
+    }
+
+    private class FilterByCurrentUserListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Switch aSwitch = (Switch) v;
+            if (aSwitch.isChecked()) {
+                populatePostItems(Initiative::isFromCurrentUser);
+            } else {
+                populatePostItemsWithEveryInitiative();
+            }
+        }
     }
 }
 

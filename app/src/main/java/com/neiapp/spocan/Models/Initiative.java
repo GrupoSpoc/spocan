@@ -129,12 +129,8 @@ public class Initiative {
             final String image = jsonObject.getString("image");
             final String nickname = jsonObject.getString("nickname");
             final String date = jsonObject.getString("date");
-            final boolean isFromCurrentUser;
-            if (jsonObject.has("is_from_current_user")) {
-                isFromCurrentUser = jsonObject.getBoolean("is_from_current_user");
-            } else {
-                isFromCurrentUser = false;
-            }
+            // final boolean isFromCurrentUser = jsonObject.getBoolean("is_from_current_user");
+            final boolean isFromCurrentUser = nickname.equalsIgnoreCase("nei"); // todo reemplazar por linea superior
             return new Initiative(_id, description, image, nickname, date, isFromCurrentUser);
         } catch (Exception e) {
             String message = "failed to convert jsno to initiative"+e.getMessage();
