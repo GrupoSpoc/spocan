@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,7 +17,6 @@ import com.neiapp.spocan.Models.Initiative;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
-import com.neiapp.spocan.backend.rest.HTTPCodes;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
 
@@ -41,48 +39,46 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        View eso = inflater.inflate(R.layout.fragment_home_, container, false);
+        View root = inflater.inflate(R.layout.fragment_home_, container, false);
         //publicaciones
-        mparent = eso.findViewById(R.id.mParent);
+        mparent = root.findViewById(R.id.mParent);
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //backend
+
+        fetchInitiatives();
+
+        //publicar
+        post = root.findViewById(R.id.CrearPost);
+        post.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), InitiativeActivity.class);
+            startActivity(intent);
+        });
+        return root;
+    }
+
+    private void fetchInitiatives() {
         Backend backend = Backend.getInstance();
         backend.getAllInitiatives(new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> collection) {
                 getActivity().runOnUiThread(() -> {
                     for (int i = 0; i < collection.size(); i++) {
-                        View myView = layoutInflater.inflate(R.layout.post_item, null, false);
-                        TextView user;
-                        ImageView img;
-                        TextView desc;
-                        TextView horario;
-                        String horaChica;
-                        int minuto;
-                        String dia;
-                        String mes;
-                        String año;
-                        int hora;
-                        String horaConCero;
-                        String minutoConCero;
-                        Initiative initiative = collection.get(i);
-                        user = myView.findViewById(R.id.username);
+                        final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
+                        final Initiative initiative = collection.get(i);
+
+                        final TextView user = myView.findViewById(R.id.username);
                         user.setText(initiative.getNickname());
-                        img = myView.findViewById(R.id.post_image);
+
+                        final ImageView img = myView.findViewById(R.id.post_image);
                         img.setImageBitmap(initiative.getImage());
-                        desc = myView.findViewById(R.id.description);
+
+                        final TextView desc = myView.findViewById(R.id.description);
                         desc.setText(initiative.getDescription());
-                        horario = myView.findViewById(R.id.horario);
-                        minuto = initiative.getDateLocal().getMinute();
-                        minutoConCero = String.format("%02d", minuto);
-                        hora = initiative.getDateLocal().getHour();
-                        horaConCero = String.format("%02d", hora);
-                        dia = String.valueOf(initiative.getDateLocal().getDayOfMonth());
-                        mes = String.valueOf(initiative.getDateLocal().getMonthValue());
-                        año = String.valueOf(initiative.getDateLocal().getYear());
-                        horaChica = horaConCero +":"+ minutoConCero + " " + dia + "/" + mes + "/" + año;
-                        horario.setText(horaChica);
+
+                        final String formattedDate = getFormattedDate(initiative);
+
+                        final TextView horario = myView.findViewById(R.id.horario);
+                        horario.setText(formattedDate);
+
                         mparent.addView(myView);
                     }
                 });
@@ -93,18 +89,20 @@ public class HomeFragment extends Fragment {
                 SpocanActivity spocanActivity = (SpocanActivity) getActivity();
                 spocanActivity.handleError(message, httpStatus);
             }
-        });
 
-        //publicar
-        post = eso.findViewById(R.id.CrearPost);
-        post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), InitiativeActivity.class);
-                startActivity(intent);
+            private String getFormattedDate(Initiative initiative) {
+                int minuto = initiative.getDateLocal().getMinute();
+                String minutoConCero = String.format("%02d", minuto);
+                int hora = initiative.getDateLocal().getHour();
+                String horaConCero = String.format("%02d", hora);
+                String dia = String.valueOf(initiative.getDateLocal().getDayOfMonth());
+                String mes = String.valueOf(initiative.getDateLocal().getMonthValue());
+                String año = String.valueOf(initiative.getDateLocal().getYear());
+
+                return horaConCero +":"+ minutoConCero + " " + dia + "/" + mes + "/" + año;
             }
         });
-        return eso;
+
     }
 }
 
