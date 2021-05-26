@@ -46,9 +46,9 @@ public class RegisterUserActivity extends SpocanActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerDialog.start();
                 selectedType = (UserType) spinner.getSelectedItem();
                 if (!validateEmptyTextView(userNicknameInput)) {
+                    spinnerDialog.start();
                     userNickname = userNicknameInput.getText().toString();
                     User newUser = new User(userNickname, selectedType);
                     Backend.getInstance().createUser(newUser, new CallbackInstance<User>() {

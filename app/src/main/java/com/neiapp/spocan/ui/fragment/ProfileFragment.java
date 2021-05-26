@@ -34,9 +34,9 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         //spinner
         final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cargando perfil...");
-        spinnerDialog.start();
         View view = inflater.inflate(R.layout.fragment_profile_, container, false);
         Backend backend = Backend.getInstance();
+        spinnerDialog.start();
         backend.getUser(new CallbackInstance<User>() {
             @Override
             public void onSuccess(User instance) {

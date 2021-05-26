@@ -71,8 +71,9 @@ public class InitiativeActivity extends SpocanActivity {
             @Override
             public void onClick(View v) {
 
-                spinnerDialog.start();
+
                 if (validateField()) {
+                    spinnerDialog.start();
                     Initiative intitiative = new Initiative(textDescription.getText().toString(), bitmap, true);
                     Backend backend = Backend.getInstance();
                     backend.createInitiative(intitiative, new CallbackVoid() {
@@ -89,7 +90,9 @@ public class InitiativeActivity extends SpocanActivity {
                         @Override
                         public void onFailure(String message, int httpStatus) {
                             InitiativeActivity.super.handleError(message, httpStatus);
-                            spinnerDialog.stop();
+                            runOnUiThread(() -> {
+                                spinnerDialog.stop();
+                            });
                         }
                     });
                 }
