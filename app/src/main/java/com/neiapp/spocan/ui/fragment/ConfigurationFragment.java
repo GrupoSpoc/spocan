@@ -18,6 +18,7 @@ import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.ui.activity.LoginActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
+import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 
 public class ConfigurationFragment extends Fragment {
@@ -32,14 +33,21 @@ public class ConfigurationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_configuration_, container, false);
         Button changeAccountBtn = view.findViewById(R.id.changeAccountBtn);
+        //spinner
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cerrando sesion...");
+
 
         changeAccountBtn.setOnClickListener(v -> {
+            spinnerDialog.start();
             Backend backend = Backend.getInstance();
             backend.logOut(new CallbackVoid() {
                 @Override
                 public void onSuccess() {
                     SpocanActivity spocanActivity = (SpocanActivity) getActivity();
                     spocanActivity.runOnUiThread(spocanActivity::logOut);
+                    spocanActivity.runOnUiThread(() -> {
+                        spinnerDialog.stop();
+                    });
                 }
             });
         });
