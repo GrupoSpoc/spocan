@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/background_spinner">
+        <shape
+            android:innerRadiusRatio="3"
+            android:shape="ring"
+            android:useLevel="false">
+            <solid  android:color="@color/grey_profile"/>
+        </shape>
+    </item>
+
+    <item android:id="@+id/progress_spinner">
+        <rotate
+            android:fromDegrees="0"
+            android:toDegrees="360">
+            <shape
+                android:innerRadiusRatio="3"
+                android:shape="ring"
+                android:useLevel="true">
+
+                <solid android:color="@color/ecologycal_green" />
+
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

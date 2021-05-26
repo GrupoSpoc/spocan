@@ -20,6 +20,7 @@ import com.neiapp.spocan.Models.Initiative;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
+import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 import java.util.Objects;
 
@@ -36,7 +37,8 @@ public class InitiativeActivity extends SpocanActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.initiative);
-
+        //spinner
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Enviando iniciativa...");
         mAddPhotoBtn = findViewById(R.id.addPhotoBtn);
         mCancelPublishBtn = findViewById(R.id.cancel_button);
         mPublishInitiativeBtn = findViewById(R.id.publish_button);
@@ -68,7 +70,10 @@ public class InitiativeActivity extends SpocanActivity {
         mPublishInitiativeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if (validateField()) {
+                    spinnerDialog.start();
                     Initiative intitiative = new Initiative(textDescription.getText().toString(), bitmap, true);
                     Backend backend = Backend.getInstance();
                     backend.createInitiative(intitiative, new CallbackVoid() {
@@ -78,12 +83,16 @@ public class InitiativeActivity extends SpocanActivity {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                                 Toast.makeText(getApplicationContext(), "INICIATIVA CREADA", Toast.LENGTH_LONG).show();
+                                spinnerDialog.stop();
                             });
                         }
 
                         @Override
                         public void onFailure(String message, int httpStatus) {
                             InitiativeActivity.super.handleError(message, httpStatus);
+                            runOnUiThread(() -> {
+                                spinnerDialog.stop();
+                            });
                         }
                     });
                 }

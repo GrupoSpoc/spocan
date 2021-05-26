@@ -21,6 +21,7 @@ import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
+import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 import java.util.List;
 
@@ -40,6 +41,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //spinner
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cargando iniciativas...");
+        spinnerDialog.start();
 
         // Inflate the layout for this fragment
         View eso = inflater.inflate(R.layout.fragment_home_, container, false);
@@ -85,6 +89,7 @@ public class HomeFragment extends Fragment {
                         horario.setText(horaChica);
                         mparent.addView(myView);
                     }
+                    spinnerDialog.stop();
                 });
             }
 
@@ -92,6 +97,9 @@ public class HomeFragment extends Fragment {
             public void onFailure(String message, int httpStatus) {
                 SpocanActivity spocanActivity = (SpocanActivity) getActivity();
                 spocanActivity.handleError(message, httpStatus);
+                spocanActivity.runOnUiThread(() -> {
+                    spinnerDialog.stop();
+                });
             }
         });
 

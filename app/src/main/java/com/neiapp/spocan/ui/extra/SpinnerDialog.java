@@ -22,7 +22,6 @@ public class SpinnerDialog {
         final LayoutInflater inflater = activity.getLayoutInflater();
         final View inflatedView = inflater.inflate(R.layout.spinner_dialog, null);
         final TextView loadingTextView = inflatedView.findViewById(R.id.loadingTextView);
-
         loadingTextView.setText(loadingMessage);
         builder.setView(inflatedView);
         builder.setCancelable(false);
@@ -36,4 +35,5 @@ public class SpinnerDialog {
     public void stop() {
         dialog.dismiss();
     }
+
 }

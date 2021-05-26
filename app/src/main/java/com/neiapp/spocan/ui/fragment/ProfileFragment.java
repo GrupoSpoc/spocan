@@ -15,6 +15,7 @@ import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
+import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 public class ProfileFragment extends Fragment {
 
@@ -31,8 +32,11 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //spinner
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cargando perfil...");
         View view = inflater.inflate(R.layout.fragment_profile_, container, false);
         Backend backend = Backend.getInstance();
+        spinnerDialog.start();
         backend.getUser(new CallbackInstance<User>() {
             @Override
             public void onSuccess(User instance) {
@@ -43,6 +47,7 @@ public class ProfileFragment extends Fragment {
                     textViewTypeUser.setText("Tipo de usuario:" + instance.getType().toString());
                     textViewCountPosts = view.findViewById(R.id.count_posts);
                     textViewCountPosts.setText(String.valueOf(instance.getAmountOfInitiatives()));
+                    spinnerDialog.stop();
                 });
             }
 
@@ -50,6 +55,9 @@ public class ProfileFragment extends Fragment {
             public void onFailure(String message, int httpStatus) {
                 SpocanActivity spocanActivity = (SpocanActivity) getActivity();
                 spocanActivity.handleError(message, httpStatus);
+                spocanActivity.runOnUiThread(() -> {
+                    spinnerDialog.stop();
+                });
             }
         });
         return view;
