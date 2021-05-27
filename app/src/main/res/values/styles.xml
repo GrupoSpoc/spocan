@@ -4,4 +4,8 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
+    
+    <style name="ProgressTheme">
+        <item name="colorAccent">@color/ecologycal_green</item>
+    </style>
 </resources>

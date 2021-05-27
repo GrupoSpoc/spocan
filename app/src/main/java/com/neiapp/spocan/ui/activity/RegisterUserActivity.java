@@ -19,6 +19,7 @@ import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.rest.HTTPCodes;
+import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 public class RegisterUserActivity extends SpocanActivity {
 
@@ -39,12 +40,15 @@ public class RegisterUserActivity extends SpocanActivity {
         ArrayAdapter<UserType> adapter = new ArrayAdapter<UserType>(this, android.R.layout.simple_spinner_dropdown_item, userTypeOptions);
         spinner.setAdapter(adapter);
 
+        //spinner
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Registrandose...");
+
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 selectedType = (UserType) spinner.getSelectedItem();
                 if (!validateEmptyTextView(userNicknameInput)) {
+                    spinnerDialog.start();
                     userNickname = userNicknameInput.getText().toString();
                     User newUser = new User(userNickname, selectedType);
                     Backend.getInstance().createUser(newUser, new CallbackInstance<User>() {
@@ -55,6 +59,7 @@ public class RegisterUserActivity extends SpocanActivity {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra(MainActivity.USER, user);
                                 startActivity(intent);
+                                spinnerDialog.stop();
                             });
                         }
 
@@ -67,6 +72,7 @@ public class RegisterUserActivity extends SpocanActivity {
                                 } else {
                                     RegisterUserActivity.super.handleError(message,httpStatus);
                                 }
+                                spinnerDialog.stop();
                             });
                         }
                     });

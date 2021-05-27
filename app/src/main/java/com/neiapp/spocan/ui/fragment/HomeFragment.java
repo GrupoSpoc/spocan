@@ -20,6 +20,7 @@ import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
+import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchInitiatives() {
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cargando iniciativas...");
+        spinnerDialog.start();
         Backend backend = Backend.getInstance();
         backend.getAllInitiatives(new CallbackCollection<Initiative>() {
             @Override
@@ -74,6 +77,7 @@ public class HomeFragment extends Fragment {
                 getActivity().runOnUiThread(() -> {
                     HomeFragment.this.initiatives = initiatives;
                     populatePostItemsWithEveryInitiative();
+                    spinnerDialog.stop();
                 });
             }
 
@@ -81,6 +85,7 @@ public class HomeFragment extends Fragment {
             public void onFailure(String message, int httpStatus) {
                 SpocanActivity spocanActivity = (SpocanActivity) getActivity();
                 spocanActivity.handleError(message, httpStatus);
+                spocanActivity.runOnUiThread(() -> spinnerDialog.stop());
             }
         });
     }
