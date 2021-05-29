@@ -6,7 +6,7 @@ public class Paths {
     public static final String BASE = "https://spochi.herokuapp.com";
 
     // TEST
-    // public static final String BASE = "https://spochi-test.herokuapp.com";
+    //public static final String BASE = "https://spochi-test.herokuapp.com";
 
     // LOCAL
     // public static final String BASE = "http://10.0.2.2:8080";
