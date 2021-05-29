@@ -131,8 +131,8 @@ public class Initiative {
             final String date = jsonObject.getString("date");
 
             final boolean isFromCurrentUser;
-            if (jsonObject.has("is_from_current_user")) {
-                isFromCurrentUser = jsonObject.getBoolean("is_from_current_user");
+            if (jsonObject.has("from_current_user")) {
+                isFromCurrentUser = jsonObject.getBoolean("from_current_user");
             } else {
                 isFromCurrentUser = false;
             }
