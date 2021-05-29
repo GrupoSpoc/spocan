@@ -3,6 +3,7 @@ package com.neiapp.spocan.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +24,7 @@ import com.neiapp.spocan.ui.activity.InitiativeActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -32,6 +35,7 @@ public class HomeFragment extends Fragment {
     LinearLayout mparent;
     LayoutInflater layoutInflater;
     List<Initiative> initiatives;
+    NestedScrollView nestedScrollView;
 
 
     @Override
@@ -50,7 +54,26 @@ public class HomeFragment extends Fragment {
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         initiatives = new ArrayList<>();
 
-        fetchInitiatives();
+        nestedScrollView = root.findViewById(R.id.scrollView);
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+           @Override
+           public void onScrollChange(NestedScrollView view, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
+               if (bottomWasReached(view, actualY)) {
+                   final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cargando más iniciativas...");
+                   spinnerDialog.start();
+                   Handler handler = new Handler();
+                   handler.postDelayed(spinnerDialog::stop, 5000);
+               }
+           }
+
+           private boolean bottomWasReached(NestedScrollView view, int actualY) {
+               final int bottomY = Math.abs(view.getMeasuredHeight() - view.getChildAt(0).getMeasuredHeight());
+               return  bottomY - actualY == 0;
+           }
+
+       });
+
+                fetchInitiatives();
 
         //publicar
         post = root.findViewById(R.id.CrearPost);
@@ -139,6 +162,10 @@ public class HomeFragment extends Fragment {
                 populatePostItemsWithEveryInitiative();
             }
         }
+    }
+
+    private LocalDateTime getLastInitiativeDateUTC() {
+        return initiatives.isEmpty() ? null : initiatives.get(initiatives.size()).getDateUTC();
     }
 }
 
