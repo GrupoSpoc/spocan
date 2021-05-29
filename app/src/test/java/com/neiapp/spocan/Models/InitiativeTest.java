@@ -95,7 +95,7 @@ public class InitiativeTest {
         jsonInitiative.addProperty("image", "imageBase64");
         jsonInitiative.addProperty("nickname", "nickname");
         jsonInitiative.addProperty("date", dateStrUTC);
-        jsonInitiative.addProperty("is_from_current_user", "true");
+        jsonInitiative.addProperty("from_current_user", "true");
 
         Initiative result = Initiative.convertJson(jsonInitiative.toString());
 
