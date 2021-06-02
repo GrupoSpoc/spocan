@@ -24,7 +24,7 @@ public class MockedBackendTest {
         MockedBackend fakeBackend = new MockedBackend();
         int originalSize = MockedBackend.initiative_store.size();
         Initiative created;
-        Initiative initiative = new Initiative("description", "image", false);
+        Initiative initiative = new Initiative("description", "image");
         CallbackVoid callback = new CallbackVoid() {
             @Override
             public void onSuccess() {
@@ -41,8 +41,8 @@ public class MockedBackendTest {
         MockedBackend fakeBackend = new MockedBackend();
         int originalSize = MockedBackend.initiative_store.size();
 
-        Initiative initiative_first = new Initiative("description", "image", false);
-        Initiative initiative_second = new Initiative("description", "image", false);
+        Initiative initiative_first = new Initiative("description", "image");
+        Initiative initiative_second = new Initiative("description", "image");
         CallbackVoid call = new CallbackVoid() {
             @Override
             public void onSuccess() {
@@ -51,7 +51,7 @@ public class MockedBackendTest {
 
         fakeBackend.createInitiative(initiative_first, call);
         fakeBackend.createInitiative(initiative_second, call);
-        fakeBackend.getAllInitiatives(dateFrom, fromCurrentUser, offset, new CallbackCollection<Initiative>() {
+        fakeBackend.getAllInitiatives(null, false, 0, new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> collection) {
                 assertEquals(originalSize + 2, MockedBackend.initiative_store.size());

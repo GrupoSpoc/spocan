@@ -74,7 +74,7 @@ public class InitiativeActivity extends SpocanActivity {
 
                 if (validateField()) {
                     spinnerDialog.start();
-                    Initiative intitiative = new Initiative(textDescription.getText().toString(), bitmap, true);
+                    Initiative intitiative = new Initiative(textDescription.getText().toString(), bitmap);
                     Backend backend = Backend.getInstance();
                     backend.createInitiative(intitiative, new CallbackVoid() {
                         @Override
