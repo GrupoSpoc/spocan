@@ -16,7 +16,7 @@ import com.neiapp.spocan.backend.rest.query.QueryParamsBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
+import java.time.LocalDateTime;
 
 import static com.neiapp.spocan.backend.rest.HTTPCodes.ERROR_PARSE_JSON;
 
@@ -105,10 +105,24 @@ public class RestClientBackend implements Backend {
 
 
     @Override
-    public void getAllInitiatives(CallbackCollection<Initiative> callback) {
-        Map<String, String> queryParams = new QueryParamsBuilder().withParam(QueryParam.ORDER, "1").build();
+    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, int offset, CallbackCollection<Initiative> callback) {
+        QueryParamsBuilder queryParamsBuilder = new QueryParamsBuilder();
+        queryParamsBuilder
+                .withParam(QueryParam.ORDER, "1")
+                .withParam(QueryParam.LIMIT, "2")
+                .withParam(QueryParam.STATUS, "2");
+        if (fromCurrentUser) {
+                queryParamsBuilder.withParam(QueryParam.CURRENT_USER, String.valueOf(fromCurrentUser));
+                queryParamsBuilder.withParam(QueryParam.OFFSET, String.valueOf(offset));
+                queryParamsBuilder.withParam(QueryParam.STATUS, "1"); // sumamos las pendientes
 
-        performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, queryParams, new ServerEnsureResponseCallback() {
+        }
+
+        if (dateTop != null) {
+               queryParamsBuilder.withParam(QueryParam.DATE_TOP, dateTop.toString());
+        }
+
+        performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, queryParamsBuilder.build(), new ServerEnsureResponseCallback() {
             @Override
             void doSuccess(@NotNull String serverResponse) {
                 executeJsonAction(() -> callback.onSuccess(Initiative.convertJsonList(serverResponse)), callback);

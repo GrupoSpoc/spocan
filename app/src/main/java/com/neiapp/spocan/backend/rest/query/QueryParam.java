@@ -1,7 +1,12 @@
 package com.neiapp.spocan.backend.rest.query;
 
 public enum QueryParam {
-    ORDER("order");
+    ORDER("order"),
+    STATUS("statusId"),
+    CURRENT_USER("currentUser"),
+    DATE_TOP("dateTop"),
+    OFFSET("offset"),
+    LIMIT("limit");
 
     private final String label;
 

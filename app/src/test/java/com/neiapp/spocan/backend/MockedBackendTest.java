@@ -51,7 +51,7 @@ public class MockedBackendTest {
 
         fakeBackend.createInitiative(initiative_first, call);
         fakeBackend.createInitiative(initiative_second, call);
-        fakeBackend.getAllInitiatives(new CallbackCollection<Initiative>() {
+        fakeBackend.getAllInitiatives(dateFrom, fromCurrentUser, offset, new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> collection) {
                 assertEquals(originalSize + 2, MockedBackend.initiative_store.size());

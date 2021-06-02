@@ -8,6 +8,7 @@ import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MockedBackend implements Backend {
@@ -40,7 +41,7 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void getAllInitiatives(CallbackCollection<Initiative> collection) {
+    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, int offset, CallbackCollection<Initiative> collection) {
         collection.onSuccess(initiative_store);
     }
 

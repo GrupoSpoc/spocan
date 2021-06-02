@@ -36,6 +36,8 @@ public class HomeFragment extends Fragment {
     LayoutInflater layoutInflater;
     List<Initiative> initiatives;
     NestedScrollView nestedScrollView;
+    int offset;
+    boolean fromCurrentUser = false;
 
 
     @Override
@@ -59,10 +61,11 @@ public class HomeFragment extends Fragment {
            @Override
            public void onScrollChange(NestedScrollView view, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
                if (bottomWasReached(view, actualY)) {
-                   final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cargando más iniciativas...");
-                   spinnerDialog.start();
-                   Handler handler = new Handler();
-                   handler.postDelayed(spinnerDialog::stop, 5000);
+                   if (fromCurrentUser) {
+                       offset = initiatives.size();
+                   }
+                   fetchInitiatives();
+
                }
            }
 
@@ -73,7 +76,7 @@ public class HomeFragment extends Fragment {
 
        });
 
-                fetchInitiatives();
+        fetchInitiatives();
 
         //publicar
         post = root.findViewById(R.id.CrearPost);
@@ -90,16 +93,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchInitiatives() {
-        final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cargando iniciativas...");
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "", true);
         spinnerDialog.start();
         Backend backend = Backend.getInstance();
-        backend.getAllInitiatives(new CallbackCollection<Initiative>() {
+        final LocalDateTime dateTop = getLastInitiativeDateUTC();
+        backend.getAllInitiatives(dateTop, fromCurrentUser, offset, new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> initiatives) {
 
                 getActivity().runOnUiThread(() -> {
-                    HomeFragment.this.initiatives = initiatives;
-                    populatePostItemsWithEveryInitiative();
+                    HomeFragment.this.initiatives.addAll(initiatives);
+                    populatePostItems();
                     spinnerDialog.stop();
                 });
             }
@@ -113,13 +117,9 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void populatePostItemsWithEveryInitiative() {
-        populatePostItems(initiative -> true);
-    }
-
-    private void populatePostItems(Predicate<Initiative> predicate) {
+    private void populatePostItems() {
         mparent.removeAllViews();
-        initiatives.stream().filter(predicate).forEach(initiative ->  {
+        initiatives.forEach(initiative ->  {
             final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
 
             final TextView user = myView.findViewById(R.id.username);
@@ -156,16 +156,21 @@ public class HomeFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Switch aSwitch = (Switch) v;
+
             if (aSwitch.isChecked()) {
-                populatePostItems(Initiative::isFromCurrentUser);
+                fromCurrentUser = true;
             } else {
-                populatePostItemsWithEveryInitiative();
+                fromCurrentUser = false;
             }
+
+            offset = 0;
+            HomeFragment.this.initiatives.clear();
+            fetchInitiatives();
         }
     }
 
     private LocalDateTime getLastInitiativeDateUTC() {
-        return initiatives.isEmpty() ? null : initiatives.get(initiatives.size()).getDateUTC();
+        return initiatives.isEmpty() ? null : initiatives.get(initiatives.size() - 1).getDateUTC();
     }
 }
 
