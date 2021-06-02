@@ -16,7 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.neiapp.spocan.Models.Initiative;
+import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackVoid;

@@ -15,7 +15,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.neiapp.spocan.Models.Initiative;
+import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
@@ -26,7 +26,6 @@ import com.neiapp.spocan.ui.extra.SpinnerDialog;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class HomeFragment extends Fragment {
 
@@ -71,7 +70,8 @@ public class HomeFragment extends Fragment {
 
            private boolean bottomWasReached(NestedScrollView view, int actualY) {
                final int bottomY = Math.abs(view.getMeasuredHeight() - view.getChildAt(0).getMeasuredHeight());
-               return  bottomY - actualY == 0;
+               // System.out.println(bottomY - actualY);
+               return bottomY - actualY == -110; // todo mejorar esto
            }
 
        });

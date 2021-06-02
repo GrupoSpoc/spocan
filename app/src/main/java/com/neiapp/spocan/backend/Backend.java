@@ -1,8 +1,8 @@
 package com.neiapp.spocan.backend;
 
 import com.neiapp.spocan.BuildConfig;
-import com.neiapp.spocan.Models.Initiative;
-import com.neiapp.spocan.Models.User;
+import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;

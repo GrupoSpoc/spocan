@@ -1,4 +1,4 @@
-package com.neiapp.spocan.Models;
+package com.neiapp.spocan.models;
 
 import android.graphics.Bitmap;
 import android.os.Build;

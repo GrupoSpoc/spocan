@@ -2,9 +2,10 @@ package com.neiapp.spocan.backend.rest;
 
 import androidx.annotation.Nullable;
 
-import com.neiapp.spocan.Models.Initiative;
-import com.neiapp.spocan.Models.TokenInfo;
-import com.neiapp.spocan.Models.User;
+import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.InitiativeStatus;
+import com.neiapp.spocan.models.TokenInfo;
+import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.ParseJsonException;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
@@ -110,11 +111,12 @@ public class RestClientBackend implements Backend {
         queryParamsBuilder
                 .withParam(QueryParam.ORDER, "1")
                 .withParam(QueryParam.LIMIT, "2")
-                .withParam(QueryParam.STATUS, "2");
+                .withParam(QueryParam.STATUS, String.valueOf(InitiativeStatus.APPROVED.getId()));
+
         if (fromCurrentUser) {
                 queryParamsBuilder.withParam(QueryParam.CURRENT_USER, String.valueOf(fromCurrentUser));
                 queryParamsBuilder.withParam(QueryParam.OFFSET, String.valueOf(offset));
-                queryParamsBuilder.withParam(QueryParam.STATUS, "1"); // sumamos las pendientes
+                queryParamsBuilder.withParam(QueryParam.STATUS, String.valueOf(InitiativeStatus.PENDING.getId())); // sumamos las pendientes
 
         }
 

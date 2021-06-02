@@ -1,9 +1,8 @@
-package com.neiapp.spocan.Models;
+package com.neiapp.spocan.models;
 
 import com.google.gson.JsonObject;
 import com.neiapp.spocan.backend.ParseJsonException;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
