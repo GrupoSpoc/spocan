@@ -44,4 +44,10 @@
     <string name="change_user_button">Cambiar cuenta</string>
     <string name="logOut_button">Cerrar Sesión</string>
 
+    ##Strings para switch home
+    <string name="switch_on">Propias</string>
+    <string name="switch_off">Todas</string>
+    <string name="switch_desc">Mis Iniciativas</string>
+    <string name="own">Tus posts</string>
+
 </resources>

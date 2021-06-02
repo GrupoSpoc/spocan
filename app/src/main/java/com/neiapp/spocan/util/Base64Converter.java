@@ -11,7 +11,7 @@ public class Base64Converter {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         mBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return Base64.encodeToString(byteArray, Base64.DEFAULT).replace("=", "");
     }
 
     public static Bitmap base64ToBitmap(String base64) {

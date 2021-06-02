@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="?attr/actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="?attr/actionBarSize"
     tools:context=".ui.fragment.HomeFragment">
 
 
@@ -12,13 +12,15 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:id="@id/scrollView">
+        android:id="@id/scrollView"
+        android:paddingTop="40dp"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingTop="22dp"
             android:id="@+id/mParent">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -43,15 +45,84 @@
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.957" />
+        app:layout_constraintVertical_bias="0.974" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="mis iniciativas"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="445dp"
-        tools:ignore="MissingConstraints"/>
+        tools:ignore="MissingConstraints">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/linearLayout"
+        android:paddingStart="10dp"
+        android:background="@color/black"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/logo_home"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="-20dp"
+            android:src="@drawable/lelon_logo3"/>
+
+         <TextView
+             android:layout_marginTop="5dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:fontFamily="@font/nunito_light"
+             android:textStyle="bold"
+             android:layout_toRightOf="@id/logo_home"
+             android:textColor="@color/grey_profile"
+             android:textSize="@dimen/browser_actions_context_menu_min_padding"
+             android:text="@string/appTitle"/>
+
+            <TextView
+                android:layout_marginTop="9dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_light"
+                android:layout_toLeftOf="@id/switch1"
+                android:textColor="#A0A39F"
+                android:text="@string/switch_desc"/>
+
+
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentEnd="true"
+            android:showText="true"
+            android:textOff=""
+            android:textOn=""
+            android:thumb="@drawable/thumb"
+            android:track="@drawable/track"
+            tools:ignore="MissingConstraints" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--  <ImageView
+                android:layout_marginTop="5dp"
+                android:id="@+id/person_home"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@id/switch1"
+                android:src="@drawable/ic_mis_posts"/> -->
