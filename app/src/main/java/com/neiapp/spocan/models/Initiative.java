@@ -106,7 +106,7 @@ public class Initiative {
 
             return json.toString();
         }catch (Exception e){
-            String message = "failed to convert initiative to json"+e.getMessage();
+            String message = "failed to convert initiative to json: " + e.getMessage();
             System.out.println(message);
             throw new ParseJsonException(message);
 
@@ -125,7 +125,7 @@ public class Initiative {
 
             return new Initiative(_id, description, image, nickname, date);
         } catch (Exception e) {
-            String message = "failed to convert jsno to initiative"+e.getMessage();
+            String message = "failed to convert jsno to initiative: " + e.getMessage();
             System.out.println(message);
             throw new ParseJsonException(message);
         }

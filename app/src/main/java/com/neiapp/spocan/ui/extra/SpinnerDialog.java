@@ -15,12 +15,8 @@ import org.jetbrains.annotations.NotNull;
 public class SpinnerDialog {
     private final AlertDialog dialog;
 
-    public SpinnerDialog(@NotNull final Activity activity) {
-        this(activity, "Cargando", false); // default message
-    }
-
     public SpinnerDialog(@NotNull final Activity activity, @NotNull final String loadingMessage) {
-        this(activity, loadingMessage, false); // default message
+        this(activity, loadingMessage, false);
     }
 
     public SpinnerDialog(@NotNull final Activity activity, @NotNull final String loadingMessage, boolean transparent) {

@@ -34,7 +34,11 @@ public class HomeFragment extends Fragment {
     LayoutInflater layoutInflater;
     List<Initiative> initiatives;
     NestedScrollView nestedScrollView;
+
+    // exclusivo para el scroll en modo currentUser,
+    // ya que al ser una consulta por clave foránea no aplican los filtros de Fiware
     int offset;
+
     boolean fromCurrentUser = false;
 
 
@@ -60,17 +64,17 @@ public class HomeFragment extends Fragment {
            @Override
            public void onScrollChange(NestedScrollView view, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
                if (bottomWasReached(view, actualY)) {
-                   if (fromCurrentUser) {
-                       offset = initiatives.size();
-                   }
-                   fetchInitiatives();
 
+                   if (fromCurrentUser) {
+                       offset = initiatives.size(); // salteo la cantidad que tengo en la lista
+                   }
+
+                   fetchInitiatives();
                }
            }
 
            private boolean bottomWasReached(NestedScrollView view, int actualY) {
                final int bottomY = Math.abs(view.getMeasuredHeight() - view.getChildAt(0).getMeasuredHeight());
-               // System.out.println(bottomY - actualY);
                return bottomY - actualY == -110; // todo mejorar esto
            }
 
@@ -95,12 +99,13 @@ public class HomeFragment extends Fragment {
     private void fetchInitiatives() {
         final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "", true);
         spinnerDialog.start();
-        Backend backend = Backend.getInstance();
+
         final LocalDateTime dateTop = getLastInitiativeDateUTC();
+
+        Backend backend = Backend.getInstance();
         backend.getAllInitiatives(dateTop, fromCurrentUser, offset, new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> initiatives) {
-
                 getActivity().runOnUiThread(() -> {
                     HomeFragment.this.initiatives.addAll(initiatives);
                     populatePostItems();
@@ -149,7 +154,7 @@ public class HomeFragment extends Fragment {
         String mes = String.valueOf(initiative.getDateLocal().getMonthValue());
         String año = String.valueOf(initiative.getDateLocal().getYear());
 
-        return horaConCero +":"+ minutoConCero + " " + dia + "/" + mes + "/" + año;
+        return horaConCero + ":" + minutoConCero + " " + dia + "/" + mes + "/" + año;
     }
 
     private class FilterByCurrentUserListener implements View.OnClickListener {
@@ -157,13 +162,9 @@ public class HomeFragment extends Fragment {
         public void onClick(View v) {
             Switch aSwitch = (Switch) v;
 
-            if (aSwitch.isChecked()) {
-                fromCurrentUser = true;
-            } else {
-                fromCurrentUser = false;
-            }
+            fromCurrentUser = aSwitch.isChecked();
+            offset = 0; // para traer todas
 
-            offset = 0;
             HomeFragment.this.initiatives.clear();
             fetchInitiatives();
         }

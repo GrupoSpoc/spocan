@@ -117,12 +117,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!--  <ImageView
-                android:layout_marginTop="5dp"
-                android:id="@+id/person_home"
-                android:layout_width="40dp"
-                android:layout_height="30dp"
-                android:layout_toLeftOf="@id/switch1"
-                android:src="@drawable/ic_mis_posts"/> -->
