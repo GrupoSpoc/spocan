@@ -41,7 +41,7 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, int offset, CallbackCollection<Initiative> collection) {
+    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackCollection<Initiative> collection) {
         collection.onSuccess(initiative_store);
     }
 

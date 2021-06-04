@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public interface Backend {
 
     void createInitiative(Initiative initiative, CallbackVoid callback);
-    void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, int offset, CallbackCollection<Initiative> collection);
+    void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackCollection<Initiative> collection);
     void getUser(CallbackInstance<User> callback);
     void logOut(CallbackVoid callback);
     void createUser(User user, CallbackInstance<User> callbackUser);

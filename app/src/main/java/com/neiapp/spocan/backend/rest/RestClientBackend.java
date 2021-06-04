@@ -106,7 +106,7 @@ public class RestClientBackend implements Backend {
 
 
     @Override
-    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, int offset, CallbackCollection<Initiative> callback) {
+    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackCollection<Initiative> callback) {
         QueryParamsBuilder queryParamsBuilder = new QueryParamsBuilder();
         queryParamsBuilder
                 .withParam(QueryParam.ORDER, "1")
@@ -115,7 +115,6 @@ public class RestClientBackend implements Backend {
 
         if (fromCurrentUser) {
                 queryParamsBuilder.withParam(QueryParam.CURRENT_USER, String.valueOf(fromCurrentUser));
-                queryParamsBuilder.withParam(QueryParam.OFFSET, String.valueOf(offset));
                 queryParamsBuilder.withParam(QueryParam.STATUS, String.valueOf(InitiativeStatus.PENDING.getId())); // sumamos las pendientes
 
         }

@@ -26,27 +26,23 @@ import com.neiapp.spocan.ui.extra.SpinnerDialog;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.function.Function;
 
 public class HomeFragment extends Fragment {
-
     FloatingActionButton post;
     LinearLayout mparent;
     LayoutInflater layoutInflater;
     List<Initiative> initiatives;
     NestedScrollView nestedScrollView;
-
-    // exclusivo para el scroll en modo currentUser,
-    // ya que al ser una consulta por clave foránea no aplican los filtros de Fiware
-    int offset;
+    private static final String POST_ITEM_TAG = "post-item";
 
     boolean fromCurrentUser = false;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -62,23 +58,19 @@ public class HomeFragment extends Fragment {
         nestedScrollView = root.findViewById(R.id.scrollView);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
            @Override
-           public void onScrollChange(NestedScrollView view, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
-               if (bottomWasReached(view, actualY)) {
-
-                   if (fromCurrentUser) {
-                       offset = initiatives.size(); // salteo la cantidad que tengo en la lista
-                   }
-
+           public void onScrollChange(NestedScrollView scrollView, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
+               if (bottomWasReached(scrollView)) {
                    fetchInitiatives();
                }
            }
 
-           private boolean bottomWasReached(NestedScrollView view, int actualY) {
-               final int bottomY = Math.abs(view.getMeasuredHeight() - view.getChildAt(0).getMeasuredHeight());
-               return bottomY - actualY == -110; // todo mejorar esto
-           }
+            private boolean bottomWasReached(NestedScrollView scrollView) {
+                View childView = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+                int diff = (childView.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
 
-       });
+                return diff == 0;
+            }
+        });
 
         fetchInitiatives();
 
@@ -103,7 +95,7 @@ public class HomeFragment extends Fragment {
         final LocalDateTime dateTop = getLastInitiativeDateUTC();
 
         Backend backend = Backend.getInstance();
-        backend.getAllInitiatives(dateTop, fromCurrentUser, offset, new CallbackCollection<Initiative>() {
+        backend.getAllInitiatives(dateTop, fromCurrentUser, new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> initiatives) {
                 getActivity().runOnUiThread(() -> {
@@ -117,14 +109,13 @@ public class HomeFragment extends Fragment {
             public void onFailure(String message, int httpStatus) {
                 SpocanActivity spocanActivity = (SpocanActivity) getActivity();
                 spocanActivity.handleError(message, httpStatus);
-                spocanActivity.runOnUiThread(() -> spinnerDialog.stop());
+                spocanActivity.runOnUiThread(spinnerDialog::stop);
             }
         });
     }
 
     private void populatePostItems() {
-        mparent.removeAllViews();
-        initiatives.forEach(initiative ->  {
+        initiatives.stream().skip(countPostItems()).forEach(initiative ->  {
             final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
 
             final TextView user = myView.findViewById(R.id.username);
@@ -136,25 +127,47 @@ public class HomeFragment extends Fragment {
             final TextView desc = myView.findViewById(R.id.description);
             desc.setText(initiative.getDescription());
 
-            final String formattedDate = getFormattedDate(initiative);
+            final String formattedDate = getFormattedDate(initiative.getDateLocal());
 
-            final TextView horario = myView.findViewById(R.id.horario);
-            horario.setText(formattedDate);
+            final TextView date = myView.findViewById(R.id.horario);
+            date.setText(formattedDate);
 
+            myView.setTag(POST_ITEM_TAG);
             mparent.addView(myView);
         });
     }
 
-    private String getFormattedDate(Initiative initiative) {
-        int minuto = initiative.getDateLocal().getMinute();
-        String minutoConCero = String.format("%02d", minuto);
-        int hora = initiative.getDateLocal().getHour();
-        String horaConCero = String.format("%02d", hora);
-        String dia = String.valueOf(initiative.getDateLocal().getDayOfMonth());
-        String mes = String.valueOf(initiative.getDateLocal().getMonthValue());
-        String año = String.valueOf(initiative.getDateLocal().getYear());
+    private long countPostItems() {
+        int count = 0;
 
-        return horaConCero + ":" + minutoConCero + " " + dia + "/" + mes + "/" + año;
+        for (int i = 0; i < mparent.getChildCount(); i ++){
+            View view = mparent.getChildAt(i);
+            if (POST_ITEM_TAG.equals(view.getTag())) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private String getFormattedDate(LocalDateTime date) {
+        Function<Integer, String> addZeros = s -> String.format(Locale.US, "%02d", s);
+
+        int minute = date.getMinute();
+        String minuteWithZero = addZeros.apply(minute);
+
+        int hour = date.getHour();
+        String hourWithZero = addZeros.apply(hour);
+
+        int day = date.getDayOfMonth();
+        String dayWithZero = addZeros.apply(day);
+
+        int monthValue = date.getMonthValue();
+        String monthWithZero = addZeros.apply(monthValue);
+
+        String year = String.valueOf(date.getYear());
+
+        return hourWithZero + ":" + minuteWithZero + " " + dayWithZero + "/" + monthWithZero + "/" + year;
     }
 
     private class FilterByCurrentUserListener implements View.OnClickListener {
@@ -163,9 +176,11 @@ public class HomeFragment extends Fragment {
             Switch aSwitch = (Switch) v;
 
             fromCurrentUser = aSwitch.isChecked();
-            offset = 0; // para traer todas
 
+            // Limpiamos el muro para volver a empezar
+            mparent.removeAllViews();
             HomeFragment.this.initiatives.clear();
+
             fetchInitiatives();
         }
     }

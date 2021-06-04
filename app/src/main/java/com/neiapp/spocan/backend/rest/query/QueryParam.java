@@ -5,7 +5,6 @@ public enum QueryParam {
     STATUS("statusId"),
     CURRENT_USER("currentUser"),
     DATE_TOP("dateTop"),
-    OFFSET("offset"),
     LIMIT("limit");
 
     private final String label;
