@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
            @Override
            public void onScrollChange(NestedScrollView scrollView, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
-               if (bottomWasReached(scrollView)) {
+               if (!HomeFragment.this.initiatives.isEmpty() && bottomWasReached(scrollView)) {
                    fetchInitiatives();
                }
            }

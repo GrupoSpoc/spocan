@@ -114,7 +114,7 @@ public class RestClientBackend implements Backend {
                 .withParam(QueryParam.STATUS, String.valueOf(InitiativeStatus.APPROVED.getId()));
 
         if (fromCurrentUser) {
-                queryParamsBuilder.withParam(QueryParam.CURRENT_USER, String.valueOf(fromCurrentUser));
+                queryParamsBuilder.withParam(QueryParam.CURRENT_USER, Boolean.toString(true));
                 queryParamsBuilder.withParam(QueryParam.STATUS, String.valueOf(InitiativeStatus.PENDING.getId())); // sumamos las pendientes
 
         }
