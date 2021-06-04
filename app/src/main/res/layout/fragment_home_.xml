@@ -90,14 +90,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_light"
-                android:layout_toLeftOf="@id/switch1"
+                android:layout_toLeftOf="@id/own_all_switch"
                 android:textColor="#A0A39F"
                 android:text="@string/switch_desc"/>
 
 
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/own_all_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleX="0.8"

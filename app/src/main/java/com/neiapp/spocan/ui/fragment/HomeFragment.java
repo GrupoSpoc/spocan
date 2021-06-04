@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment {
     LayoutInflater layoutInflater;
     List<Initiative> initiatives;
     NestedScrollView nestedScrollView;
+    Switch ownAllSwitch;
     private static final String POST_ITEM_TAG = "post-item";
 
     boolean fromCurrentUser = false;
@@ -50,40 +51,26 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home_, container, false);
-        //publicaciones
+
+        // muro
         mparent = root.findViewById(R.id.mParent);
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         initiatives = new ArrayList<>();
 
+        // scroll
         nestedScrollView = root.findViewById(R.id.scrollView);
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-           @Override
-           public void onScrollChange(NestedScrollView scrollView, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
-               if (!HomeFragment.this.initiatives.isEmpty() && bottomWasReached(scrollView)) {
-                   fetchInitiatives();
-               }
-           }
+        nestedScrollView.setOnScrollChangeListener(scrollListener);
 
-            private boolean bottomWasReached(NestedScrollView scrollView) {
-                View childView = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
-                int diff = (childView.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+        // publicar
+        post = root.findViewById(R.id.CrearPost);
+        post.setOnClickListener(goToCreationListener);
 
-                return diff == 0;
-            }
-        });
+        // filtro propias/todas
+        ownAllSwitch = root.findViewById(R.id.own_all_switch);
+        ownAllSwitch.setOnClickListener(ownAllFilterListener);
 
         fetchInitiatives();
-
-        //publicar
-        post = root.findViewById(R.id.CrearPost);
-        post.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), InitiativeActivity.class);
-            startActivity(intent);
-        });
-
-        Switch switchButton = root.findViewById(R.id.switch1);
-
-        switchButton.setOnClickListener(new FilterByCurrentUserListener());
+        scrollToTop();
 
         return root;
     }
@@ -115,6 +102,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void populatePostItems() {
+        // skipeamos las que ya están renderizadas
         initiatives.stream().skip(countPostItems()).forEach(initiative ->  {
             final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
 
@@ -137,6 +125,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // Esto sirve para saber cuantas publicaciones ya están renderizadas en el muro.
+    // Entonces al momento de popular skipeamos ese número para no tener que volver a renderizarlas
     private long countPostItems() {
         int count = 0;
 
@@ -170,23 +160,49 @@ public class HomeFragment extends Fragment {
         return hourWithZero + ":" + minuteWithZero + " " + dayWithZero + "/" + monthWithZero + "/" + year;
     }
 
-    private class FilterByCurrentUserListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Switch aSwitch = (Switch) v;
-
-            fromCurrentUser = aSwitch.isChecked();
-
-            // Limpiamos el muro para volver a empezar
-            mparent.removeAllViews();
-            HomeFragment.this.initiatives.clear();
-
-            fetchInitiatives();
-        }
+    private void scrollToTop() {
+        nestedScrollView.scrollTo(0, 0);
     }
 
     private LocalDateTime getLastInitiativeDateUTC() {
         return initiatives.isEmpty() ? null : initiatives.get(initiatives.size() - 1).getDateUTC();
     }
+
+
+    // ---- LISTENERS ----
+
+    private final NestedScrollView.OnScrollChangeListener scrollListener = new NestedScrollView.OnScrollChangeListener() {
+        @Override
+        public void onScrollChange(NestedScrollView scrollView, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
+            if (bottomWasReached(scrollView)) {
+                fetchInitiatives();
+            }
+        }
+
+        private boolean bottomWasReached(NestedScrollView scrollView) {
+            View childView = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+            int diff = (childView.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+
+            return diff == 0;
+        }
+    };
+
+    private final View.OnClickListener goToCreationListener = v -> {
+        Intent intent = new Intent(getContext(), InitiativeActivity.class);
+        startActivity(intent);
+    };
+
+    private final View.OnClickListener ownAllFilterListener = v -> {
+            Switch aSwitch = (Switch) v;
+
+            fromCurrentUser = aSwitch.isChecked();
+
+            // Limpiamos el muro para volver a empezar
+            scrollToTop();
+            mparent.removeAllViews();
+            HomeFragment.this.initiatives.clear();
+
+            fetchInitiatives();
+    };
 }
 
