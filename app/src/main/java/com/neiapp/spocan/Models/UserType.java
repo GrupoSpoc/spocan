@@ -3,8 +3,8 @@ package com.neiapp.spocan.Models;
 import java.util.Arrays;
 
 public enum UserType {
-    PERSONA(1),
-    ORGANIZACIÓN(2);
+    PERSON(1),
+    COMPANY(2);
 
     private final int id;
 
