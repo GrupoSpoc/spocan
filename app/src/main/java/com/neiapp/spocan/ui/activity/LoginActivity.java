@@ -75,10 +75,10 @@ public class LoginActivity extends SpocanActivity {
 
         try {
             GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
-            Toast.makeText(LoginActivity.this, "Logueado Exitosamente! ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(LoginActivity.this, "Logueado Exitosamente! ", Toast.LENGTH_SHORT).show();
             firebaseAuthWithGoogle(acc.getIdToken());
         } catch (ApiException ae) {
-            Toast.makeText(LoginActivity.this, "Hubo un error al loguearse ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Hubo un error al loguearse", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -116,7 +116,7 @@ public class LoginActivity extends SpocanActivity {
         // Defino una instancia de SpinnerDialog, pasando el activity y (opcional) el mensaje de carga
         // sino se le pasa un mensaje, por defecto se muestra 'Cargando'
         // Para el 'activity', si estoy en un Activity le paso 'this'. Si estoy en un Fragment le paso getActivity()
-        final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Iniciando sesion...");
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Iniciando sesión...");
 
         // Muestro el spinner antes de ejecutar el proceso con espera
         spinnerDialog.start();

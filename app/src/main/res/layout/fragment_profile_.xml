@@ -84,7 +84,9 @@
 
             <LinearLayout
                 android:layout_marginBottom="150dp"
+                android:padding="20dp"
                 android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
@@ -108,6 +110,37 @@
                     android:textColor="#023e64"
                     />
             </LinearLayout>
+
+            <!--<LinearLayout
+                android:layout_marginTop="140dp"
+                android:layout_width="wrap_content"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/count_posts2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/grey_backgrounds"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_light"
+                    android:text="@string/post_string_pendientes"
+                    android:textAllCaps="true"
+                    android:textColor="@color/grey_backgrounds"
+                    android:textSize="15sp" />
+            </LinearLayout> -->
 
         </RelativeLayout>
 

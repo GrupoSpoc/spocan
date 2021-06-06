@@ -39,12 +39,12 @@ public abstract class SpocanActivity extends AppCompatActivity {
     public void handleError(String message, int httpStatus) {
         runOnUiThread(() -> {
             if (httpStatus == HTTPCodes.NOT_ACCEPTABLE.getCode()) {
-                Toast.makeText(getApplicationContext(), "Su sesión ha caducado, incie sesión nuevamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Su sesión ha caducado, inicie sesión nuevamente", Toast.LENGTH_LONG).show();
                 logOut();
             } else if (httpStatus == HTTPCodes.SERVER_ERROR.getCode()) {
                 Toast.makeText(getApplicationContext(), "Error del servidor, intente de nuevo mas tarde", Toast.LENGTH_LONG).show();
             } else if (httpStatus == HTTPCodes.TIMEOUT.getCode()) {
-                Toast.makeText(getApplicationContext(), "No se pudo procesar la operación, reintentelo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "No se pudo procesar la operación, intentelo nuevamente", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Error desconocido", Toast.LENGTH_LONG).show();
             }

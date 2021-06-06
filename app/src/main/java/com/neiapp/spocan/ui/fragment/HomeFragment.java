@@ -34,8 +34,9 @@ public class HomeFragment extends Fragment {
     LinearLayout mparent;
     LayoutInflater layoutInflater;
     List<Initiative> initiatives;
-    NestedScrollView nestedScrollView;
+    TextView ownAllSwitch_desc;
     Switch ownAllSwitch;
+    NestedScrollView nestedScrollView;
     private static final String POST_ITEM_TAG = "post-item";
 
     boolean fromCurrentUser = false;
@@ -52,7 +53,7 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home_, container, false);
 
-        // muro
+
         mparent = root.findViewById(R.id.mParent);
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         initiatives = new ArrayList<>();
@@ -68,6 +69,8 @@ public class HomeFragment extends Fragment {
         // filtro propias/todas
         ownAllSwitch = root.findViewById(R.id.own_all_switch);
         ownAllSwitch.setOnClickListener(ownAllFilterListener);
+        ownAllSwitch_desc = root.findViewById(R.id.switch_text);
+        ownAllSwitch_desc.setText("Todas");
 
         fetchInitiatives();
         scrollToTop();
@@ -124,6 +127,7 @@ public class HomeFragment extends Fragment {
             mparent.addView(myView);
         });
     }
+
 
     // Esto sirve para saber cuantas publicaciones ya están renderizadas en el muro.
     // Entonces al momento de popular skipeamos ese número para no tener que volver a renderizarlas
@@ -195,7 +199,14 @@ public class HomeFragment extends Fragment {
     private final View.OnClickListener ownAllFilterListener = v -> {
             Switch aSwitch = (Switch) v;
 
-            fromCurrentUser = aSwitch.isChecked();
+            if (aSwitch.isChecked()) {
+                fromCurrentUser = true;
+                ownAllSwitch_desc.setText("Propias");
+            } else {
+                fromCurrentUser = false;
+                ownAllSwitch_desc.setText("Todas");
+
+            }
 
             // Limpiamos el muro para volver a empezar
             scrollToTop();

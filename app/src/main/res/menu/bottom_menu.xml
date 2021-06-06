@@ -11,6 +11,6 @@
         android:icon="@drawable/ic_home"/>
     <item
         android:id="@+id/configuration_Fragment"
-        android:title="Configuracion"
+        android:title="Configuración"
         android:icon="@drawable/ic_settings"/>
 </menu>

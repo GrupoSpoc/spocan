@@ -40,7 +40,7 @@ public class RegisterUserActivity extends SpocanActivity {
         spinner.setAdapter(adapter);
 
         //spinner
-        final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Registrandose...");
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Registrándose...");
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class RegisterUserActivity extends SpocanActivity {
                         @Override
                         public void onSuccess(User user) {
                             runOnUiThread(() -> {
-                                Toast.makeText(getApplicationContext(), "Usuario registrado con éxito!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "¡Usuario registrado con éxito!", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra(MainActivity.USER, user);
                                 startActivity(intent);

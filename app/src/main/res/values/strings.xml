@@ -1,48 +1,49 @@
 <resources>
     ##Strings usados para la vista de publicar iniciativa
-    <string name="app_name">spocan</string>
-    <string name="SubirIniciativaTitle">Subi tu Iniciativa</string>
+    <string name="app_name">CollaborAR</string>
+    <string name="SubirIniciativaTitle">Subí tu Iniciativa</string>
     <string name="AddPhotoBtn">Agregar foto</string>
     <string name="AddDescriptionBtn">Agregar una descripción</string>
     <string name="PublishInitiativeBtn">Publicar</string>
     <string name="CancelInitiativeBtn">Cancelar</string>
 
     ##Strings usados para la vista de registrarse
-    <string name="registerUser">Registrate</string>
+    <string name="registerUser">Regístrate</string>
     <string name="nicknamePlaceholder"> Ingresa tu nuevo nickname</string>
     <string name="registerButton">Registrarse</string>
-    <string name="dropDownOptionsDescription">Usted sera:</string>
+    <string name="dropDownOptionsDescription">Elija su tipo de usuario:</string>
 
     ##Strings para las vistas de pantallas
     <string name="homeFragment">Home Fragment</string>
     <string name="username">Nombre_usuario</string>
-    <string name="description">Descripcion de la publicacion</string>
+    <string name="description">Descripción de la publicación</string>
 
     ##Strings usados para el splash screen
     <string name="ciudadesDelFuturo">Ciudades del futuro</string>
     <string name="appTitle">CollaborAR</string>
     <string name="legalInformation">S.P.O.C. Dev 2021 ®</string>
-    <string name="fiware">Powered by FIWARE</string>
+    <string name="fiware">Powered by</string>
 
     ##Strings usados para el log-in
-    <string name="loginTitle"> Ingresá a CollaborAr</string>
+    <string name="loginTitle">Ingresa a CollaborAr</string>
     <string name="loginWithAppBtn">Login</string>
     <string name="loginWithGoogleBtn">Login con Google</string>
-    <string name="registerBottomButton">Registrate</string>
-    <string name="dontHaveAccount">Todavia no tenés cuenta? </string>
+    <string name="registerBottomButton">Regístrate</string>
+    <string name="dontHaveAccount">¿No tenés cuenta?</string>
 
     ##Strings para el profile
     <string name="name_organitation_profile">Grupo SPOC</string>
     <string name="post_string_profile">Iniciativas</string>
+    <string name="post_string_pendientes">Pendientes</string>
     <string name="typeOfUserPersonProfile">Tipo de usuario: Persona</string>
-    <string name="typeOfUserOrganitationProfile">Tipo de usuario: Organizacion</string>
+    <string name="typeOfUserOrganitationProfile">Tipo de usuario: Organización</string>
     <string name="email_indicator_profile">Email</string>
     <string name="email_profile">spocproyectofinal@gmail.com</string>
 
     ##Strings para configuración
     <string name="configuration_titile">Configuración</string>
     <string name="change_user_button">Cambiar cuenta</string>
-    <string name="logOut_button">Cerrar Sesión</string>
+    <string name="logOut_button">Cerrar sesión</string>
 
     ##Strings para switch home
     <string name="switch_on">Propias</string>
