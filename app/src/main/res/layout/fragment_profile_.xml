@@ -111,7 +111,7 @@
                     />
             </LinearLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_marginTop="140dp"
                 android:layout_width="wrap_content"
                 android:padding="15dp"
@@ -140,7 +140,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/grey_backgrounds"
                     android:textSize="15sp" />
-            </LinearLayout>
+            </LinearLayout> -->
 
         </RelativeLayout>
 
