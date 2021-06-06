@@ -1,17 +1,19 @@
 package com.neiapp.spocan.backend;
 
 import com.neiapp.spocan.BuildConfig;
-import com.neiapp.spocan.Models.Initiative;
-import com.neiapp.spocan.Models.User;
+import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.backend.rest.RestClientBackend;
 
+import java.time.LocalDateTime;
+
 public interface Backend {
 
     void createInitiative(Initiative initiative, CallbackVoid callback);
-    void getAllInitiatives(CallbackCollection<Initiative> collection);
+    void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackCollection<Initiative> collection);
     void getUser(CallbackInstance<User> callback);
     void logOut(CallbackVoid callback);
     void createUser(User user, CallbackInstance<User> callbackUser);

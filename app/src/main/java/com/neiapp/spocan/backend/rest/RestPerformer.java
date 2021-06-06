@@ -1,6 +1,7 @@
 package com.neiapp.spocan.backend.rest;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -51,7 +52,7 @@ public class RestPerformer {
         get(url, Collections.emptyMap(), serverCallback);
     }
 
-    public void get(String url, Map<String, String> queryParams, Callback serverCallback) {
+    public void get(String url, Map<String, List<String>> queryParams, Callback serverCallback) {
         Request request = buildGetRequest(url, queryParams);
         perform(request, serverCallback);
     }
@@ -70,7 +71,7 @@ public class RestPerformer {
         httpClient.newCall(request).enqueue(serverCallback);
     }
 
-    private Request buildGetRequest(String url, Map<String, String> queryParams) {
+    private Request buildGetRequest(String url, Map<String, List<String>> queryParams) {
         return commonRequestBuilder(url, queryParams)
                 .get()
                 .build();
@@ -94,9 +95,9 @@ public class RestPerformer {
         return commonRequestBuilder(url, Collections.emptyMap());
     }
 
-    private Request.Builder commonRequestBuilder(String url, Map<String, String> queryParams) {
+    private Request.Builder commonRequestBuilder(String url, Map<String, List<String>> queryParams) {
         final HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-        queryParams.forEach(httpBuilder::addQueryParameter);
+        queryParams.forEach((key, values) -> values.forEach(value -> httpBuilder.addQueryParameter(key, value)));
 
         final Request.Builder builder = new Request.Builder().url(httpBuilder.build());
         builder.addHeader(CLIENT_ID,ANDROID_ID);

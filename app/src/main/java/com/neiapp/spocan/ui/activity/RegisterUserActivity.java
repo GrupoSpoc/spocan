@@ -1,6 +1,5 @@
 package com.neiapp.spocan.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,8 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.neiapp.spocan.Models.User;
-import com.neiapp.spocan.Models.UserType;
+import com.neiapp.spocan.models.User;
+import com.neiapp.spocan.models.UserType;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;

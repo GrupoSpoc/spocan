@@ -12,6 +12,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@id/scrollView"
         android:paddingTop="40dp"
         tools:ignore="MissingConstraints">
 
@@ -90,13 +91,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_light"
-                android:layout_toLeftOf="@id/switch1"
+                android:layout_toLeftOf="@id/own_all_switch"
                 android:textColor="#A0A39F"/>
 
 
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/own_all_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleX="0.8"
@@ -116,12 +117,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!--  <ImageView
-                android:layout_marginTop="5dp"
-                android:id="@+id/person_home"
-                android:layout_width="40dp"
-                android:layout_height="30dp"
-                android:layout_toLeftOf="@id/switch1"
-                android:src="@drawable/ic_mis_posts"/> -->

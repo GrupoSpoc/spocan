@@ -1,4 +1,4 @@
-package com.neiapp.spocan.Models;
+package com.neiapp.spocan.models;
 
 import com.google.gson.JsonObject;
 import com.neiapp.spocan.backend.ParseJsonException;

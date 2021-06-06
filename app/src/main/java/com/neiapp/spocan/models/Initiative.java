@@ -1,4 +1,4 @@
-package com.neiapp.spocan.Models;
+package com.neiapp.spocan.models;
 
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -27,30 +27,26 @@ public class Initiative {
     private String image;
     private String nickname;
     private LocalDateTime date;
-    private boolean isFromCurrentUser;
 
-    public Initiative(String _id, String description, String image, String nickname, String dateStrUTC, boolean isFromCurrentUser) {
+    public Initiative(String _id, String description, String image, String nickname, String dateStrUTC) {
         this._id = _id;
         this.description = description;
         this.image = image;
         this.nickname = nickname;
-        this.isFromCurrentUser = isFromCurrentUser;
         setDate(dateStrUTC);
     }
 
-    public Initiative(String description, String image, boolean isFromCurrentUser) {
+    public Initiative(String description, String image) {
         this.description = description;
         this.image = image;
-        this.isFromCurrentUser = isFromCurrentUser;
         this._id = null;
         this.nickname = null;
         initDate();
     }
 
-    public Initiative(String description, Bitmap bitmap, boolean isFromCurrentUser) {
+    public Initiative(String description, Bitmap bitmap) {
         this.description = description;
         setImage(bitmap);
-        this.isFromCurrentUser = isFromCurrentUser;
         this._id = null;
         this.nickname = null;
         initDate();
@@ -78,10 +74,6 @@ public class Initiative {
 
     public String getNickname() {
         return nickname;
-    }
-
-    public boolean isFromCurrentUser() {
-        return isFromCurrentUser;
     }
 
     public void setId(String id) {
@@ -114,7 +106,7 @@ public class Initiative {
 
             return json.toString();
         }catch (Exception e){
-            String message = "failed to convert initiative to json"+e.getMessage();
+            String message = "failed to convert initiative to json: " + e.getMessage();
             System.out.println(message);
             throw new ParseJsonException(message);
 
@@ -124,22 +116,16 @@ public class Initiative {
     public static Initiative convertJson(String jsonToTransform) throws ParseJsonException {
         try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
+
             final String _id = jsonObject.getString("_id");
             final String description = jsonObject.getString("description");
             final String image = jsonObject.getString("image");
             final String nickname = jsonObject.getString("nickname");
             final String date = jsonObject.getString("date");
 
-            final boolean isFromCurrentUser;
-            if (jsonObject.has("from_current_user")) {
-                isFromCurrentUser = jsonObject.getBoolean("from_current_user");
-            } else {
-                isFromCurrentUser = false;
-            }
-
-            return new Initiative(_id, description, image, nickname, date, isFromCurrentUser);
+            return new Initiative(_id, description, image, nickname, date);
         } catch (Exception e) {
-            String message = "failed to convert jsno to initiative"+e.getMessage();
+            String message = "failed to convert jsno to initiative: " + e.getMessage();
             System.out.println(message);
             throw new ParseJsonException(message);
         }

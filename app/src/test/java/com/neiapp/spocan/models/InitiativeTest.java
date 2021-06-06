@@ -1,4 +1,4 @@
- package com.neiapp.spocan.Models;
+ package com.neiapp.spocan.models;
 
  import android.graphics.Bitmap;
 
@@ -28,14 +28,12 @@ public class InitiativeTest {
     public void testInitiativeCreation() {
         String  description = "description";
         String  imageBase64 = "imageBase64";
-        boolean isFromCurrentUser = false;
 
-        Initiative initiative = new Initiative(description, imageBase64, isFromCurrentUser);
+        Initiative initiative = new Initiative(description, imageBase64);
         long testNowMillis = LocalDateTime.now(Initiative.UTC).toInstant(ZoneOffset.UTC).toEpochMilli();
 
         assertEquals(description, initiative.getDescription());
         assertEquals(imageBase64, initiative.getImageBase64());
-        assertFalse(initiative.isFromCurrentUser());
         assertNull(initiative.getId());
         assertNull(initiative.getNickname());
 
@@ -49,17 +47,15 @@ public class InitiativeTest {
     public void testInitiativeCreationWithout_IdNorNickname(){
         String  description = "description";
         String  imageBase64 = "imageBase64";
-        boolean isFromCurrentUser = true;
         String nickname = "lolo";
         String _id = "_id";
         LocalDateTime date = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
         String dateStrUTC = date.toString();
 
-        Initiative initiative = new Initiative(_id, description, imageBase64, nickname, dateStrUTC, isFromCurrentUser);
+        Initiative initiative = new Initiative(_id, description, imageBase64, nickname, dateStrUTC);
 
         assertEquals(description, initiative.getDescription());
         assertEquals(imageBase64, initiative.getImageBase64());
-        assertTrue(initiative.isFromCurrentUser());
         assertEquals(_id, initiative.getId());
         assertEquals(nickname, initiative.getNickname());
         assertEquals(date, initiative.getDateUTC());
@@ -69,9 +65,8 @@ public class InitiativeTest {
     public void testToJson() throws JSONException, ParseJsonException {
         String  description = "description";
         String  imageBase64 = "imageBase64";
-        boolean isFromCurrentUser = false;
 
-        Initiative initiative = new Initiative(description, imageBase64, isFromCurrentUser);
+        Initiative initiative = new Initiative(description, imageBase64);
 
         String json = initiative.toJson();
 
@@ -95,7 +90,6 @@ public class InitiativeTest {
         jsonInitiative.addProperty("image", "imageBase64");
         jsonInitiative.addProperty("nickname", "nickname");
         jsonInitiative.addProperty("date", dateStrUTC);
-        jsonInitiative.addProperty("from_current_user", "true");
 
         Initiative result = Initiative.convertJson(jsonInitiative.toString());
 
@@ -103,21 +97,18 @@ public class InitiativeTest {
         assertEquals(result.getId(), jsonInitiative.get("_id").getAsString());
         assertEquals(result.getImageBase64(), jsonInitiative.get("image").getAsString());
         assertEquals(result.getNickname(), jsonInitiative.get("nickname").getAsString());
-        assertTrue(result.isFromCurrentUser());
     }
 
     @Test
     public void testBuildInitiativeWithImage() {
         String  description = "description";
-        boolean isFromCurrentUser = true;
         final Bitmap bitmap = Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8);
 
-        Initiative initiative = new Initiative(description, bitmap, isFromCurrentUser);
+        Initiative initiative = new Initiative(description, bitmap);
 
         assertNotNull(initiative.getImageBase64());
         assertNotNull(initiative.getImage());
         assertEquals(description, initiative.getDescription());
-        assertTrue(initiative.isFromCurrentUser());
         assertNull(initiative.getId());
         assertNull(initiative.getNickname());
     }
@@ -126,14 +117,13 @@ public class InitiativeTest {
     public void testSettingAndGettingImage() {
         String  description = "description";
         String  imageBase64 = null;
-        boolean isFromCurrentUser = true;
         String nickname = "lolo";
         String _id = "_id";
         LocalDateTime date = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
         String dateStrUTC = date.toString();
         final Bitmap bitmap = Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8);
 
-        Initiative initiative = new Initiative(_id, description, imageBase64, nickname, dateStrUTC, isFromCurrentUser);
+        Initiative initiative = new Initiative(_id, description, imageBase64, nickname, dateStrUTC);
 
         initiative.setImage(bitmap);
 
@@ -145,14 +135,13 @@ public class InitiativeTest {
     public void testDateZones() {
         String  description = "description";
         String  imageBase64 = null;
-        boolean isFromCurrentUser = true;
         String nickname = "lolo";
         String _id = "_id";
         LocalDateTime dateUTC = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
         String dateStrUTC = dateUTC.toString();
         LocalDateTime zonedBsAsDate = dateUTC.minusHours(Initiative.ZONE_BS_AS_HOURS);
 
-        Initiative initiative = new Initiative(_id, description, imageBase64, nickname, dateStrUTC, isFromCurrentUser);
+        Initiative initiative = new Initiative(_id, description, imageBase64, nickname, dateStrUTC);
 
         assertEquals(dateUTC, initiative.getDateUTC());
         assertEquals(zonedBsAsDate, initiative.getDateLocal());

@@ -1,4 +1,4 @@
-package com.neiapp.spocan.Models;
+package com.neiapp.spocan.models;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
