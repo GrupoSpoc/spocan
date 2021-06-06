@@ -34,7 +34,7 @@ public class ConfigurationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_configuration_, container, false);
         Button changeAccountBtn = view.findViewById(R.id.changeAccountBtn);
         //spinner
-        final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cerrando sesion...");
+        final SpinnerDialog spinnerDialog = new SpinnerDialog(getActivity(), "Cerrando sesión...");
 
 
         changeAccountBtn.setOnClickListener(v -> {

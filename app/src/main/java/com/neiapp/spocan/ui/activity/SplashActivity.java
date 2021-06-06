@@ -21,6 +21,7 @@ public class SplashActivity extends Activity {
     Animation top_animation;
     Animation bottom_animation;
     ImageView logo;
+    ImageView logoFiware;
     TextView company;
     TextView slogan;
     TextView fiware;
@@ -36,9 +37,11 @@ public class SplashActivity extends Activity {
         bottom_animation = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
         //hooks
         logo = findViewById(R.id.imageView3);
+        logoFiware = findViewById(R.id.imageViewFiware);
         company = findViewById(R.id.textView3);
         slogan = findViewById(R.id.textView4);
         logo.setAnimation(top_animation);
+        logoFiware.setAnimation(bottom_animation);
         company.setAnimation(bottom_animation);
         slogan.setAnimation(bottom_animation);
         fiware = findViewById(R.id.textViewFireware);

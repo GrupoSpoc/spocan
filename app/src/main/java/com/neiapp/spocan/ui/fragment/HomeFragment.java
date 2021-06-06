@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
     LinearLayout mparent;
     LayoutInflater layoutInflater;
     List<Initiative> initiatives;
+    TextView switch_desc;
 
 
     @Override
@@ -48,6 +50,8 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home_, container, false);
         //publicaciones
+        switch_desc = root.findViewById(R.id.switch_text);
+        switch_desc.setText("Todas");
         mparent = root.findViewById(R.id.mParent);
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         initiatives = new ArrayList<>();
@@ -64,7 +68,6 @@ public class HomeFragment extends Fragment {
         Switch switchButton = root.findViewById(R.id.switch1);
 
         switchButton.setOnClickListener(new FilterByCurrentUserListener());
-
         return root;
     }
 
@@ -96,8 +99,10 @@ public class HomeFragment extends Fragment {
         populatePostItems(initiative -> true);
     }
 
+
     private void populatePostItems(Predicate<Initiative> predicate) {
         mparent.removeAllViews();
+
         initiatives.stream().filter(predicate).forEach(initiative ->  {
             final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
 
@@ -124,21 +129,24 @@ public class HomeFragment extends Fragment {
         String minutoConCero = String.format("%02d", minuto);
         int hora = initiative.getDateLocal().getHour();
         String horaConCero = String.format("%02d", hora);
-        String dia = String.valueOf(initiative.getDateLocal().getDayOfMonth());
-        String mes = String.valueOf(initiative.getDateLocal().getMonthValue());
+        int diaInt = initiative.getDateLocal().getDayOfMonth();
+        String dia = String.format("%02d", diaInt);
+        int mesInt = initiative.getDateLocal().getMonthValue();
+        String mes = String.format("%02d", mesInt);
         String año = String.valueOf(initiative.getDateLocal().getYear());
 
         return horaConCero +":"+ minutoConCero + " " + dia + "/" + mes + "/" + año;
     }
 
     private class FilterByCurrentUserListener implements View.OnClickListener {
-        @Override
         public void onClick(View v) {
             Switch aSwitch = (Switch) v;
             if (aSwitch.isChecked()) {
                 populatePostItems(Initiative::isFromCurrentUser);
+                switch_desc.setText("Propias");
             } else {
                 populatePostItemsWithEveryInitiative();
+                switch_desc.setText("Todas");
             }
         }
     }

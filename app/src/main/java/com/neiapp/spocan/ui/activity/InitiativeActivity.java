@@ -82,7 +82,7 @@ public class InitiativeActivity extends SpocanActivity {
                             runOnUiThread(() -> {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
-                                Toast.makeText(getApplicationContext(), "INICIATIVA CREADA", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Iniciativa creada", Toast.LENGTH_LONG).show();
                                 spinnerDialog.stop();
                             });
                         }
@@ -105,11 +105,11 @@ public class InitiativeActivity extends SpocanActivity {
         Boolean result = true;
         if (bitmap == null) {
             result = false;
-            Toast.makeText(getApplicationContext(), "DEBE AGREGAR UNA FOTO", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Debe agregar una foto", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(textDescription.getText())) {
             result = false;
-            Toast.makeText(getApplicationContext(), "DEBE AGREGAR UNA DESCRIPCION", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Debe agregar una descripción", Toast.LENGTH_LONG).show();
         }
         return result;
     }
@@ -134,7 +134,7 @@ public class InitiativeActivity extends SpocanActivity {
                 startActivityForResult(intent, 1001);
                 setResult(RESULT_OK);
             } else {
-                Toast.makeText(getApplicationContext(), "ES NECESARIO APROBAR LOS PERMISOS DE LA CAMARA PARA TOMAR LA FOTO", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Es necesario aprobar los permisos de la cámara para tomar la foto", Toast.LENGTH_SHORT).show();
             }
         }
     }
