@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MockedBackend implements Backend {
     public static ArrayList<Initiative> initiative_store;
-    public static final User USER = new User("TestUser", UserType.PERSON, 550, false);
+    public static final User USER = new User("TestUser", UserType.PERSONA, 550, false);
     public static User CURRENT_USER;
 
     protected MockedBackend() {
