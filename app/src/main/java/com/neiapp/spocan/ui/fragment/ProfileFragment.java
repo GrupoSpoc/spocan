@@ -5,15 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.neiapp.spocan.Models.User;
+import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
-import com.neiapp.spocan.backend.rest.HTTPCodes;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
 

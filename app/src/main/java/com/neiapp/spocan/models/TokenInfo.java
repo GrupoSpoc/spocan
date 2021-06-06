@@ -1,8 +1,7 @@
-package com.neiapp.spocan.Models;
+package com.neiapp.spocan.models;
 
 import com.neiapp.spocan.backend.ParseJsonException;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TokenInfo {

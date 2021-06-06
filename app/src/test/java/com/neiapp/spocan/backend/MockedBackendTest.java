@@ -1,7 +1,7 @@
 package com.neiapp.spocan.backend;
 
-import com.neiapp.spocan.Models.Initiative;
-import com.neiapp.spocan.Models.UserType;
+import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.UserType;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 
@@ -24,7 +24,7 @@ public class MockedBackendTest {
         MockedBackend fakeBackend = new MockedBackend();
         int originalSize = MockedBackend.initiative_store.size();
         Initiative created;
-        Initiative initiative = new Initiative("description", "image", false);
+        Initiative initiative = new Initiative("description", "image");
         CallbackVoid callback = new CallbackVoid() {
             @Override
             public void onSuccess() {
@@ -41,8 +41,8 @@ public class MockedBackendTest {
         MockedBackend fakeBackend = new MockedBackend();
         int originalSize = MockedBackend.initiative_store.size();
 
-        Initiative initiative_first = new Initiative("description", "image", false);
-        Initiative initiative_second = new Initiative("description", "image", false);
+        Initiative initiative_first = new Initiative("description", "image");
+        Initiative initiative_second = new Initiative("description", "image");
         CallbackVoid call = new CallbackVoid() {
             @Override
             public void onSuccess() {
@@ -51,7 +51,7 @@ public class MockedBackendTest {
 
         fakeBackend.createInitiative(initiative_first, call);
         fakeBackend.createInitiative(initiative_second, call);
-        fakeBackend.getAllInitiatives(new CallbackCollection<Initiative>() {
+        fakeBackend.getAllInitiatives(null, false, new CallbackCollection<Initiative>() {
             @Override
             public void onSuccess(List<Initiative> collection) {
                 assertEquals(originalSize + 2, MockedBackend.initiative_store.size());
