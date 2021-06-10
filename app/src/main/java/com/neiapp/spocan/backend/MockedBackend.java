@@ -1,6 +1,7 @@
 package com.neiapp.spocan.backend;
 
 import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.InitiativeStatus;
 import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.models.UserType;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
@@ -16,15 +17,15 @@ public class MockedBackend implements Backend {
     public static final User USER = new User("TestUser", UserType.PERSON, 550, false);
     public static User CURRENT_USER;
 
-    /*protected MockedBackend() {
+    protected MockedBackend() {
         if (initiative_store == null) {
             initiative_store = new ArrayList<>();
-            initiative_store.add(new Initiative("1", "[test] Iniciativa de prueba 1", MockedImagesBase64.RED_800_X_600, "TestUser-1", "2021-04-27T22:59:34"));
-            initiative_store.add(new Initiative("2", "[test] Iniciativa de prueba 2. Esta vez la descripcion es un poco mas larga.", MockedImagesBase64.BLUE_800_X_600, "TestUser-2", "2021-04-22T14:13:05"));
-            initiative_store.add(new Initiative("3", "[test] Iniciativa de prueba 3", MockedImagesBase64.GREEN_800_X_600, "CurrentUser", "2021-03-16T18:07:14"));
-            initiative_store.add(new Initiative("4", "[test] Iniciativa de prueba 4", MockedImagesBase64.YELLOW_800_X_600, "TestUser-1", "2020-09-11T11:42:35"));
+            initiative_store.add(new Initiative("1", InitiativeStatus.APPROVED,"[test] Iniciativa de prueba 1", MockedImagesBase64.RED_800_X_600, "TestUser-1", "2021-04-27T22:59:34"));
+            initiative_store.add(new Initiative("2",InitiativeStatus.APPROVED, "[test] Iniciativa de prueba 2. Esta vez la descripcion es un poco mas larga.", MockedImagesBase64.BLUE_800_X_600, "TestUser-2", "2021-04-22T14:13:05"));
+            initiative_store.add(new Initiative("3", InitiativeStatus.APPROVED,"[test] Iniciativa de prueba 3", MockedImagesBase64.GREEN_800_X_600, "CurrentUser", "2021-03-16T18:07:14"));
+            initiative_store.add(new Initiative("4", InitiativeStatus.APPROVED,"[test] Iniciativa de prueba 4", MockedImagesBase64.YELLOW_800_X_600, "TestUser-1", "2020-09-11T11:42:35"));
         }
-    }*/
+    }
 
     public static void doAuthenticate(CallbackInstance<User> callback) {
         CURRENT_USER = USER;
