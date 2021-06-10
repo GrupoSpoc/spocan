@@ -40,6 +40,7 @@ public class Initiative {
 
     public Initiative(String description, String image) {
         this.description = description;
+        this.status = null;
         this.image = image;
         this._id = null;
         this.nickname = null;
@@ -48,6 +49,7 @@ public class Initiative {
 
     public Initiative(String description, Bitmap bitmap) {
         this.description = description;
+        this.status = null;
         setImage(bitmap);
         this._id = null;
         this.nickname = null;
