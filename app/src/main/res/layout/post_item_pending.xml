@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!-- android:background="@color/grey_pending" -->
+
 
     <TextView
 
@@ -10,11 +12,36 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/horario"
-        android:textSize="14dp"
+        android:id="@+id/pendiente"
+        android:text="Aprobación pendiente"
+        android:textSize="15dp"
         android:textStyle="bold"
         android:textColor="@color/grey_backgrounds"
-        android:layout_margin="15dp"/>
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/horario_pendiente"
+        android:textSize="12dp"
+        android:layout_toRightOf="@+id/cartel"
+        android:textStyle="bold"
+        android:textColor="@color/grey_backgrounds"
+        android:layout_marginTop="24dp"/>
+
+    <ImageView
+        android:id="@+id/cartel"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toLeftOf="@+id/pendiente"
+        android:src="@drawable/ic_pending" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,13 +57,13 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/profile_image"
+                android:id="@+id/profile_image_pendiente"
                 android:src="@drawable/ic_profile"
                 android:layout_margin="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/username"
+                android:id="@+id/username_pendiente"
                 android:layout_gravity="center_vertical"
                 android:textSize="16dp"
                 android:textStyle="bold"
@@ -57,7 +84,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/post_image"
+                android:alpha=".3"
+                android:id="@+id/post_image_pendiente"
                 app:layout_constraintDimensionRatio="H,4:5"
                 tools:ignore="MissingConstraints"/>
 
@@ -81,7 +109,7 @@
             android:paddingStart="5dp"
             android:textSize="17dp"
             android:textColor="@color/black"
-            android:id="@+id/description"/>
+            android:id="@+id/description_pendiente"/>
 
     </LinearLayout>
 

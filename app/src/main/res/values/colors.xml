@@ -23,6 +23,7 @@
     <color name="followers_bg_profile">#65DCE5</color>
     <color name="following_bg_profile">#49BEFF</color>
     <color name="grey_profile">#E5E5E5</color>
+    <color name="grey_pending">#f2f2f2</color>
     <color name="ecologycal_green">#71f24a</color>
 
 

@@ -107,24 +107,46 @@ public class HomeFragment extends Fragment {
     private void populatePostItems() {
         // skipeamos las que ya están renderizadas
         initiatives.stream().skip(countPostItems()).forEach(initiative ->  {
-            final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
+            if(initiative.getStatus().toString() == "APPROVED") {
+                final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
 
-            final TextView user = myView.findViewById(R.id.username);
-            user.setText(initiative.getNickname());
+                final TextView user = myView.findViewById(R.id.username);
+                user.setText(initiative.getNickname());
 
-            final ImageView img = myView.findViewById(R.id.post_image);
-            img.setImageBitmap(initiative.getImage());
+                final ImageView img = myView.findViewById(R.id.post_image);
+                img.setImageBitmap(initiative.getImage());
 
-            final TextView desc = myView.findViewById(R.id.description);
-            desc.setText(initiative.getDescription());
+                final TextView desc = myView.findViewById(R.id.description);
+                desc.setText(initiative.getDescription());
 
-            final String formattedDate = getFormattedDate(initiative.getDateLocal());
+                final String formattedDate = getFormattedDate(initiative.getDateLocal());
 
-            final TextView date = myView.findViewById(R.id.horario);
-            date.setText(formattedDate);
+                final TextView date = myView.findViewById(R.id.horario);
+                date.setText(formattedDate);
 
-            myView.setTag(POST_ITEM_TAG);
-            mparent.addView(myView);
+                myView.setTag(POST_ITEM_TAG);
+                mparent.addView(myView);
+            }else{
+                final View myView = layoutInflater.inflate(R.layout.post_item_pending, null, false);
+
+                final TextView user = myView.findViewById(R.id.username_pendiente);
+                user.setText(initiative.getNickname());
+
+                final ImageView img = myView.findViewById(R.id.post_image_pendiente);
+                img.setImageBitmap(initiative.getImage());
+
+                final TextView desc = myView.findViewById(R.id.description_pendiente);
+                desc.setText(initiative.getDescription());
+
+                final String formattedDate = getFormattedDate(initiative.getDateLocal());
+
+                final TextView date = myView.findViewById(R.id.horario_pendiente);
+                date.setText(formattedDate);
+
+                myView.setTag(POST_ITEM_TAG);
+                mparent.addView(myView);
+
+            }
         });
     }
 

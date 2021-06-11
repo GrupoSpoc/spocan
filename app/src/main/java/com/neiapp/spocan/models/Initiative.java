@@ -27,9 +27,11 @@ public class Initiative {
     private String image;
     private String nickname;
     private LocalDateTime date;
+    private InitiativeStatus status;
 
-    public Initiative(String _id, String description, String image, String nickname, String dateStrUTC) {
+    public Initiative(String _id, InitiativeStatus status, String description, String image, String nickname, String dateStrUTC) {
         this._id = _id;
+        this.status = status;
         this.description = description;
         this.image = image;
         this.nickname = nickname;
@@ -38,6 +40,7 @@ public class Initiative {
 
     public Initiative(String description, String image) {
         this.description = description;
+        this.status = null;
         this.image = image;
         this._id = null;
         this.nickname = null;
@@ -46,6 +49,7 @@ public class Initiative {
 
     public Initiative(String description, Bitmap bitmap) {
         this.description = description;
+        this.status = null;
         setImage(bitmap);
         this._id = null;
         this.nickname = null;
@@ -55,6 +59,8 @@ public class Initiative {
     public String getId() {
         return _id;
     }
+
+    public InitiativeStatus getStatus(){return status;}
 
     private void initDate() {
         this.date = LocalDateTime.now(UTC);
@@ -117,13 +123,15 @@ public class Initiative {
         try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
 
+
+            final InitiativeStatus status = InitiativeStatus.fromIdOrElseThrow(Integer.parseInt(jsonObject.getString("status_id")));
             final String _id = jsonObject.getString("_id");
             final String description = jsonObject.getString("description");
             final String image = jsonObject.getString("image");
             final String nickname = jsonObject.getString("nickname");
             final String date = jsonObject.getString("date");
 
-            return new Initiative(_id, description, image, nickname, date);
+            return new Initiative(_id, status, description, image, nickname, date);
         } catch (Exception e) {
             String message = "failed to convert jsno to initiative: " + e.getMessage();
             System.out.println(message);
