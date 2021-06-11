@@ -19,6 +19,7 @@ import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackCollection;
+import com.neiapp.spocan.models.InitiativeStatus;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
@@ -107,8 +108,12 @@ public class HomeFragment extends Fragment {
     private void populatePostItems() {
         // skipeamos las que ya están renderizadas
         initiatives.stream().skip(countPostItems()).forEach(initiative ->  {
-            if(initiative.getStatus().toString() == "APPROVED") {
-                final View myView = layoutInflater.inflate(R.layout.post_item, null, false);
+
+            final View myView;
+            final String formattedDate = getFormattedDate(initiative.getDateLocal());
+
+            if (initiative.getStatus() == InitiativeStatus.APPROVED) {
+                myView = layoutInflater.inflate(R.layout.post_item, null, false);
 
                 final TextView user = myView.findViewById(R.id.username);
                 user.setText(initiative.getNickname());
@@ -119,15 +124,12 @@ public class HomeFragment extends Fragment {
                 final TextView desc = myView.findViewById(R.id.description);
                 desc.setText(initiative.getDescription());
 
-                final String formattedDate = getFormattedDate(initiative.getDateLocal());
 
                 final TextView date = myView.findViewById(R.id.horario);
                 date.setText(formattedDate);
 
-                myView.setTag(POST_ITEM_TAG);
-                mparent.addView(myView);
-            }else{
-                final View myView = layoutInflater.inflate(R.layout.post_item_pending, null, false);
+            } else {
+                myView = layoutInflater.inflate(R.layout.post_item_pending, null, false);
 
                 final TextView user = myView.findViewById(R.id.username_pendiente);
                 user.setText(initiative.getNickname());
@@ -138,15 +140,12 @@ public class HomeFragment extends Fragment {
                 final TextView desc = myView.findViewById(R.id.description_pendiente);
                 desc.setText(initiative.getDescription());
 
-                final String formattedDate = getFormattedDate(initiative.getDateLocal());
-
                 final TextView date = myView.findViewById(R.id.horario_pendiente);
                 date.setText(formattedDate);
-
-                myView.setTag(POST_ITEM_TAG);
-                mparent.addView(myView);
-
             }
+
+            myView.setTag(POST_ITEM_TAG);
+            mparent.addView(myView);
         });
     }
 
