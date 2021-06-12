@@ -2,7 +2,9 @@ package com.neiapp.spocan.backend.rest;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.JsonObject;
 import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.InitiativeBatch;
 import com.neiapp.spocan.models.InitiativeStatus;
 import com.neiapp.spocan.models.TokenInfo;
 import com.neiapp.spocan.models.User;
@@ -16,6 +18,8 @@ import com.neiapp.spocan.backend.rest.query.QueryParam;
 import com.neiapp.spocan.backend.rest.query.QueryParamsBuilder;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 
@@ -106,7 +110,7 @@ public class RestClientBackend implements Backend {
 
 
     @Override
-    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackCollection<Initiative> callback) {
+    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackInstance<InitiativeBatch> callback) {
         QueryParamsBuilder queryParamsBuilder = new QueryParamsBuilder();
         queryParamsBuilder
                 .withParam(QueryParam.ORDER, "1")
@@ -126,7 +130,7 @@ public class RestClientBackend implements Backend {
         performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, queryParamsBuilder.build(), new ServerEnsureResponseCallback() {
             @Override
             void doSuccess(@NotNull String serverResponse) {
-                executeJsonAction(() -> callback.onSuccess(Initiative.convertJsonList(serverResponse)), callback);
+                executeJsonAction(() -> callback.onSuccess(InitiativeBatch.convertJson(serverResponse)), callback);
             }
 
             @Override
@@ -148,7 +152,7 @@ public class RestClientBackend implements Backend {
 
     @FunctionalInterface
     private interface FallibleExecutable {
-        void execute() throws ParseJsonException;
+        void execute() throws ParseJsonException, JSONException;
     }
 
 
