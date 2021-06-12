@@ -35,6 +35,7 @@
     <string name="name_organitation_profile">Grupo SPOC</string>
     <string name="post_string_profile">Iniciativas</string>
     <string name="post_string_pendientes">Pendientes</string>
+    <string name="post_string_aprobadas">Aprobadas</string>
     <string name="typeOfUserPersonProfile">Tipo de usuario: Persona</string>
     <string name="typeOfUserOrganitationProfile">Tipo de usuario: Organización</string>
     <string name="email_indicator_profile">Email</string>
