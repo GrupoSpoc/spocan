@@ -2,24 +2,20 @@ package com.neiapp.spocan.backend.rest;
 
 import androidx.annotation.Nullable;
 
-import com.google.gson.JsonObject;
-import com.neiapp.spocan.models.Initiative;
-import com.neiapp.spocan.models.InitiativeBatch;
-import com.neiapp.spocan.models.InitiativeStatus;
-import com.neiapp.spocan.models.TokenInfo;
-import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.ParseJsonException;
-import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.backend.callback.Fallible;
 import com.neiapp.spocan.backend.rest.query.QueryParam;
 import com.neiapp.spocan.backend.rest.query.QueryParamsBuilder;
+import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.InitiativeBatch;
+import com.neiapp.spocan.models.InitiativeStatus;
+import com.neiapp.spocan.models.TokenInfo;
+import com.neiapp.spocan.models.User;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 
@@ -152,7 +148,7 @@ public class RestClientBackend implements Backend {
 
     @FunctionalInterface
     private interface FallibleExecutable {
-        void execute() throws ParseJsonException, JSONException;
+        void execute() throws ParseJsonException;
     }
 
 
