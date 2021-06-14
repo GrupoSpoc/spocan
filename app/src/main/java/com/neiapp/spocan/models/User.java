@@ -114,6 +114,11 @@ public class User implements Serializable {
     }
 
     public int getAmountOfInitiatives(){
-        return initiativesByStatus.get(InitiativeStatus.PENDING.getId()) + initiativesByStatus.get(InitiativeStatus.APPROVED.getId()) + initiativesByStatus.get(InitiativeStatus.REJECTED.getId());
+        //Tiene pasos extra por el unboxing del Enum
+        Integer pendingTotal =  initiativesByStatus.get(InitiativeStatus.PENDING.getId());
+        Integer approvedTotal =  initiativesByStatus.get(InitiativeStatus.APPROVED.getId());
+        Integer rejectedTotal = initiativesByStatus.get(InitiativeStatus.REJECTED.getId());
+
+        return pendingTotal != null && approvedTotal != null && rejectedTotal != null? pendingTotal+approvedTotal+rejectedTotal : -1;
     }
 }
