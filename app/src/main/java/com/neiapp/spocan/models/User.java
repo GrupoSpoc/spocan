@@ -17,33 +17,26 @@ import java.util.Map;
 public class User implements Serializable {
     private String nickname;
     private UserType type;
-    private int amountOfInitiatives;
     private boolean admin;
     private Map<Integer, Integer> initiativesByStatus;
 
     public User(String nickname, UserType type) {
         this.nickname = nickname;
         this.type = type;
-        this.amountOfInitiatives = 0;
         this.admin = false;
         this.initiativesByStatus = new HashMap<>();
 
     }
 
-    public User(String nickname, UserType type, int amountOfInitiatives, boolean admin, Map<Integer, Integer> initiativesByStatus) {
+    public User(String nickname, UserType type, boolean admin, Map<Integer, Integer> initiativesByStatus) {
         this.nickname = nickname;
         this.type = type;
         this.admin = admin;
-        this.amountOfInitiatives = amountOfInitiatives;
         this.initiativesByStatus = initiativesByStatus;
     }
 
     public boolean isAdmin() {
         return admin;
-    }
-
-    public int getAmountOfInitiatives() {
-        return amountOfInitiatives;
     }
 
     public String getNickname() {
@@ -93,11 +86,10 @@ public class User implements Serializable {
             final String nickname = jsonObject.getString("nickname");
             final int typeId = jsonObject.getInt("type_id");
             final boolean admin = jsonObject.getBoolean("admin");
-            final int amountOfInitiatives = jsonObject.getInt("amount_of_initiatives");
             JSONObject statusObject = jsonObject.getJSONObject("initiatives_by_status");
             Map<Integer, Integer> initiativesByStatus = convertJSONObjectToStatus(statusObject);
 
-            return new User(nickname, UserType.fromIdOrElseThrow(typeId), amountOfInitiatives, admin, initiativesByStatus);
+            return new User(nickname, UserType.fromIdOrElseThrow(typeId),  admin, initiativesByStatus);
         } catch (Exception e) {
             String message = "failed to convert json to user" + e.getMessage();
             System.out.println(message);
@@ -119,5 +111,9 @@ public class User implements Serializable {
         Integer ammountOfInitiatives = initiativesByStatus.get(status);
 
         return ammountOfInitiatives != null? ammountOfInitiatives : 0;
+    }
+
+    public int getAmountOfInitiatives(){
+        return initiativesByStatus.get(InitiativeStatus.PENDING.getId()) + initiativesByStatus.get(InitiativeStatus.APPROVED.getId()) + initiativesByStatus.get(InitiativeStatus.REJECTED.getId());
     }
 }

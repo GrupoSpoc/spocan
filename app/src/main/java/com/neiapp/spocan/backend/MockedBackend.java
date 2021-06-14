@@ -17,7 +17,7 @@ import java.util.Map;
 public class MockedBackend implements Backend {
     public static ArrayList<Initiative> initiative_store;
     public static Map<Integer,Integer> initiative_by_status = new HashMap<>();
-    public static final User USER = new User("TestUser", UserType.PERSON, 550, false, initiative_by_status );
+    public static final User USER = new User("TestUser", UserType.PERSON, false, initiative_by_status );
     public static User CURRENT_USER;
 
     protected MockedBackend() {
