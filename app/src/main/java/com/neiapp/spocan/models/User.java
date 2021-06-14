@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -89,7 +90,7 @@ public class User implements Serializable {
             JSONObject statusObject = jsonObject.getJSONObject("initiatives_by_status");
             Map<Integer, Integer> initiativesByStatus = convertJSONObjectToStatus(statusObject);
 
-            return new User(nickname, UserType.fromIdOrElseThrow(typeId),  admin, initiativesByStatus);
+            return new User(nickname, UserType.fromIdOrElseThrow(typeId), admin, initiativesByStatus);
         } catch (Exception e) {
             String message = "failed to convert json to user" + e.getMessage();
             System.out.println(message);
@@ -110,15 +111,13 @@ public class User implements Serializable {
     public int getAmountOfInitiativesByStatus(int status) {
         Integer ammountOfInitiatives = initiativesByStatus.get(status);
 
-        return ammountOfInitiatives != null? ammountOfInitiatives : 0;
+        return ammountOfInitiatives != null ? ammountOfInitiatives : 0;
     }
 
-    public int getAmountOfInitiatives(){
-        //Tiene pasos extra por el unboxing del Enum
-        Integer pendingTotal =  initiativesByStatus.get(InitiativeStatus.PENDING.getId());
-        Integer approvedTotal =  initiativesByStatus.get(InitiativeStatus.APPROVED.getId());
-        Integer rejectedTotal = initiativesByStatus.get(InitiativeStatus.REJECTED.getId());
+    public int getAmountOfInitiatives() {
 
-        return pendingTotal != null && approvedTotal != null && rejectedTotal != null? pendingTotal+approvedTotal+rejectedTotal : -1;
+        return Arrays.stream(InitiativeStatus.values())
+                .mapToInt(status -> this.getAmountOfInitiativesByStatus(status.getId()))
+                .sum();
     }
 }
