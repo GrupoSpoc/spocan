@@ -1,16 +1,18 @@
 package com.neiapp.spocan.backend;
 
-import com.neiapp.spocan.models.Initiative;
-import com.neiapp.spocan.models.UserType;
-import com.neiapp.spocan.backend.callback.CallbackCollection;
+import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
+import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.InitiativeBatch;
+import com.neiapp.spocan.models.UserType;
 
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(RobolectricTestRunner.class)
 public class MockedBackendTest {
@@ -51,14 +53,15 @@ public class MockedBackendTest {
 
         fakeBackend.createInitiative(initiative_first, call);
         fakeBackend.createInitiative(initiative_second, call);
-        fakeBackend.getAllInitiatives(null, false, new CallbackCollection<Initiative>() {
+        fakeBackend.getAllInitiatives(null, false, new CallbackInstance<InitiativeBatch>() {
             @Override
-            public void onSuccess(List<Initiative> collection) {
+            public void onSuccess(InitiativeBatch batch) {
                 assertEquals(originalSize + 2, MockedBackend.initiative_store.size());
                 // tomo la penúltima creada, debería ser initiative_first
-                assertEquals(String.valueOf(originalSize + 1), collection.get(originalSize).getId());
+                assertEquals(String.valueOf(originalSize + 1), batch.getInitiatives().get(originalSize).getId());
                 // tomo la última creada, debería ser initiative_second
-                assertEquals(String.valueOf(originalSize + 2), collection.get(originalSize + 1).getId());
+                assertEquals(String.valueOf(originalSize + 2), batch.getInitiatives().get(originalSize + 1).getId());
+                assertFalse(batch.isLastBatch());
             }
         });
     }

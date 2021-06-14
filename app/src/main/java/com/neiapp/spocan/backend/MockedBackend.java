@@ -1,6 +1,7 @@
 package com.neiapp.spocan.backend;
 
 import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.InitiativeBatch;
 import com.neiapp.spocan.models.InitiativeStatus;
 import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.models.UserType;
@@ -51,8 +52,8 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackCollection<Initiative> collection) {
-        collection.onSuccess(initiative_store);
+    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackInstance<InitiativeBatch> callback) {
+        callback.onSuccess(new InitiativeBatch(initiative_store, false));
     }
 
 

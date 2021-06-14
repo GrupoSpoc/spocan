@@ -15,10 +15,11 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
-import com.neiapp.spocan.backend.callback.CallbackCollection;
+import com.neiapp.spocan.backend.callback.CallbackInstance;
+import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.InitiativeBatch;
 import com.neiapp.spocan.models.InitiativeStatus;
 import com.neiapp.spocan.ui.activity.InitiativeActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
@@ -41,6 +42,7 @@ public class HomeFragment extends Fragment {
     private static final String POST_ITEM_TAG = "post-item";
 
     boolean fromCurrentUser = false;
+    boolean lastBatch = false;
 
 
     @Override
@@ -86,11 +88,12 @@ public class HomeFragment extends Fragment {
         final LocalDateTime dateTop = getLastInitiativeDateUTC();
 
         Backend backend = Backend.getInstance();
-        backend.getAllInitiatives(dateTop, fromCurrentUser, new CallbackCollection<Initiative>() {
+        backend.getAllInitiatives(dateTop, fromCurrentUser, new CallbackInstance<InitiativeBatch>() {
             @Override
-            public void onSuccess(List<Initiative> initiatives) {
+            public void onSuccess(InitiativeBatch batch) {
                 getActivity().runOnUiThread(() -> {
-                    HomeFragment.this.initiatives.addAll(initiatives);
+                    HomeFragment.this.initiatives.addAll(batch.getInitiatives());
+                    HomeFragment.this.lastBatch = batch.isLastBatch();
                     populatePostItems();
                     spinnerDialog.stop();
                 });
@@ -199,7 +202,7 @@ public class HomeFragment extends Fragment {
     private final NestedScrollView.OnScrollChangeListener scrollListener = new NestedScrollView.OnScrollChangeListener() {
         @Override
         public void onScrollChange(NestedScrollView scrollView, int scrollX, int actualY, int oldScrollX, int oldScrollY) {
-            if (bottomWasReached(scrollView)) {
+            if (bottomWasReached(scrollView) && !lastBatch) {
                 fetchInitiatives();
             }
         }
@@ -226,7 +229,6 @@ public class HomeFragment extends Fragment {
             } else {
                 fromCurrentUser = false;
                 ownAllSwitch_desc.setText("Todas");
-
             }
 
             // Limpiamos el muro para volver a empezar

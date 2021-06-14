@@ -2,18 +2,18 @@ package com.neiapp.spocan.backend.rest;
 
 import androidx.annotation.Nullable;
 
-import com.neiapp.spocan.models.Initiative;
-import com.neiapp.spocan.models.InitiativeStatus;
-import com.neiapp.spocan.models.TokenInfo;
-import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.ParseJsonException;
-import com.neiapp.spocan.backend.callback.CallbackCollection;
 import com.neiapp.spocan.backend.callback.CallbackInstance;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.backend.callback.Fallible;
 import com.neiapp.spocan.backend.rest.query.QueryParam;
 import com.neiapp.spocan.backend.rest.query.QueryParamsBuilder;
+import com.neiapp.spocan.models.Initiative;
+import com.neiapp.spocan.models.InitiativeBatch;
+import com.neiapp.spocan.models.InitiativeStatus;
+import com.neiapp.spocan.models.TokenInfo;
+import com.neiapp.spocan.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -106,7 +106,7 @@ public class RestClientBackend implements Backend {
 
 
     @Override
-    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackCollection<Initiative> callback) {
+    public void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackInstance<InitiativeBatch> callback) {
         QueryParamsBuilder queryParamsBuilder = new QueryParamsBuilder();
         queryParamsBuilder
                 .withParam(QueryParam.ORDER, "1")
@@ -126,7 +126,7 @@ public class RestClientBackend implements Backend {
         performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, queryParamsBuilder.build(), new ServerEnsureResponseCallback() {
             @Override
             void doSuccess(@NotNull String serverResponse) {
-                executeJsonAction(() -> callback.onSuccess(Initiative.convertJsonList(serverResponse)), callback);
+                executeJsonAction(() -> callback.onSuccess(InitiativeBatch.convertJson(serverResponse)), callback);
             }
 
             @Override
