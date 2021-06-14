@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.neiapp.spocan.models.InitiativeStatus;
 import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
@@ -20,6 +21,9 @@ public class ProfileFragment extends Fragment {
     TextView textViewNickname;
     TextView textViewTypeUser;
     TextView textViewCountPosts;
+    TextView textViewApprovedPosts;
+    TextView textViewPendingPosts;
+    TextView textViewRejectedPosts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,12 @@ public class ProfileFragment extends Fragment {
                     textViewTypeUser.setText("Tipo de usuario:" + instance.getType().toString());
                     textViewCountPosts = view.findViewById(R.id.count_posts);
                     textViewCountPosts.setText(String.valueOf(instance.getAmountOfInitiatives()));
+                    textViewApprovedPosts = view.findViewById(R.id.count_approved_posts);
+                    textViewApprovedPosts.setText(String.valueOf(instance.getAmountOfInitiativesByStatus(InitiativeStatus.APPROVED.getId())));
+                    textViewPendingPosts = view.findViewById(R.id.count_pending_posts);
+                    textViewPendingPosts.setText(String.valueOf(instance.getAmountOfInitiativesByStatus(InitiativeStatus.PENDING.getId())));
+                    textViewRejectedPosts = view.findViewById(R.id.count_rejected_posts);
+                    textViewRejectedPosts.setText(String.valueOf(instance.getAmountOfInitiativesByStatus(InitiativeStatus.REJECTED.getId())));
                     spinnerDialog.stop();
                 });
             }
