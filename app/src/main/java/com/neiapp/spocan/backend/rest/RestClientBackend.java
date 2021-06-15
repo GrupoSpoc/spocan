@@ -110,7 +110,7 @@ public class RestClientBackend implements Backend {
         QueryParamsBuilder queryParamsBuilder = new QueryParamsBuilder();
         queryParamsBuilder
                 .withParam(QueryParam.ORDER, "1")
-                .withParam(QueryParam.LIMIT, "2")
+                .withParam(QueryParam.LIMIT, "3")
                 .withParam(QueryParam.STATUS, String.valueOf(InitiativeStatus.APPROVED.getId()));
 
         if (fromCurrentUser) {
