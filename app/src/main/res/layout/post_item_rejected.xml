@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- android:background="@color/grey_pending" -->
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/rechazada"
+        android:text="Iniciativa rechazada"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textColor="@color/grey_backgrounds"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/horario_rechazada"
+        android:textSize="12dp"
+        android:layout_toRightOf="@+id/cartel"
+        android:textStyle="bold"
+        android:textColor="@color/grey_backgrounds"
+        android:layout_marginTop="24dp"/>
+
+    <ImageView
+        android:id="@+id/cartel"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toLeftOf="@+id/rechazada"
+        android:src="@drawable/ic_rejected" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:paddingStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/profile_image_rechazada"
+                android:src="@drawable/ic_profile"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/username_rechazada"
+                android:layout_gravity="center_vertical"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_margin="0dp"/>
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:alpha=".3"
+                android:id="@+id/post_image_rechazada"
+                app:layout_constraintDimensionRatio="H,4:5"
+                tools:ignore="MissingConstraints"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/motivo_rechazo"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textSize="17dp"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/post_image_rechazada"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingStart="5dp"
+            android:textSize="17dp"
+            android:textColor="@color/black"
+            android:id="@+id/description_rechazada"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
