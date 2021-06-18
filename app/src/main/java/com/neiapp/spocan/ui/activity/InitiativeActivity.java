@@ -82,7 +82,7 @@ public class InitiativeActivity extends SpocanActivity {
                             runOnUiThread(() -> {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
-                                Toast.makeText(getApplicationContext(), "Iniciativa enviada pendiente de aprobación", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Iniciativa enviada para evaluar su aprobación", Toast.LENGTH_LONG).show();
                                 spinnerDialog.stop();
                             });
                         }
