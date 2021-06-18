@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -111,7 +112,26 @@ public class InitiativeActivity extends SpocanActivity {
             result = false;
             Toast.makeText(getApplicationContext(), "Debe agregar una descripción", Toast.LENGTH_LONG).show();
         }
+        if (validateFiwareCharacter(textDescription.getText().toString())){
+            result = false;
+            Toast.makeText(getApplicationContext(), "No se pueden ingresar los siguientes caracteres : ( ) > < ; = ' \" ", Toast.LENGTH_LONG).show();
+        }
         return result;
+    }
+
+    private boolean validateFiwareCharacter(String description){
+            char[] fiwareRestrictedChars = {'<','>','"','=','(',')',';', '\''};
+            boolean containRestricted = false;
+
+            for(char i : description.toCharArray()){
+                for(char j : fiwareRestrictedChars){
+                    if(i == j){
+                        containRestricted = true;
+                        break;
+                    }
+                }
+            }
+            return containRestricted;
     }
 
     @Override
