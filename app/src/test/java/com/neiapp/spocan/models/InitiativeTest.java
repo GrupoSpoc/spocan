@@ -49,11 +49,12 @@ public class InitiativeTest {
         String  imageBase64 = "imageBase64";
         String nickname = "lolo";
         String _id = "_id";
+        String reject_motive = "Rechazada por no ser iniciativa xd";
         InitiativeStatus status = InitiativeStatus.APPROVED;
         LocalDateTime date = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
         String dateStrUTC = date.toString();
 
-        Initiative initiative = new Initiative(_id, status, description, imageBase64, nickname, dateStrUTC);
+        Initiative initiative = new Initiative(_id, status, description, imageBase64, nickname, dateStrUTC, reject_motive);
 
         assertEquals(description, initiative.getDescription());
         assertEquals(imageBase64, initiative.getImageBase64());
@@ -61,6 +62,7 @@ public class InitiativeTest {
         assertEquals(status, initiative.getStatus());
         assertEquals(nickname, initiative.getNickname());
         assertEquals(date, initiative.getDateUTC());
+        assertEquals(reject_motive, initiative.getReject_motive());
     }
 
     @Test
@@ -93,6 +95,7 @@ public class InitiativeTest {
         jsonInitiative.addProperty("image", "imageBase64");
         jsonInitiative.addProperty("nickname", "nickname");
         jsonInitiative.addProperty("date", dateStrUTC);
+        jsonInitiative.addProperty("reject_motive", "reject_motive");
 
         Initiative result = Initiative.convertJson(jsonInitiative.toString());
 
@@ -101,6 +104,7 @@ public class InitiativeTest {
         assertEquals(result.getStatus().getId(), jsonInitiative.get("status_id").getAsInt());
         assertEquals(result.getImageBase64(), jsonInitiative.get("image").getAsString());
         assertEquals(result.getNickname(), jsonInitiative.get("nickname").getAsString());
+        assertEquals(result.getReject_motive(), jsonInitiative.get("reject_motive").getAsString());
     }
 
     @Test
@@ -124,11 +128,12 @@ public class InitiativeTest {
         String nickname = "lolo";
         String _id = "_id";
         InitiativeStatus status = InitiativeStatus.APPROVED;
+        String reject_motive = "Rechazada por no ser una iniciativa xd";
         LocalDateTime date = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
         String dateStrUTC = date.toString();
         final Bitmap bitmap = Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8);
 
-        Initiative initiative = new Initiative(_id, status,  description, imageBase64, nickname, dateStrUTC);
+        Initiative initiative = new Initiative(_id, status,  description, imageBase64, nickname, dateStrUTC, reject_motive);
 
         initiative.setImage(bitmap);
 
@@ -143,11 +148,12 @@ public class InitiativeTest {
         String nickname = "lolo";
         String _id = "_id";
         InitiativeStatus status = InitiativeStatus.APPROVED;
+        String reject_motive = "Rechazada por no ser una iniciativa xd";
         LocalDateTime dateUTC = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
         String dateStrUTC = dateUTC.toString();
         LocalDateTime zonedBsAsDate = dateUTC.minusHours(Initiative.ZONE_BS_AS_HOURS);
 
-        Initiative initiative = new Initiative(_id, status, description, imageBase64, nickname, dateStrUTC);
+        Initiative initiative = new Initiative(_id, status, description, imageBase64, nickname, dateStrUTC, reject_motive);
 
         assertEquals(dateUTC, initiative.getDateUTC());
         assertEquals(zonedBsAsDate, initiative.getDateLocal());

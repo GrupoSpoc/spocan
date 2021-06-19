@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- android:background="@color/grey_pending" -->
@@ -72,8 +74,6 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -90,16 +90,16 @@
                 tools:ignore="MissingConstraints"/>
 
             <TextView
+                android:id="@+id/motivo_rechazo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/motivo_rechazo"
-                android:layout_marginBottom="5dp"
-                android:paddingStart="15dp"
+                android:gravity="center_vertical" android:paddingStart="15dp"
                 android:paddingEnd="15dp"
+                android:textColor="@color/black"
                 android:textSize="17dp"
                 android:textStyle="italic"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@id/post_image_rechazada"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/post_image_rechazada" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

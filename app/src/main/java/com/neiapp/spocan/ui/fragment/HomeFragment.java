@@ -162,8 +162,8 @@ public class HomeFragment extends Fragment {
                 final TextView date = myView.findViewById(R.id.horario_rechazada);
                 date.setText(formattedDate);
 
-                //final Text motivo = myView.findViewById(R.id.motivo_rechazo);
-                //desc.setText(initiative.getMotivo());
+                final TextView motivo = myView.findViewById(R.id.motivo_rechazo);
+                motivo.setText(initiative.getReject_motive());
             }
 
             myView.setTag(POST_ITEM_TAG);

@@ -28,8 +28,14 @@ public class Initiative {
     private String nickname;
     private LocalDateTime date;
     private InitiativeStatus status;
+    private String reject_motive;
 
-    public Initiative(String _id, InitiativeStatus status, String description, String image, String nickname, String dateStrUTC) {
+    public Initiative(String _id, InitiativeStatus status, String description, String image, String nickname, String dateStrUTC, String reject_motive) {
+        if(reject_motive!=null){
+            this.reject_motive = reject_motive;
+        }else{
+            this.reject_motive = null;
+        }
         this._id = _id;
         this.status = status;
         this.description = description;
@@ -44,6 +50,7 @@ public class Initiative {
         this.image = image;
         this._id = null;
         this.nickname = null;
+        this.reject_motive = null;
         initDate();
     }
 
@@ -53,6 +60,7 @@ public class Initiative {
         setImage(bitmap);
         this._id = null;
         this.nickname = null;
+        this.reject_motive = null;
         initDate();
     }
 
@@ -61,6 +69,8 @@ public class Initiative {
     }
 
     public InitiativeStatus getStatus(){return status;}
+
+    public String getReject_motive(){return reject_motive;}
 
     private void initDate() {
         this.date = LocalDateTime.now(UTC);
@@ -105,7 +115,9 @@ public class Initiative {
     public String toJson() throws ParseJsonException {
         try {
             JsonObject json = new JsonObject();
-
+            if(json.has("reject_motive")){
+                json.addProperty("reject_motive", this.reject_motive);
+            }
             json.addProperty("description", this.description);
             json.addProperty("image", this.image);
             json.addProperty("date", this.date.toString());
@@ -125,13 +137,14 @@ public class Initiative {
 
 
             final InitiativeStatus status = InitiativeStatus.fromIdOrElseThrow(Integer.parseInt(jsonObject.getString("status_id")));
+            final String reject_motive = jsonObject.getString("reject_motive");
             final String _id = jsonObject.getString("_id");
             final String description = jsonObject.getString("description");
             final String image = jsonObject.getString("image");
             final String nickname = jsonObject.getString("nickname");
             final String date = jsonObject.getString("date");
 
-            return new Initiative(_id, status, description, image, nickname, date);
+            return new Initiative(_id, status, description, image, nickname, date, reject_motive);
         } catch (Exception e) {
             String message = "failed to convert jsno to initiative: " + e.getMessage();
             System.out.println(message);
