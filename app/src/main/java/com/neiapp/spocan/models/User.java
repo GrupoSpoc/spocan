@@ -100,11 +100,16 @@ public class User implements Serializable {
 
     private static Map<Integer, Integer> convertJSONObjectToStatus(JSONObject statusObject) throws JSONException {
 
+        String pendingId = String.valueOf(InitiativeStatus.PENDING.getId());
+        String approvedId = String.valueOf(InitiativeStatus.APPROVED.getId());
+        String rejectedId = String.valueOf(InitiativeStatus.REJECTED.getId());
+
         Map<Integer, Integer> result = new HashMap<>();
 
-        result.put(InitiativeStatus.PENDING.getId(), statusObject.getInt(String.valueOf(InitiativeStatus.PENDING.getId())));
-        result.put(InitiativeStatus.APPROVED.getId(), statusObject.getInt(String.valueOf(InitiativeStatus.APPROVED.getId())));
-        result.put(InitiativeStatus.REJECTED.getId(), statusObject.getInt(String.valueOf(InitiativeStatus.REJECTED.getId())));
+        result.put(InitiativeStatus.PENDING.getId(), statusObject.has(pendingId) ? statusObject.getInt(pendingId) : 0);
+        result.put(InitiativeStatus.APPROVED.getId(), statusObject.has(approvedId) ? statusObject.getInt(approvedId) : 0);
+        result.put(InitiativeStatus.REJECTED.getId(), statusObject.has(rejectedId) ? statusObject.getInt(rejectedId) : 0);
+
         return result;
     }
 
