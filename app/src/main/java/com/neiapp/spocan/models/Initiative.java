@@ -153,7 +153,4 @@ public class Initiative {
             throw new ParseJsonException(message);
         }
     }
-
-
-
 }
