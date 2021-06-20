@@ -31,17 +31,13 @@ public class Initiative {
     private String reject_motive;
 
     public Initiative(String _id, InitiativeStatus status, String description, String image, String nickname, String dateStrUTC, String reject_motive) {
-        if(reject_motive!=null){
-            this.reject_motive = reject_motive;
-        }else{
-            this.reject_motive = null;
-        }
         this._id = _id;
         this.status = status;
         this.description = description;
         this.image = image;
         this.nickname = nickname;
         setDate(dateStrUTC);
+        this.reject_motive = reject_motive;
     }
 
     public Initiative(String description, String image) {
@@ -115,9 +111,7 @@ public class Initiative {
     public String toJson() throws ParseJsonException {
         try {
             JsonObject json = new JsonObject();
-            if(json.has("reject_motive")){
-                json.addProperty("reject_motive", this.reject_motive);
-            }
+
             json.addProperty("description", this.description);
             json.addProperty("image", this.image);
             json.addProperty("date", this.date.toString());
@@ -135,9 +129,16 @@ public class Initiative {
         try {
             JSONObject jsonObject = new JSONObject(jsonToTransform);
 
-
             final InitiativeStatus status = InitiativeStatus.fromIdOrElseThrow(Integer.parseInt(jsonObject.getString("status_id")));
-            final String reject_motive = jsonObject.getString("reject_motive");
+
+            final String reject_motive;
+
+            if (jsonObject.has("reject_motive")) {
+                reject_motive = jsonObject.getString("reject_motive");
+            } else {
+                reject_motive = null;
+            }
+
             final String _id = jsonObject.getString("_id");
             final String description = jsonObject.getString("description");
             final String image = jsonObject.getString("image");

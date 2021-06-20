@@ -1,5 +1,11 @@
  package com.neiapp.spocan.models;
 
+ import static org.junit.Assert.assertEquals;
+ import static org.junit.Assert.assertNotNull;
+ import static org.junit.Assert.assertNull;
+ import static org.junit.Assert.assertThrows;
+ import static org.junit.Assert.assertTrue;
+
  import android.graphics.Bitmap;
 
  import com.google.gson.JsonObject;
@@ -14,13 +20,6 @@
  import java.time.LocalDateTime;
  import java.time.Month;
  import java.time.ZoneOffset;
-
- import static org.junit.Assert.assertEquals;
- import static org.junit.Assert.assertFalse;
- import static org.junit.Assert.assertNotNull;
- import static org.junit.Assert.assertNull;
- import static org.junit.Assert.assertThrows;
- import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 public class InitiativeTest {
@@ -105,6 +104,29 @@ public class InitiativeTest {
         assertEquals(result.getImageBase64(), jsonInitiative.get("image").getAsString());
         assertEquals(result.getNickname(), jsonInitiative.get("nickname").getAsString());
         assertEquals(result.getReject_motive(), jsonInitiative.get("reject_motive").getAsString());
+    }
+
+    @Test
+    public void testInitiativeTransformJSONWithoutRejectMotive() throws ParseJsonException {
+        JsonObject jsonInitiative = new JsonObject();
+        LocalDateTime date = LocalDateTime.of(1980, Month.APRIL, 20, 10, 30);
+        String dateStrUTC = date.toString();
+
+        jsonInitiative.addProperty("_id", "_id");
+        jsonInitiative.addProperty("status_id", 1);
+        jsonInitiative.addProperty("description", "description");
+        jsonInitiative.addProperty("image", "imageBase64");
+        jsonInitiative.addProperty("nickname", "nickname");
+        jsonInitiative.addProperty("date", dateStrUTC);
+
+        Initiative result = Initiative.convertJson(jsonInitiative.toString());
+
+        assertEquals(result.getDescription(), jsonInitiative.get("description").getAsString());
+        assertEquals(result.getId(), jsonInitiative.get("_id").getAsString());
+        assertEquals(result.getStatus().getId(), jsonInitiative.get("status_id").getAsInt());
+        assertEquals(result.getImageBase64(), jsonInitiative.get("image").getAsString());
+        assertEquals(result.getNickname(), jsonInitiative.get("nickname").getAsString());
+        assertNull(result.getReject_motive());
     }
 
     @Test

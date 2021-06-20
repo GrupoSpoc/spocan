@@ -1,6 +1,5 @@
 package com.neiapp.spocan.models;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.neiapp.spocan.backend.ParseJsonException;
 
@@ -8,11 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class User implements Serializable {
