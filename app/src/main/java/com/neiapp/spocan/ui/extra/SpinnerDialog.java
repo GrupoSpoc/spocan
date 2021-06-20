@@ -31,6 +31,8 @@ public class SpinnerDialog {
 
         if (transparent) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setDimAmount(0.0f);
+            dialog.setContentView(inflatedView);
         }
     }
 

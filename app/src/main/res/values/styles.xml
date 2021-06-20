@@ -8,4 +8,8 @@
     <style name="ProgressTheme">
         <item name="colorAccent">@color/ecologycal_green</item>
     </style>
+
+    <style name="Theme.DoNotDim" parent="android:Theme">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>
