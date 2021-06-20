@@ -24,8 +24,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout2"
-        android:layout_width="425dp"
-        android:layout_height="448dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
             android:id="@+id/nicknameTextBox"
             android:layout_width="310dp"
             android:layout_height="68dp"
-            android:layout_marginTop="108dp"
+            android:layout_marginTop="200dp"
             android:drawableLeft="@drawable/add_user_icon"
             android:ems="10"
             android:fontFamily="@font/nunito_light"
@@ -65,6 +65,7 @@
             app:layout_constraintTop_toBottomOf="@+id/userTypeSpinner"
             app:layout_constraintVertical_bias="0.635" />
 
+
         <Spinner
             android:id="@+id/userTypeSpinner"
             android:layout_width="265dp"
@@ -73,11 +74,9 @@
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/nicknameTextBox"
-            app:layout_constraintVertical_bias="0.526"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/userTypeDesc"
+            app:layout_constraintVertical_bias="0.038" />
 
         <TextView
             android:id="@+id/userTypeDesc"
@@ -88,7 +87,6 @@
             android:fontFamily="@font/nunito_light"
             android:text="@string/dropDownOptionsDescription"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/userTypeSpinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"

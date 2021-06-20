@@ -27,12 +27,12 @@ public class MockedBackend implements Backend {
         this.initiative_by_status.put(InitiativeStatus.REJECTED.getId(),3);
         if (initiative_store == null) {
             initiative_store = new ArrayList<>();
-            initiative_store.add(new Initiative("1", InitiativeStatus.APPROVED,"[test] Iniciativa de prueba 1", MockedImagesBase64.RED_800_X_600, "TestUser-1", "2021-04-27T22:59:34"));
-            initiative_store.add(new Initiative("2",InitiativeStatus.APPROVED, "[test] Iniciativa de prueba 2. Esta vez la descripcion es un poco mas larga.", MockedImagesBase64.BLUE_800_X_600, "TestUser-2", "2021-04-22T14:13:05"));
-            initiative_store.add(new Initiative("3", InitiativeStatus.APPROVED,"[test] Iniciativa de prueba 3", MockedImagesBase64.GREEN_800_X_600, "CurrentUser", "2021-03-16T18:07:14"));
-            initiative_store.add(new Initiative("4", InitiativeStatus.APPROVED,"[test] Iniciativa de prueba 4", MockedImagesBase64.YELLOW_800_X_600, "TestUser-1", "2020-09-11T11:42:35"));
-            initiative_store.add(new Initiative("3", InitiativeStatus.REJECTED,"[test] Iniciativa de prueba 5", MockedImagesBase64.GREEN_800_X_600, "CurrentUser", "2021-03-16T18:07:12"));
-            initiative_store.add(new Initiative("4", InitiativeStatus.REJECTED,"[test] Iniciativa de prueba 6", MockedImagesBase64.YELLOW_800_X_600, "TestUser-1", "2020-09-11T11:42:36"));
+            initiative_store.add(new Initiative("1", InitiativeStatus.REJECTED,"[test] Iniciativa de prueba 1", MockedImagesBase64.RED_800_X_600, "TestUser-1", "2021-04-27T22:59:34","desaprobada"));
+            initiative_store.add(new Initiative("2",InitiativeStatus.APPROVED, "[test] Iniciativa de prueba 2. Esta vez la descripcion es un poco mas larga.", MockedImagesBase64.BLUE_800_X_600, "TestUser-2", "2021-04-22T14:13:05",null));
+            initiative_store.add(new Initiative("3", InitiativeStatus.PENDING,"[test] Iniciativa de prueba 3", MockedImagesBase64.GREEN_800_X_600, "CurrentUser", "2021-03-16T18:07:14",null));
+            initiative_store.add(new Initiative("4", InitiativeStatus.APPROVED,"[test] Iniciativa de prueba 4", MockedImagesBase64.YELLOW_800_X_600, "TestUser-1", "2020-09-11T11:42:35",null));
+            initiative_store.add(new Initiative("3", InitiativeStatus.REJECTED,"[test] Iniciativa de prueba 5", MockedImagesBase64.GREEN_800_X_600, "CurrentUser", "2021-03-16T18:07:12","hola2"));
+            initiative_store.add(new Initiative("4", InitiativeStatus.PENDING,"[test] Iniciativa de prueba 6", MockedImagesBase64.YELLOW_800_X_600, "TestUser-1", "2020-09-11T11:42:36",null));
         }
     }
 
