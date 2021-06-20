@@ -82,7 +82,7 @@ public class InitiativeActivity extends SpocanActivity {
                             runOnUiThread(() -> {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
-                                Toast.makeText(getApplicationContext(), "Iniciativa creada", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Iniciativa enviada para evaluar su aprobación", Toast.LENGTH_LONG).show();
                                 spinnerDialog.stop();
                             });
                         }
@@ -111,7 +111,26 @@ public class InitiativeActivity extends SpocanActivity {
             result = false;
             Toast.makeText(getApplicationContext(), "Debe agregar una descripción", Toast.LENGTH_LONG).show();
         }
+        if (validateFiwareCharacter(textDescription.getText().toString())){
+            result = false;
+            Toast.makeText(getApplicationContext(), "No se pueden ingresar los siguientes caracteres : ( ) > < ; = ' \" ", Toast.LENGTH_LONG).show();
+        }
         return result;
+    }
+
+    private boolean validateFiwareCharacter(String description){
+            char[] fiwareRestrictedChars = {'<','>','"','=','(',')',';', '\''};
+            boolean containRestricted = false;
+
+            for(char i : description.toCharArray()){
+                for(char j : fiwareRestrictedChars){
+                    if(i == j){
+                        containRestricted = true;
+                        break;
+                    }
+                }
+            }
+            return containRestricted;
     }
 
     @Override
