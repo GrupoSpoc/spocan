@@ -55,23 +55,6 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <Button
-            android:id="@+id/publish_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="84dp"
-            android:fontFamily="@font/nunito_light"
-            android:text="@string/PublishInitiativeBtn"
-            android:background="@drawable/diseno_botones_verdes"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            app:backgroundTint="@color/ecologycal_green"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDescription"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
             android:id="@+id/addPhotoBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,7 +89,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
-            android:layout_marginTop="70dp"
             app:backgroundTint="@color/black"
             android:background="@drawable/diseno_botones_verdes"
             android:fontFamily="@font/nunito_light"
@@ -115,8 +97,24 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDescription"
-            app:layout_constraintVertical_bias="0.146" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextDescription"/>
+
+        <Button
+            android:id="@+id/publish_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="64dp"
+            android:background="@drawable/diseno_botones_verdes"
+            android:fontFamily="@font/nunito_light"
+            android:text="@string/PublishInitiativeBtn"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:backgroundTint="@color/ecologycal_green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
