@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Spocan2">
-        <activity android:name=".ui.activity.SplashActivity">
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,10 +25,18 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <activity android:name=".ui.activity.LoginActivity"/>
-        <activity android:name=".ui.activity.RegisterUserActivity"/>
-        <activity android:name=".ui.activity.InitiativeActivity"/>
-        <activity android:name=".ui.activity.MainActivity"/>
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.RegisterUserActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.InitiativeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
