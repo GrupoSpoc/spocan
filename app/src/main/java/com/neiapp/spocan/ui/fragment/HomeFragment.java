@@ -25,6 +25,8 @@ import com.neiapp.spocan.ui.activity.InitiativeActivity;
 import com.neiapp.spocan.ui.activity.SpocanActivity;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
+import org.w3c.dom.Text;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +133,7 @@ public class HomeFragment extends Fragment {
                 final TextView date = myView.findViewById(R.id.horario);
                 date.setText(formattedDate);
 
-            } else {
+            } else if(initiative.getStatus() == InitiativeStatus.PENDING){
                 myView = layoutInflater.inflate(R.layout.post_item_pending, null, false);
 
                 final TextView user = myView.findViewById(R.id.username_pendiente);
@@ -145,6 +147,23 @@ public class HomeFragment extends Fragment {
 
                 final TextView date = myView.findViewById(R.id.horario_pendiente);
                 date.setText(formattedDate);
+            }else{
+                myView = layoutInflater.inflate(R.layout.post_item_rejected, null, false);
+
+                final TextView user = myView.findViewById(R.id.username_rechazada);
+                user.setText(initiative.getNickname());
+
+                final ImageView img = myView.findViewById(R.id.post_image_rechazada);
+                img.setImageBitmap(initiative.getImage());
+
+                final TextView desc = myView.findViewById(R.id.description_rechazada);
+                desc.setText(initiative.getDescription());
+
+                final TextView date = myView.findViewById(R.id.horario_rechazada);
+                date.setText(formattedDate);
+
+                final TextView motivo = myView.findViewById(R.id.motivo_rechazo);
+                motivo.setText(initiative.getReject_motive());
             }
 
             myView.setTag(POST_ITEM_TAG);
