@@ -2,12 +2,10 @@ package com.neiapp.spocan.ui.activity;
 
 import android.graphics.Bitmap;
 import com.neiapp.spocan.util.Base64Converter;
-import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
+import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -16,7 +14,7 @@ import static com.neiapp.spocan.ui.activity.InitiativeActivity.controlImageSize;
 
 
 @RunWith(RobolectricTestRunner.class)
-public class InitiativeActivityTest extends TestCase {
+public class InitiativeActivityTest {
 
     private  String leerBase64() {
         String  resultado = "";
