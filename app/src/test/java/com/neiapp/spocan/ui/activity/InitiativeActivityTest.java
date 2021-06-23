@@ -39,6 +39,7 @@ public class InitiativeActivityTest extends TestCase {
     }
     @Test
     public void controlImageSizeTest(){
+
         Bitmap bmp = Base64Converter.base64ToBitmap(leerBase64());
         final Bitmap resultingBitmap = controlImageSize(bmp);
 
