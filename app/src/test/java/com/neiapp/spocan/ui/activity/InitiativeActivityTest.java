@@ -43,7 +43,7 @@ public class InitiativeActivityTest extends TestCase {
         Bitmap bmp = Base64Converter.base64ToBitmap(leerBase64());
         final Bitmap resultingBitmap = controlImageSize(bmp);
 
-        assertTrue(true);
-     //   assertTrue(bmp.getWidth() > resultingBitmap.getWidth());
+        assertTrue(bmp.getHeight() != resultingBitmap.getHeight());
+        assertTrue(bmp.getWidth() != resultingBitmap.getWidth());
     }
 }
