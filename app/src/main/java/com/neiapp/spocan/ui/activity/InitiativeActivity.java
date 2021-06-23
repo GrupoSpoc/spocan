@@ -140,7 +140,6 @@ public class InitiativeActivity extends SpocanActivity {
 
         if((bitmap.getWidth()*bitmap.getHeight()) > IMAGE_MAX_SIZE) {
            bitmapResult = Bitmap.createBitmap((bitmapResult.getWidth() * 1/2), bitmapResult.getHeight() * 1/2, Bitmap.Config.ARGB_8888);
-          // bitmapResult = Bitmap.createScaledBitmap(bitmap,500,500,true);
         }
          return bitmapResult;
     }
