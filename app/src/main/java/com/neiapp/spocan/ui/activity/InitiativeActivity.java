@@ -26,6 +26,7 @@ import java.util.Objects;
 
 public class InitiativeActivity extends SpocanActivity {
 
+    final static int IMAGE_MAX_SIZE = 160000; // 400px * 400px
     Button mAddPhotoBtn;
     Button mPublishInitiativeBtn;
     Button mCancelPublishBtn;
@@ -132,6 +133,14 @@ public class InitiativeActivity extends SpocanActivity {
             }
             return containRestricted;
     }
+     static public Bitmap controlImageSize(Bitmap bitmap){
+        Bitmap bitmapResult = bitmap;
+
+        if((bitmap.getWidth()*bitmap.getHeight()) > IMAGE_MAX_SIZE) {
+           bitmapResult = Bitmap.createBitmap((bitmapResult.getWidth() * 1/2), bitmapResult.getHeight() * 1/2, Bitmap.Config.ARGB_8888);
+        }
+         return bitmapResult;
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -139,8 +148,9 @@ public class InitiativeActivity extends SpocanActivity {
         if (requestCode == 1001) {
             if (resultCode == RESULT_OK) {
                 final Bitmap bitmapPreview = (Bitmap) Objects.requireNonNull(data.getExtras().get("data"));
-                imageView.setImageBitmap(bitmapPreview);
-                this.bitmap = bitmapPreview;
+                final Bitmap validateBitmap = controlImageSize(bitmapPreview);
+                imageView.setImageBitmap(validateBitmap);
+                this.bitmap = validateBitmap;
             }
         }
     }
