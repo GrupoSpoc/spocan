@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -13,25 +15,31 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
 import com.neiapp.spocan.backend.callback.CallbackVoid;
+import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class InitiativeActivity extends SpocanActivity {
 
     Button mAddPhotoBtn;
+    Button mSelectPhotoBtn;
     Button mPublishInitiativeBtn;
     Button mCancelPublishBtn;
     ImageView imageView;
     EditText textDescription;
     Bitmap bitmap = null;
+
+    private static final int CAMERA_CODE = 1001;
+    private static final int GALLERY_CODE = 1002;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,7 @@ public class InitiativeActivity extends SpocanActivity {
         //spinner
         final SpinnerDialog spinnerDialog = new SpinnerDialog(this, "Enviando iniciativa...");
         mAddPhotoBtn = findViewById(R.id.addPhotoBtn);
+        mSelectPhotoBtn = findViewById(R.id.selectPhotoBtn);
         mCancelPublishBtn = findViewById(R.id.cancel_button);
         mPublishInitiativeBtn = findViewById(R.id.publish_button);
         textDescription = findViewById(R.id.editTextDescription);
@@ -50,12 +59,21 @@ public class InitiativeActivity extends SpocanActivity {
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
                     final String[] permission = {Manifest.permission.CAMERA};
-                    requestPermissions(permission, 1001);
+                    requestPermissions(permission, CAMERA_CODE);
                 } else {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, 1001);
+                    startActivityForResult(intent, CAMERA_CODE);
                     setResult(RESULT_OK);
                 }
+            }
+        });
+        
+        mSelectPhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_CODE);
             }
         });
 
@@ -70,7 +88,6 @@ public class InitiativeActivity extends SpocanActivity {
         mPublishInitiativeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 if (validateField()) {
                     spinnerDialog.start();
@@ -99,6 +116,31 @@ public class InitiativeActivity extends SpocanActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GALLERY_CODE) {
+                try {
+                    final Uri imageUri = data.getData();
+                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    imageView.setImageBitmap(selectedImage);
+                    this.bitmap = selectedImage;
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(getApplicationContext(), "Error obteniendo la imagen. Intente nuevamente", Toast.LENGTH_SHORT).show();
+                }
+
+            } else if (requestCode == CAMERA_CODE) {
+                final Bitmap bitmapPreview = (Bitmap) Objects.requireNonNull(data.getExtras().get("data"));
+                imageView.setImageBitmap(bitmapPreview);
+                this.bitmap = bitmapPreview;
+            }
+        }
+    }
+
 
     // valida que los atributos para la creación de la iniciativa sean válidos.
     private boolean validateField() {
@@ -134,24 +176,12 @@ public class InitiativeActivity extends SpocanActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(resultCode, requestCode, data);
-        if (requestCode == 1001) {
-            if (resultCode == RESULT_OK) {
-                final Bitmap bitmapPreview = (Bitmap) Objects.requireNonNull(data.getExtras().get("data"));
-                imageView.setImageBitmap(bitmapPreview);
-                this.bitmap = bitmapPreview;
-            }
-        }
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1001) {
+        if (requestCode == CAMERA_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 1001);
+                startActivityForResult(intent, CAMERA_CODE);
                 setResult(RESULT_OK);
             } else {
                 Toast.makeText(getApplicationContext(), "Es necesario aprobar los permisos de la cámara para tomar la foto", Toast.LENGTH_SHORT).show();
