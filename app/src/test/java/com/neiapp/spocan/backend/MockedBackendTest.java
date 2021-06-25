@@ -32,7 +32,7 @@ public class MockedBackendTest {
             public void onSuccess() {
             }
         };
-        fakeBackend.createInitiative(initiative, callback);
+        fakeBackend.createInitiative(initiative, callback, null);
         assertEquals(originalSize + 1, MockedBackend.initiative_store.size());
         created = MockedBackend.initiative_store.get(originalSize);
         assertEquals(String.valueOf(originalSize + 1), created.getId());
@@ -51,8 +51,8 @@ public class MockedBackendTest {
             }
         };
 
-        fakeBackend.createInitiative(initiative_first, call);
-        fakeBackend.createInitiative(initiative_second, call);
+        fakeBackend.createInitiative(initiative_first, call, null);
+        fakeBackend.createInitiative(initiative_second, call, null);
         fakeBackend.getAllInitiatives(null, false, new CallbackInstance<InitiativeBatch>() {
             @Override
             public void onSuccess(InitiativeBatch batch) {

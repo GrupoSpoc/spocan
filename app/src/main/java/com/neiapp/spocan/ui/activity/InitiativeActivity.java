@@ -1,12 +1,17 @@
 package com.neiapp.spocan.ui.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.neiapp.spocan.R;
 import com.neiapp.spocan.backend.Backend;
@@ -23,8 +29,12 @@ import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class InitiativeActivity extends SpocanActivity {
@@ -39,6 +49,8 @@ public class InitiativeActivity extends SpocanActivity {
 
     private static final int CAMERA_CODE = 1001;
     private static final int GALLERY_CODE = 1002;
+
+    String currentPhotoPath;
 
 
     @Override
@@ -61,9 +73,7 @@ public class InitiativeActivity extends SpocanActivity {
                     final String[] permission = {Manifest.permission.CAMERA};
                     requestPermissions(permission, CAMERA_CODE);
                 } else {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, CAMERA_CODE);
-                    setResult(RESULT_OK);
+                    dispatchTakePictureIntent();
                 }
             }
         });
@@ -111,7 +121,7 @@ public class InitiativeActivity extends SpocanActivity {
                                 spinnerDialog.stop();
                             });
                         }
-                    });
+                    }, (status, message) -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), status + " - " + message, Toast.LENGTH_LONG).show()));
                 }
             }
         });
@@ -134,11 +144,64 @@ public class InitiativeActivity extends SpocanActivity {
                 }
 
             } else if (requestCode == CAMERA_CODE) {
-                final Bitmap bitmapPreview = (Bitmap) Objects.requireNonNull(data.getExtras().get("data"));
-                imageView.setImageBitmap(bitmapPreview);
-                this.bitmap = bitmapPreview;
+                // Get the dimensions of the View
+                int targetW = imageView.getWidth();
+                int targetH = imageView.getHeight();
+
+                // Get the dimensions of the bitmap
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inJustDecodeBounds = true;
+
+                BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+
+                int photoW = bmOptions.outWidth;
+                int photoH = bmOptions.outHeight;
+
+                // Determine how much to scale down the image
+                int scaleFactor = Math.max(4, Math.min(photoW/targetW, photoH/targetH));
+
+                // Decode the image file into a Bitmap sized to fill the View
+                bmOptions.inJustDecodeBounds = false;
+                bmOptions.inSampleSize = scaleFactor;
+                bmOptions.inPurgeable = true;
+
+                Bitmap bitmap = null;
+                try {
+                    bitmap = rotateImageIfRequired(this, BitmapFactory.decodeFile(currentPhotoPath, bmOptions), currentPhotoPath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageView.setImageBitmap(bitmap);
+                this.bitmap = bitmap;
             }
         }
+    }
+
+
+    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, String selectedImage) throws IOException {
+
+        ExifInterface ei = new ExifInterface(selectedImage);
+
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+    }
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
     }
 
 
@@ -175,6 +238,21 @@ public class InitiativeActivity extends SpocanActivity {
             return containRestricted;
     }
 
+    private String getFiwareCharacter(String description){
+        String fiwareChar = "-";
+        char[] fiwareRestrictedChars = {'<','>','"','=','(',')',';', '\''};
+        boolean containRestricted = false;
+
+        for(char i : description.toCharArray()){
+            for(char j : fiwareRestrictedChars){
+                if(i == j){
+                    fiwareChar += i;
+                }
+            }
+        }
+        return fiwareChar;
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -192,6 +270,49 @@ public class InitiativeActivity extends SpocanActivity {
     @Override
     protected View getViewForAutoHiddingKeyboard() {
         return findViewById(R.id.initiativeView);
+    }
+
+
+
+
+    // ----------------------- IMAGE SHIT -----------------------
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.neiapp.spocan.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, CAMERA_CODE);
+            }
+        }
     }
 
 }

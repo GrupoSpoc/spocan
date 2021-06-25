@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class MockedBackend implements Backend {
     public static ArrayList<Initiative> initiative_store;
@@ -44,7 +45,7 @@ public class MockedBackend implements Backend {
     }
 
     @Override
-    public void createInitiative(Initiative initiative, CallbackVoid callback) {
+    public void createInitiative(Initiative initiative, CallbackVoid callback, BiConsumer<Integer, String> error) {
         String assignedId = Integer.toString(initiative_store.size() + 1);
         initiative.setId(assignedId);
         initiative_store.add(initiative);

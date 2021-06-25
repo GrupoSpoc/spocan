@@ -10,10 +10,11 @@ import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.backend.rest.RestClientBackend;
 
 import java.time.LocalDateTime;
+import java.util.function.BiConsumer;
 
 public interface Backend {
 
-    void createInitiative(Initiative initiative, CallbackVoid callback);
+    void createInitiative(Initiative initiative, CallbackVoid callback, BiConsumer<Integer, String> errorShow);
     void getAllInitiatives(LocalDateTime dateTop, boolean fromCurrentUser, CallbackInstance<InitiativeBatch> callback);
     void getUser(CallbackInstance<User> callback);
     void logOut(CallbackVoid callback);
