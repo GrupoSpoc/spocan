@@ -45,9 +45,9 @@
             android:background="@drawable/style_desc_iniciative"
             android:ems="10"
             android:hint="@string/AddDescriptionBtn"
+            android:inputType="textMultiLine"
             android:paddingStart="15dp"
             android:textColorHint="@color/grey_backgrounds"
-            android:inputType="textMultiLine"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,12 +61,29 @@
             android:background="@drawable/diseno_botones_verdes"
             android:fontFamily="@font/nunito_light"
             android:text="@string/AddPhotoBtn"
-            app:backgroundTint="@color/ecologycal_green"
             android:textColor="@color/black"
             android:textStyle="bold"
+            app:backgroundTint="@color/ecologycal_green"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.061"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.603" />
+
+        <Button
+            android:id="@+id/selectPhotoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/diseno_botones_verdes"
+            android:fontFamily="@font/nunito_light"
+            android:text="@string/selectPhotoBtn"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:backgroundTint="@color/ecologycal_green"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.931"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.603" />
@@ -76,28 +93,28 @@
             android:layout_width="376dp"
             android:layout_height="235dp"
             android:background="@color/white"
+            android:src="@drawable/ic_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.457"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.246"
-           android:src="@drawable/ic_image" />
+            app:layout_constraintVertical_bias="0.246" />
 
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
-            app:backgroundTint="@color/black"
             android:background="@drawable/diseno_botones_verdes"
             android:fontFamily="@font/nunito_light"
             android:text="@string/CancelInitiativeBtn"
             android:textColor="@color/white"
             android:textStyle="bold"
+            app:backgroundTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDescription"/>
+            app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 
         <Button
             android:id="@+id/publish_button"

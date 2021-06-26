@@ -1,5 +1,7 @@
 package com.neiapp.spocan.backend.rest;
 
+import static com.neiapp.spocan.backend.rest.HTTPCodes.ERROR_PARSE_JSON;
+
 import androidx.annotation.Nullable;
 
 import com.neiapp.spocan.backend.Backend;
@@ -18,8 +20,6 @@ import com.neiapp.spocan.models.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
-
-import static com.neiapp.spocan.backend.rest.HTTPCodes.ERROR_PARSE_JSON;
 
 
 public class RestClientBackend implements Backend {

@@ -1,6 +1,5 @@
  package com.neiapp.spocan.models;
 
- import static com.neiapp.spocan.ui.activity.InitiativeActivity.controlImageSize;
  import static org.junit.Assert.assertEquals;
  import static org.junit.Assert.assertNotNull;
  import static org.junit.Assert.assertNull;
@@ -11,7 +10,6 @@
 
  import com.google.gson.JsonObject;
  import com.neiapp.spocan.backend.ParseJsonException;
- import com.neiapp.spocan.util.Base64Converter;
 
  import org.json.JSONException;
  import org.json.JSONObject;
@@ -19,12 +17,9 @@
  import org.junit.runner.RunWith;
  import org.robolectric.RobolectricTestRunner;
 
- import java.io.File;
- import java.io.FileNotFoundException;
  import java.time.LocalDateTime;
  import java.time.Month;
  import java.time.ZoneOffset;
- import java.util.Scanner;
 
  @RunWith(RobolectricTestRunner.class)
 public class InitiativeTest {
@@ -192,30 +187,4 @@ public class InitiativeTest {
 
         assertThrows(ParseJsonException.class,()-> User.convertJson(wrong_jsonInitiative.toString()));
     }
-
-     @Test
-     public void controlImageSizeTest(){
-
-         Bitmap bmp = Base64Converter.base64ToBitmap(leerBase64());
-         final Bitmap resultingBitmap = controlImageSize(bmp);
-
-         assertTrue(true);
-     }
-     private  String leerBase64() {
-         String  resultado = "";
-
-         try {
-             File myObj = new File("/home/l30/corazonBase64");
-             Scanner myReader = new Scanner(myObj);
-             while (myReader.hasNextLine()) {
-                 String data = myReader.nextLine();
-                 resultado = resultado + data;
-             }
-             myReader.close();
-         } catch (FileNotFoundException e) {
-             System.out.println("An error occurred.");
-             e.printStackTrace();
-         }
-         return  resultado;
-     }
 }

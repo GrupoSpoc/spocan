@@ -1,14 +1,12 @@
 package com.neiapp.spocan.backend;
 
+import com.neiapp.spocan.backend.callback.CallbackInstance;
+import com.neiapp.spocan.backend.callback.CallbackVoid;
 import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.models.InitiativeBatch;
 import com.neiapp.spocan.models.InitiativeStatus;
 import com.neiapp.spocan.models.User;
 import com.neiapp.spocan.models.UserType;
-import com.neiapp.spocan.backend.callback.CallbackCollection;
-import com.neiapp.spocan.backend.callback.CallbackInstance;
-import com.neiapp.spocan.backend.callback.CallbackVoid;
-
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,9 +20,10 @@ public class MockedBackend implements Backend {
     public static User CURRENT_USER;
 
     protected MockedBackend() {
-        this.initiative_by_status.put(InitiativeStatus.APPROVED.getId(),8);
-        this.initiative_by_status.put(InitiativeStatus.PENDING.getId(),4);
-        this.initiative_by_status.put(InitiativeStatus.REJECTED.getId(),3);
+        initiative_by_status.put(InitiativeStatus.APPROVED.getId(),8);
+        initiative_by_status.put(InitiativeStatus.PENDING.getId(),4);
+        initiative_by_status.put(InitiativeStatus.REJECTED.getId(),3);
+
         if (initiative_store == null) {
             initiative_store = new ArrayList<>();
             initiative_store.add(new Initiative("1", InitiativeStatus.REJECTED,"[test] Iniciativa de prueba 1", MockedImagesBase64.RED_800_X_600, "TestUser-1", "2021-04-27T22:59:34","desaprobada"));
