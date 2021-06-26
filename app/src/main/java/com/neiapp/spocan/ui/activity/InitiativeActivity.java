@@ -1,7 +1,6 @@
 package com.neiapp.spocan.ui.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -30,12 +28,12 @@ import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
+import java.util.Locale;
+import java.util.function.Function;
 
 public class InitiativeActivity extends SpocanActivity {
 
@@ -77,7 +75,7 @@ public class InitiativeActivity extends SpocanActivity {
                 }
             }
         });
-        
+
         mSelectPhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,52 +131,67 @@ public class InitiativeActivity extends SpocanActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == GALLERY_CODE) {
-                try {
-                    final Uri imageUri = data.getData();
-                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    imageView.setImageBitmap(selectedImage);
-                    this.bitmap = selectedImage;
-                } catch (FileNotFoundException e) {
-                    Toast.makeText(getApplicationContext(), "Error obteniendo la imagen. Intente nuevamente", Toast.LENGTH_SHORT).show();
-                }
+                final Uri imageUri = data.getData();
+                resolveBitmap(bmOptions -> {
+                    try {
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        return BitmapFactory.decodeStream(imageStream, null, bmOptions);
+                    } catch (Exception e) {
+                        return null;
+                    }
+
+                });
 
             } else if (requestCode == CAMERA_CODE) {
-                // Get the dimensions of the View
-                int targetW = imageView.getWidth();
-                int targetH = imageView.getHeight();
-
-                // Get the dimensions of the bitmap
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                bmOptions.inJustDecodeBounds = true;
-
-                BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-
-                int photoW = bmOptions.outWidth;
-                int photoH = bmOptions.outHeight;
-
-                // Determine how much to scale down the image
-                int scaleFactor = Math.max(4, Math.min(photoW/targetW, photoH/targetH));
-
-                // Decode the image file into a Bitmap sized to fill the View
-                bmOptions.inJustDecodeBounds = false;
-                bmOptions.inSampleSize = scaleFactor;
-                bmOptions.inPurgeable = true;
-
-                Bitmap bitmap = null;
-                try {
-                    bitmap = rotateImageIfRequired(this, BitmapFactory.decodeFile(currentPhotoPath, bmOptions), currentPhotoPath);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                imageView.setImageBitmap(bitmap);
-                this.bitmap = bitmap;
+                resolveBitmap(bmOptions -> BitmapFactory.decodeFile(currentPhotoPath, bmOptions));
             }
         }
     }
 
+    private void resolveBitmap(Function<BitmapFactory.Options, Bitmap> bitmapSupplier) {
+        // Get the dimensions of the View
+        int targetW = imageView.getWidth();
+        int targetH = imageView.getHeight();
 
-    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, String selectedImage) throws IOException {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        bitmapSupplier.apply(bmOptions);
+
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.max(4, Math.min(photoW/targetW, photoH/targetH));
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inTargetDensity = bmOptions.inDensity;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = null;
+        if (currentPhotoPath != null) {
+            try {
+                bitmap = rotateImageIfRequired(bitmapSupplier.apply(bmOptions), currentPhotoPath);
+            } catch (IOException e) {
+                displayImageErrorToast();
+            }
+        } else {
+            bitmap = bitmapSupplier.apply(bmOptions);
+        }
+
+        if (bitmap == null) {
+            displayImageErrorToast();
+        }
+
+        this.imageView.setImageBitmap(bitmap);
+        this.bitmap = bitmap;
+    }
+
+
+    private static Bitmap rotateImageIfRequired(Bitmap img, String selectedImage) throws IOException {
 
         ExifInterface ei = new ExifInterface(selectedImage);
 
@@ -238,21 +251,6 @@ public class InitiativeActivity extends SpocanActivity {
             return containRestricted;
     }
 
-    private String getFiwareCharacter(String description){
-        String fiwareChar = "-";
-        char[] fiwareRestrictedChars = {'<','>','"','=','(',')',';', '\''};
-        boolean containRestricted = false;
-
-        for(char i : description.toCharArray()){
-            for(char j : fiwareRestrictedChars){
-                if(i == j){
-                    fiwareChar += i;
-                }
-            }
-        }
-        return fiwareChar;
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -273,19 +271,14 @@ public class InitiativeActivity extends SpocanActivity {
     }
 
 
-
-
-    // ----------------------- IMAGE SHIT -----------------------
-
     private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
 
         // Save a file: path for use with ACTION_VIEW intents
@@ -295,16 +288,13 @@ public class InitiativeActivity extends SpocanActivity {
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                // Error occurred while creating the File
+                displayImageErrorToast();
             }
-            // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.neiapp.spocan.fileprovider",
@@ -313,6 +303,10 @@ public class InitiativeActivity extends SpocanActivity {
                 startActivityForResult(takePictureIntent, CAMERA_CODE);
             }
         }
+    }
+
+    private void displayImageErrorToast() {
+        Toast.makeText(this, "Ocurrió un error procesando la imagen", Toast.LENGTH_SHORT).show();
     }
 
 }
