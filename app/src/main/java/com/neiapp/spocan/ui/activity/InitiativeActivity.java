@@ -173,7 +173,7 @@ public class InitiativeActivity extends SpocanActivity {
 
     private void resolveBitmap(Function<BitmapFactory.Options, Bitmap> bitmapSupplier,
                                Supplier<ExifInterface> exifInterfaceSupplier) {
-        final int IMAGE_MAX_SIZE = 307200; // 640x480
+        final int IMAGE_MAX_SIZE = 76800; // 320x240
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();

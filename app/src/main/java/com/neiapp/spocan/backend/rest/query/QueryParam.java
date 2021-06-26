@@ -4,7 +4,7 @@ public enum QueryParam {
     ORDER("order"),
     STATUS("statusId"),
     CURRENT_USER("currentUser"),
-    DATE_TOP("dateTop"),
+    DATE_TO("dateTo"),
     LIMIT("limit");
 
     private final String label;

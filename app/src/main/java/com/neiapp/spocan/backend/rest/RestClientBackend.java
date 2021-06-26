@@ -121,7 +121,7 @@ public class RestClientBackend implements Backend {
         }
 
         if (dateTop != null) {
-               queryParamsBuilder.withParam(QueryParam.DATE_TOP, dateTop.toString());
+               queryParamsBuilder.withParam(QueryParam.DATE_TO, dateTop.toString());
         }
 
         performer.get(Paths.BASE + Paths.INITIATIVE + Paths.ALL, queryParamsBuilder.build(), new ServerEnsureResponseCallback() {
