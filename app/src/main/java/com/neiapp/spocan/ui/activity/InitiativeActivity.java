@@ -28,12 +28,14 @@ import com.neiapp.spocan.models.Initiative;
 import com.neiapp.spocan.ui.extra.SpinnerDialog;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class InitiativeActivity extends SpocanActivity {
 
@@ -115,9 +117,7 @@ public class InitiativeActivity extends SpocanActivity {
                         @Override
                         public void onFailure(String message, int httpStatus) {
                             InitiativeActivity.super.handleError(message, httpStatus);
-                            runOnUiThread(() -> {
-                                spinnerDialog.stop();
-                            });
+                            runOnUiThread(spinnerDialog::stop);
                         }
                     }, (status, message) -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), status + " - " + message, Toast.LENGTH_LONG).show()));
                 }
@@ -132,23 +132,49 @@ public class InitiativeActivity extends SpocanActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == GALLERY_CODE) {
                 final Uri imageUri = data.getData();
+                // how to get Bitmap
                 resolveBitmap(bmOptions -> {
                     try {
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         return BitmapFactory.decodeStream(imageStream, null, bmOptions);
-                    } catch (Exception e) {
-                        return null;
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException();
                     }
 
+                    // how to get ExifInterface
+                }, () -> {
+                    final InputStream imageStream;
+                    try {
+                        imageStream = getContentResolver().openInputStream(imageUri);
+                        ExifInterface exifInterface = new ExifInterface(imageStream);
+                        imageStream.close();
+                        return exifInterface;
+                    } catch (Exception e) {
+                        throw new RuntimeException();
+                    }
                 });
 
             } else if (requestCode == CAMERA_CODE) {
-                resolveBitmap(bmOptions -> BitmapFactory.decodeFile(currentPhotoPath, bmOptions));
+                resolveBitmap(
+                        // how to get Bitmap
+                        bmOptions -> BitmapFactory.decodeFile(currentPhotoPath, bmOptions),
+
+                        // how to get ExifInterface
+                        () -> {
+                            try {
+                                return new ExifInterface(currentPhotoPath);
+                            } catch (IOException e) {
+                                throw new RuntimeException();
+                            }
+                        });
             }
         }
     }
 
-    private void resolveBitmap(Function<BitmapFactory.Options, Bitmap> bitmapSupplier) {
+    private void resolveBitmap(Function<BitmapFactory.Options, Bitmap> bitmapSupplier,
+                               Supplier<ExifInterface> exifInterfaceSupplier) {
+        final int IMAGE_MAX_SIZE = 307200; // 640x480
+
         // Get the dimensions of the View
         int targetW = imageView.getWidth();
         int targetH = imageView.getHeight();
@@ -162,38 +188,30 @@ public class InitiativeActivity extends SpocanActivity {
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
 
-        // Determine how much to scale down the image
-        int scaleFactor = Math.max(4, Math.min(photoW/targetW, photoH/targetH));
+        // Reduce resolution until <= 640x480
+        int scale = 1;
+        while ((photoW * photoH) * (1 / Math.pow(scale, 2)) > IMAGE_MAX_SIZE) {
+            scale++;
+        }
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
-        bmOptions.inTargetDensity = bmOptions.inDensity;
-        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inSampleSize = scale > 1 ? scale - 1 : 1;
         bmOptions.inPurgeable = true;
 
-        Bitmap bitmap = null;
-        if (currentPhotoPath != null) {
-            try {
-                bitmap = rotateImageIfRequired(bitmapSupplier.apply(bmOptions), currentPhotoPath);
-            } catch (IOException e) {
-                displayImageErrorToast();
-            }
-        } else {
-            bitmap = bitmapSupplier.apply(bmOptions);
-        }
-
-        if (bitmap == null) {
+        try {
+            bitmap = rotateImageIfRequired(bitmapSupplier.apply(bmOptions), exifInterfaceSupplier);
+        } catch (Exception e) {
             displayImageErrorToast();
         }
 
         this.imageView.setImageBitmap(bitmap);
-        this.bitmap = bitmap;
     }
 
 
-    private static Bitmap rotateImageIfRequired(Bitmap img, String selectedImage) throws IOException {
+    private static Bitmap rotateImageIfRequired(Bitmap img, Supplier<ExifInterface> exifInterfaceSupplier) throws IOException {
 
-        ExifInterface ei = new ExifInterface(selectedImage);
+        ExifInterface ei = exifInterfaceSupplier.get();
 
         int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
@@ -220,7 +238,8 @@ public class InitiativeActivity extends SpocanActivity {
 
     // valida que los atributos para la creación de la iniciativa sean válidos.
     private boolean validateField() {
-        Boolean result = true;
+        boolean result = true;
+
         if (bitmap == null) {
             result = false;
             Toast.makeText(getApplicationContext(), "Debe agregar una foto", Toast.LENGTH_SHORT).show();
