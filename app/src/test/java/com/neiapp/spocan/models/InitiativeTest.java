@@ -21,7 +21,7 @@
  import java.time.Month;
  import java.time.ZoneOffset;
 
-@RunWith(RobolectricTestRunner.class)
+ @RunWith(RobolectricTestRunner.class)
 public class InitiativeTest {
     @Test
     public void testInitiativeCreation() {
@@ -187,5 +187,4 @@ public class InitiativeTest {
 
         assertThrows(ParseJsonException.class,()-> User.convertJson(wrong_jsonInitiative.toString()));
     }
-
 }

@@ -175,10 +175,6 @@ public class InitiativeActivity extends SpocanActivity {
                                Supplier<ExifInterface> exifInterfaceSupplier) {
         final int IMAGE_MAX_SIZE = 307200; // 640x480
 
-        // Get the dimensions of the View
-        int targetW = imageView.getWidth();
-        int targetH = imageView.getHeight();
-
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
