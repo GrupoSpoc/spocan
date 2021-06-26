@@ -1,5 +1,7 @@
 package com.neiapp.spocan.backend.rest;
 
+import static com.neiapp.spocan.backend.rest.HTTPCodes.ERROR_PARSE_JSON;
+
 import androidx.annotation.Nullable;
 
 import com.neiapp.spocan.backend.Backend;
@@ -18,9 +20,6 @@ import com.neiapp.spocan.models.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.function.BiConsumer;
-
-import static com.neiapp.spocan.backend.rest.HTTPCodes.ERROR_PARSE_JSON;
 
 
 public class RestClientBackend implements Backend {
@@ -84,7 +83,7 @@ public class RestClientBackend implements Backend {
 
 
     @Override
-    public void createInitiative(Initiative initiative, CallbackVoid callback, BiConsumer<Integer, String> error) {
+    public void createInitiative(Initiative initiative, CallbackVoid callback) {
         executeJsonAction(() -> performer.post(Paths.BASE + Paths.INITIATIVE, initiative.toJson(), new ServerCallback() {
             @Override
             void success(@Nullable String serverResponse) {
@@ -93,7 +92,6 @@ public class RestClientBackend implements Backend {
 
             @Override
             void failure(int statusCode, @Nullable String serverResponse) {
-                error.accept(statusCode, serverResponse);
                 callback.onFailure(serverResponse, statusCode);
             }
         }), callback);

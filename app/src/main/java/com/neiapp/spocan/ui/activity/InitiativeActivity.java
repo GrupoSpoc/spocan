@@ -119,7 +119,7 @@ public class InitiativeActivity extends SpocanActivity {
                             InitiativeActivity.super.handleError(message, httpStatus);
                             runOnUiThread(spinnerDialog::stop);
                         }
-                    }, (status, message) -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), status + " - " + message, Toast.LENGTH_LONG).show()));
+                    });
                 }
             }
         });
