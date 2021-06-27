@@ -271,9 +271,7 @@ public class InitiativeActivity extends SpocanActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CAMERA_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, CAMERA_CODE);
-                setResult(RESULT_OK);
+                dispatchTakePictureIntent();
             } else {
                 Toast.makeText(getApplicationContext(), "Es necesario aprobar los permisos de la cámara para tomar la foto", Toast.LENGTH_SHORT).show();
             }
